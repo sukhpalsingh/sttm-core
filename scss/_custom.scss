@@ -1,0 +1,34 @@
+/*
+  Custom Styles
+*/
+.global-nav {
+  background: #333;
+  height: 45px;
+  margin-bottom: 0px;
+  overflow: hidden;
+  
+  ul.title-area {
+    margin-bottom: 0px;
+    position: relative;
+    float: left;
+    width: auto;
+    list-style: none;
+    height: 100%;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+
+    li.name {
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+
+      h1 {
+        color: #fff;
+        font-size: 17px;
+        font-weight: bold;
+        line-height: 39px;
+      }
+    }
+  }
+}

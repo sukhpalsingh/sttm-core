@@ -1,0 +1,14 @@
+{
+  "name": "sttm-everywhere-html",
+  "version": "1.0.0",
+  "description": "The HTML for STTM Everywhere, to be used as a submodule for the desktop and mobile apps",
+  "scripts": {
+    "build-css": "node-sass --output-style nested --source-map true --include-path scss scss/foundation.scss css/foundation.css",
+    "watch-css": "nodemon -e scss -x \"npm run build-css\""
+  },
+  "author": "Khalis Foundation",
+  "devDependencies": {
+    "node-sass": "^3.5.3",
+    "nodemon": "^1.9.1"
+  }
+}
