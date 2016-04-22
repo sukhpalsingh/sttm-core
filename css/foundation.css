@@ -5492,4 +5492,7 @@ blockquote p {
         font-weight: bold;
         line-height: 39px; }
 
+#search_div input {
+  margin: 0; }
+
 /*# sourceMappingURL=foundation.css.map */
