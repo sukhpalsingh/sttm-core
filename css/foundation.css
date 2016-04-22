@@ -5483,6 +5483,7 @@ blockquote p {
 /*
   Custom Styles
 */
+/* HEADER */
 .global-nav {
   background: #333;
   height: 45px;
@@ -5507,6 +5508,12 @@ blockquote p {
         font-weight: bold;
         line-height: 39px; }
 
+/* SEARCH RESULTS */
+#results-block .block-list {
+  margin: 0;
+  width: 100%; }
+
+/* SEARCH BAR */
 #search_div input {
   margin: 0; }
 

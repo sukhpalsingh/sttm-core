@@ -8,13 +8,13 @@ xhr.responseType = 'arraybuffer';
 xhr.onload = function(e) {
   var uInt8Array = new Uint8Array(this.response);
   db = new SQL.Database(uInt8Array);
-  //var contents = db.exec("SELECT DISTINCT source_id FROM shabad");
-  //console.dir(contents);// contents is now [{columns:['col1','col2',...], values:[[first row], [second row], ...]}]
 };
 xhr.send();
 
 var $search = document.getElementById("search");
 var $results = document.getElementById("results");
+
+$search.addEventListener("keyup", typeSearch);
 
 function typeSearch() {
   clearTimeout(new_search_timeout);
