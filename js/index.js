@@ -1,7 +1,7 @@
-var db;
+var db,
+    new_search_timeout;
 
 var xhr = new XMLHttpRequest();
-console.log("xhr.open");
 xhr.open('GET', '../gurbani.sqlite', true);
 xhr.responseType = 'arraybuffer';
 
@@ -16,15 +16,24 @@ xhr.send();
 var $search = document.getElementById("search");
 var $results = document.getElementById("results");
 
+function typeSearch() {
+  clearTimeout(new_search_timeout);
+  new_search_timeout = setTimeout(search, 500);
+}
+
 function search() {
   var search_query = $search.value;
   if (search_query.length > 2) {
-    $results.innerHTML = "";
     var content = db.exec("SELECT ID, Gurmukhi, ShabadID FROM Shabad WHERE FirstLetters LIKE '%" + search_query + "%'");
     if (content.length > 0) {
+      $results.innerHTML = "";
       content[0].values.forEach(function(item, i) {
-        $results.innerHTML = $results.innerHTML + "<div><a href='#'>" + item[1] + "</a></div>";
+        $results.innerHTML = $results.innerHTML + "<li><a href='#'>" + item[1] + "</a></li>";
       });
+    } else {
+      $results.innerHTML = "<li class='english'>No results.</li>";
     }
+  } else {
+    $results.innerHTML = "";
   }
 }

@@ -10,7 +10,7 @@
   <div class="vertical grid-frame">
     <div id="header" class="shrink collapse grid-content">
       <nav class="global-nav">
-        <ul class="title-area">
+        <ul class="title-area no-bullet">
           <li class="name">
             <h1>STTM Everywhere</h1>
           </li>
@@ -22,11 +22,12 @@
         Shabad
       </div>
       <div class="grid-block">
-        Results
-        <div id="results"></div>
+        <section class="block-list">
+          <header>Results</header>
+          <ul id="results" class="gurmukhi"></ul>
       </div>
       <div class="shrink collapse grid-block" id="search_div">
-        <input type="text" placeholder="Search" id="search" onkeyup="search()">
+        <input type="text" class="gurmukhi" placeholder="src" id="search" onkeyup="typeSearch()">
       </div>
     </div>
   </div>

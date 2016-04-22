@@ -5465,6 +5465,22 @@ blockquote p {
   float: none; }
 
 /*
+  Fonts
+*/
+@font-face {
+  font-family: "gurbaniakhar";
+  src: url("../fonts/gurbaniakhar-webfont.eot");
+  src: url("../fonts/gurbaniakhar-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/gurbaniakhar-webfont.woff2") format("woff2"), url("../fonts/gurbaniakhar-webfont.woff") format("woff"), url("../fonts/gurbaniakhar-webfont.ttf") format("truetype"), url("../fonts/gurbaniakhar-webfont.svg#gurbaniakharregular") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+.gurmukhi {
+  font-family: "gurbaniakhar"; }
+
+.english {
+  font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; }
+
+/*
   Custom Styles
 */
 .global-nav {
@@ -5477,7 +5493,6 @@ blockquote p {
     position: relative;
     float: left;
     width: auto;
-    list-style: none;
     height: 100%;
     display: -webkit-flex;
     display: -ms-flexbox;
