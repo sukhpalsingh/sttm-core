@@ -2,7 +2,7 @@ var db;
 
 var xhr = new XMLHttpRequest();
 console.log("xhr.open");
-xhr.open('GET', '../database.sqlite', true);
+xhr.open('GET', '../gurbani.sqlite', true);
 xhr.responseType = 'arraybuffer';
 
 xhr.onload = function(e) {
