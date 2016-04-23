@@ -57,8 +57,21 @@ $gurmukhi-font-family: 'gurbaniakhar';
   }
 }
 
+#shabad-block {
+  .block-list {
+    margin: 0;
+    width: 100%;
+  }
+}
+
 /* SEARCH RESULTS */
 #results-block {
+  .block-list {
+    margin: 0;
+    width: 100%;
+  }
+}
+#session-block {
   .block-list {
     margin: 0;
     width: 100%;

@@ -18,13 +18,25 @@
       </nav>
     </div>
     <div class="vertical grid-block">
-      <div class="grid-block">
-        Shabad
-      </div>
-      <div class="grid-block" id="results-block">
+      <div class="grid-block" id="shabad-block">
         <section class="block-list">
-          <header>Results</header>
-          <ul id="results" class="gurmukhi"></ul>
+          <header>Shabad</header>
+          <ul id="shabad" class="gurmukhi"></ul>
+        </section>
+      </div>
+      <div class="grid-block vertical medium-horizontal">
+        <div class="grid-block order-2 medium-order-1" id="results-block">
+          <section class="block-list">
+            <header>Results</header>
+            <ul id="results" class="gurmukhi"></ul>
+          </section>
+        </div>
+        <div class="grid-block order-1 medium-order-2" id="session-block">
+          <section class="block-list">
+            <header>Session</header>
+            <ul id="session" class="gurmukhi"></ul>
+          </section>
+        </div>
       </div>
       <div class="shrink collapse grid-block" id="search_div">
         <input type="text" class="gurmukhi" placeholder="src" id="search">
