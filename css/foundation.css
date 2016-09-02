@@ -5483,6 +5483,9 @@ blockquote p {
 /*
   Custom Styles
 */
+#app-frame {
+  height: 100%; }
+
 /* HEADER */
 .global-nav {
   background: #333;
@@ -5507,19 +5510,34 @@ blockquote p {
         font-size: 17px;
         font-weight: bold;
         line-height: 39px; }
+  .global-nav ul.right {
+    margin-bottom: 0;
+    float: right; }
 
-#shabad-block .block-list {
-  margin: 0;
-  width: 100%; }
+#main-ui {
+  height: calc(100% - (45px + 38px)); }
+
+#shabad-block {
+  border-bottom: 1px solid #000; }
+  #shabad-block .block-list {
+    margin: 0;
+    width: 100%; }
 
 /* SEARCH RESULTS */
-#results-block .block-list {
-  margin: 0;
-  width: 100%; }
+#results-block {
+  border-right: 1px solid #000; }
+  #results-block .block-list {
+    margin: 0;
+    width: 100%; }
 
 #session-block .block-list {
   margin: 0;
   width: 100%; }
+
+@media only screen and (min-width: 40em) {
+  #shabad-block,
+  #bottom_blocks {
+    height: 50%; } }
 
 /* SEARCH BAR */
 #search_div input {

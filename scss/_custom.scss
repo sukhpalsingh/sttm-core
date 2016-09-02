@@ -25,6 +25,10 @@ $gurmukhi-font-family: 'gurbaniakhar';
   Custom Styles
 */
 
+#app-frame {
+  height: 100%;
+}
+
 /* HEADER */
 .global-nav {
   background: #333;
@@ -55,9 +59,17 @@ $gurmukhi-font-family: 'gurbaniakhar';
       }
     }
   }
+  ul.right {
+    margin-bottom: 0;
+    float: right;
+  }
 }
 
+#main-ui {
+  height: calc(100% - (45px + 38px)); //Full-height minus header and search
+}
 #shabad-block {
+  border-bottom: 1px solid #000;
   .block-list {
     margin: 0;
     width: 100%;
@@ -66,6 +78,7 @@ $gurmukhi-font-family: 'gurbaniakhar';
 
 /* SEARCH RESULTS */
 #results-block {
+  border-right: 1px solid #000;
   .block-list {
     margin: 0;
     width: 100%;
@@ -75,6 +88,12 @@ $gurmukhi-font-family: 'gurbaniakhar';
   .block-list {
     margin: 0;
     width: 100%;
+  }
+}
+@media only screen and (min-width: 40em) {
+  #shabad-block,
+  #bottom_blocks {
+    height: 50%;
   }
 }
 
