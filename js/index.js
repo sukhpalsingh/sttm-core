@@ -1,5 +1,20 @@
 var db,
-    new_search_timeout;
+    new_search_timeout,
+    electron  = false,
+    cordova   = false;
+
+//Check if we're in Electron
+if (window && window.process && window.process.type == "renderer") {
+  electron  = true;
+  var script  = "../desktop_www/js/desktop_scripts.js";
+}
+
+if (script) {
+  var s   = document.createElement("script");
+  s.type  = "text/javascript";
+  s.src   = script;
+  document.body.appendChild(s);
+}
 
 var $search = document.getElementById("search");
 var $shabad = document.getElementById("shabad");
@@ -43,7 +58,6 @@ function clickResult(e) {
   if (e.target.classList.contains("panktee")) {
     var $panktee = e.target;
     var ShabadID = $panktee.dataset.shabadId;
-    console.log(ShabadID);
     $session.innerHTML = $session.innerHTML + '<li><a href="#" class="panktee" data-shabad-id="' + ShabadID + '">' + $panktee.innerText + '</a></li>';
     loadShabad(ShabadID);
   }
@@ -81,29 +95,28 @@ function clickButtons(e) {
   }
 }
 
-if (typeof getResults !== 'function') {
+//If we're just hanging out in a browser, we need to pull data from a local server
+if (!electron && !cordova) {
   function getResults(search_query, callback) {
     localRequest("search=" + search_query, callback);
   }
-}
 
-if (typeof loadShabad !== 'function') {
   function loadShabad(ShabadID) {
     localRequest("shabad=" + ShabadID, writeShabadLines);
   }
-}
 
-function localRequest(query, callback) {
-  var request = new XMLHttpRequest();
-  request.open('GET', "http://127.0.0.1/bani.php?" + query, true);
+  function localRequest(query, callback) {
+    var request = new XMLHttpRequest();
+    request.open('GET', "http://127.0.0.1/bani.php?" + query, true);
 
-  request.onload = function() {
-    if (this.status >= 200 && this.status < 400) {
-      // Success!
-      if (typeof callback == "function") {
-        callback(this.response);
+    request.onload = function() {
+      if (this.status >= 200 && this.status < 400) {
+        // Success!
+        if (typeof callback == "function") {
+          callback(this.response);
+        }
       }
-    }
-  };
-  request.send();
+    };
+    request.send();
+  }
 }
