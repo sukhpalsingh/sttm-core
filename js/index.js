@@ -36,21 +36,17 @@ function typeSearch() {
 function search() {
   var search_query = $search.value;
   if (search_query.length > 2) {
-    getResults(search_query, parseResults);
+    var content = db.exec("SELECT ID, Gurmukhi, ShabadID FROM Shabad WHERE FirstLetters LIKE '%" + search_query + "%'");
+    if (content.length > 0) {
+      $results.innerHTML = "";
+      content[0].values.forEach(function(item, i) {
+        $results.innerHTML = $results.innerHTML + "<li><a href='#' class='panktee' data-shabad-id='" + item[2] + "'>" + item[1] + "</a></li>";
+      });
+    } else {
+      $results.innerHTML = "<li class='english'>No results.</li>";
+    }
   } else {
     $results.innerHTML = "";
-  }
-}
-
-function parseResults(results) {
-  var content = JSON.parse(results);
-  if (content.length > 0) {
-    $results.innerHTML = "";
-    content.forEach(function(item, i) {
-      $results.innerHTML = $results.innerHTML + "<li><a href='#' class='panktee' data-shabad-id='" + item.ShabadID + "'>" + item.Gurmukhi + "</a></li>";
-    });
-  } else {
-    $results.innerHTML = "<li class='english'>No results.</li>";
   }
 }
 
@@ -71,12 +67,12 @@ function clickSession(e) {
   }
 }
 
-function writeShabadLines(results) {
-  var content = JSON.parse(results);
+function loadShabad(ShabadID) {
+  var content = db.exec("SELECT ID, Gurmukhi FROM Shabad WHERE ShabadID = '" + ShabadID + "'");
   if (content.length > 0) {
     $shabad.innerHTML = "";
-    content.forEach(function(item, i) {
-      $shabad.innerHTML = $shabad.innerHTML + '<li><a href="#" class="panktee">' + item.Gurmukhi + '</a></li>';
+    content[0].values.forEach(function(item, i) {
+      $shabad.innerHTML = $shabad.innerHTML + '<li><a href="#" class="panktee">' + item[1] + '</a></li>';
     });
   }
 }
@@ -95,28 +91,15 @@ function clickButtons(e) {
   }
 }
 
-//If we're just hanging out in a browser, we need to pull data from a local server
-if (!electron && !cordova) {
-  function getResults(search_query, callback) {
-    localRequest("search=" + search_query, callback);
-  }
+//If we're not in Electron, grab the database via AJAX
+if (!electron) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'gurbani.sqlite', true);
+  xhr.responseType = 'arraybuffer';
 
-  function loadShabad(ShabadID) {
-    localRequest("shabad=" + ShabadID, writeShabadLines);
-  }
-
-  function localRequest(query, callback) {
-    var request = new XMLHttpRequest();
-    request.open('GET', "http://127.0.0.1/bani.php?" + query, true);
-
-    request.onload = function() {
-      if (this.status >= 200 && this.status < 400) {
-        // Success!
-        if (typeof callback == "function") {
-          callback(this.response);
-        }
-      }
-    };
-    request.send();
-  }
+  xhr.onload = function(e) {
+    var uInt8Array = new Uint8Array(this.response);
+    db = new SQL.Database(uInt8Array);
+  };
+  xhr.send();
 }
