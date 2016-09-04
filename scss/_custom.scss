@@ -35,6 +35,7 @@ $gurmukhi-font-family: 'gurbaniakhar';
   height: 45px;
   margin-bottom: 0px;
   overflow: hidden;
+  padding: 0 10px;
   
   ul.title-area {
     margin-bottom: 0px;
@@ -60,8 +61,13 @@ $gurmukhi-font-family: 'gurbaniakhar';
     }
   }
   ul.right {
-    margin-bottom: 0;
     float: right;
+    line-height: 39px;
+    margin-bottom: 0;
+
+    a {
+      color: #fff;
+    }
   }
 }
 

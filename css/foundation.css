@@ -5491,7 +5491,8 @@ blockquote p {
   background: #333;
   height: 45px;
   margin-bottom: 0px;
-  overflow: hidden; }
+  overflow: hidden;
+  padding: 0 10px; }
   .global-nav ul.title-area {
     margin-bottom: 0px;
     position: relative;
@@ -5511,8 +5512,11 @@ blockquote p {
         font-weight: bold;
         line-height: 39px; }
   .global-nav ul.right {
-    margin-bottom: 0;
-    float: right; }
+    float: right;
+    line-height: 39px;
+    margin-bottom: 0; }
+    .global-nav ul.right a {
+      color: #fff; }
 
 #main-ui {
   height: calc(100% - (45px + 38px)); }
