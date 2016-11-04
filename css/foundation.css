@@ -5522,7 +5522,7 @@ blockquote p {
   height: calc(100% - (45px + 38px)); }
 
 #shabad-block {
-  border-bottom: 1px solid #000; }
+  border-top: 1px solid #000; }
   #shabad-block .block-list {
     margin: 0;
     width: 100%; }
@@ -5542,6 +5542,18 @@ blockquote p {
   #shabad-block,
   #bottom_blocks {
     height: 50%; } }
+
+/* SESSION WINDOW */
+.block-list ul.right {
+  color: #666666;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  font-size: 0.8em;
+  cursor: default;
+  text-transform: uppercase;
+  float: right; }
+  .block-list ul.right li {
+    border: 0; }
 
 /* SEARCH BAR */
 #search_div input {

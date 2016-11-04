@@ -75,7 +75,7 @@ $gurmukhi-font-family: 'gurbaniakhar';
   height: calc(100% - (45px + 38px)); //Full-height minus header and search
 }
 #shabad-block {
-  border-bottom: 1px solid #000;
+  border-top: 1px solid #000;
   .block-list {
     margin: 0;
     width: 100%;
@@ -100,6 +100,21 @@ $gurmukhi-font-family: 'gurbaniakhar';
   #shabad-block,
   #bottom_blocks {
     height: 50%;
+  }
+}
+
+/* SESSION WINDOW */
+.block-list ul.right {
+  color: #666666;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  font-size: 0.8em;
+  cursor: default;
+  text-transform: uppercase;
+  float: right;
+
+  li {
+    border: 0;
   }
 }
 
