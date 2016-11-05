@@ -1,11 +1,13 @@
 var db,
     new_search_timeout,
     electron  = false,
-    cordova   = false;
+    cordova   = false,
+    dbPath    = "./";
 
 //Check if we're in Electron
 if (window && window.process && window.process.type == "renderer") {
-  electron  = true;
+  electron    = true;
+  dbPath      = "../";
   var script  = "../desktop_www/js/desktop_scripts.js";
 }
 
@@ -94,7 +96,7 @@ function clickButtons(e) {
 //If we're not in Electron, grab the database via AJAX
 if (!electron) {
   var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'gurbani.sqlite', true);
+  xhr.open('GET', dbPath + 'gurbani.sqlite', true);
   xhr.responseType = 'arraybuffer';
 
   xhr.onload = function(e) {
