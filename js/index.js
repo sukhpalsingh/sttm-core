@@ -2,20 +2,66 @@ var db,
     new_search_timeout,
     electron  = false,
     cordova   = false,
-    dbPath    = "./";
+    dbPath    = "./",
+    storage;
+if (!scripts) {
+  var scripts = [];
+}
 
 //Check if we're in Electron
 if (window && window.process && window.process.type == "renderer") {
   electron    = true;
+  var storage = require("electron-json-storage");
   dbPath      = "../";
-  var script  = "../desktop_www/js/desktop_scripts.js";
+  scripts.unshift("../desktop_www/js/desktop_scripts.js");
 }
 
-if (script) {
-  var s   = document.createElement("script");
-  s.type  = "text/javascript";
-  s.src   = script;
-  document.body.appendChild(s);
+//Defaults
+var defaults = {
+  searchType:     "fls",
+  bgColour:       "#333",
+  view:           "slide",
+  slideTemplate:  [
+    {
+      tag:    "h1",
+      data:   "gurmukhi",
+      colour: "#fff"
+    },
+    {
+      tag:    "h2",
+      data:   "english_ssk",
+      colour:  "#ccc"
+    },
+    {
+      tag:    "h2",
+      data:   "transliteration",
+      colour: "#ffc"
+    },
+    {
+      tag:    "h2",
+      data:   "sggs_darpan",
+      colour: "#cff"
+    }
+  ]
+}
+
+//Settings
+var settings = {};
+storage.get('user-settings', function(error, data) {
+  if (error) throw error;
+  for (var key in defaults) {
+    settings[key] = data[key] || defaults[key];
+  }
+});
+
+
+if (scripts) {
+  for (var key in scripts) {
+    var s   = document.createElement("script");
+    s.type  = "text/javascript";
+    s.src   = scripts[key];
+    document.body.appendChild(s);
+  }
 }
 
 var $search = document.getElementById("search");
@@ -36,9 +82,25 @@ function typeSearch() {
 }
 
 function search() {
-  var search_query = $search.value;
+  var search_col;
+  var search_query  = $search.value;
+  switch (settings.searchType) {
+    case 'fls':
+      search_col    = "first_ltr_start";
+      var db_query  = '';
+      for (var x = 0, len = search_query.length; x < len; x++) {
+          var charCode = search_query.charCodeAt(x);
+          if (charCode < 100) {
+              charCode = '0' + charCode;
+          }
+          db_query += charCode + ',';
+      }
+      //Strip trailing comma and add a wildcard
+      db_query = db_query.substr(0, db_query.length - 1) + '%';
+      debugger;
+  }
   if (search_query.length > 2) {
-    var content = db.exec("SELECT ID, Gurmukhi, ShabadID FROM Shabad WHERE FirstLetters LIKE '%" + search_query + "%'");
+    var content = db.exec("SELECT _id, gurmukhi, shabad_no FROM shabad WHERE " + search_col + " LIKE '" + db_query + "'");
     if (content.length > 0) {
       $results.innerHTML = "";
       content[0].values.forEach(function(item, i) {
@@ -70,11 +132,11 @@ function clickSession(e) {
 }
 
 function loadShabad(ShabadID) {
-  var content = db.exec("SELECT ID, Gurmukhi FROM Shabad WHERE ShabadID = '" + ShabadID + "'");
+  var content = db.exec("SELECT _id, gurmukhi FROM shabad WHERE shabad_no = '" + ShabadID + "'");
   if (content.length > 0) {
     $shabad.innerHTML = "";
     content[0].values.forEach(function(item, i) {
-      $shabad.innerHTML = $shabad.innerHTML + '<li><a href="#" class="panktee">' + item[1] + '</a></li>';
+      $shabad.innerHTML = $shabad.innerHTML + '<li><a href="#" class="panktee" data-line-id="' + item[0] + '">' + item[1] + '</a></li>';
     });
   }
 }
@@ -82,7 +144,7 @@ function loadShabad(ShabadID) {
 function clickShabad(e) {
   if (e.target.classList.contains("panktee")) {
     var $panktee = e.target;
-    sendText($panktee.innerText);
+    sendLine($panktee.dataset.lineId);
   }
 }
 
