@@ -93,7 +93,7 @@ function search() {
     if (content.length > 0) {
       $results.innerHTML = "";
       content[0].values.forEach(function(item, i) {
-        $results.innerHTML = $results.innerHTML + "<li><a href='#' class='panktee' data-shabad-id='" + item[2] + "'>" + item[1] + "</a></li>";
+        $results.innerHTML = $results.innerHTML + "<li><a href='#' class='panktee' data-shabad-id='" + item[2] + "' data-line-id='" + item[0] + "'>" + item[1] + "</a></li>";
       });
     } else {
       $results.innerHTML = "<li class='english'>No results.</li>";
@@ -105,9 +105,10 @@ function search() {
 
 function clickResult(e) {
   if (e.target.classList.contains("panktee")) {
-    var $panktee = e.target;
-    var ShabadID = $panktee.dataset.shabadId;
-    $session.innerHTML = $session.innerHTML + '<li><a href="#" class="panktee" data-shabad-id="' + ShabadID + '">' + $panktee.innerText + '</a></li>';
+    var $panktee  = e.target;
+    var ShabadID  = $panktee.dataset.shabadId;
+    var LineID    = $panktee.dataset.lineId;
+    $session.innerHTML = $session.innerHTML + '<li><a href="#" class="panktee" data-shabad-id="' + ShabadID + '" data-line-id="' + LineID + '">' + $panktee.innerText + '</a></li>';
     loadShabad(ShabadID);
   }
 }
