@@ -66,6 +66,7 @@ if (scripts) {
 
 
 function typeSearch() {
+  document.body.className = document.body.className.replace("home","");
   clearTimeout(new_search_timeout);
   new_search_timeout = setTimeout(search, 500);
 }
@@ -86,7 +87,6 @@ function search() {
       }
       //Strip trailing comma and add a wildcard
       db_query = db_query.substr(0, db_query.length - 1) + '%';
-      debugger;
   }
   if (search_query.length > 2) {
     var content = db.exec("SELECT _id, gurmukhi, shabad_no FROM shabad WHERE " + search_col + " LIKE '" + db_query + "'");

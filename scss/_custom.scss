@@ -30,49 +30,111 @@ $gurmukhi-font-family: 'gurbaniakhar';
 }
 
 /* HEADER */
-.global-nav {
-  background: #333;
-  height: 45px;
+body.home #header {
+  background-color: #fff;
+  height: 100%;
+
+  .global-nav {
+    height: 290px;
+    padding-top: 198px;
+
+    ul.title-area {
+      align-items: center;
+      justify-content: center;
+
+      li.name {
+
+        h1 {
+
+          img {
+            width: 272px;
+          }
+        }
+      }
+    }
+  }
+
+  #search_div {
+    top: auto;
+  }
+}
+#header {
+  background-color: #fafafa;
+  border-bottom: 1px solid #ebebeb;
+  height: 123px;
   margin-bottom: 0px;
   overflow: hidden;
-  padding: 0 10px;
-  
-  ul.title-area {
-    margin-bottom: 0px;
-    position: relative;
-    float: left;
-    width: auto;
-    height: 100%;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: flex;
+  padding: 20px 10px 0;
+  transition: height .25s ease-out;
 
-    li.name {
+  .global-nav {
+    padding-top: 0;
+    transition: padding-top .25s ease-out;
+    
+    ul.title-area {
+      margin-bottom: 0px;
+      position: relative;
+      width: auto;
+      height: 100%;
       display: -webkit-flex;
       display: -ms-flexbox;
       display: flex;
 
-      h1 {
-        color: #fff;
-        font-size: 17px;
-        font-weight: bold;
-        line-height: 39px;
+      li.name {
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+
+        h1 {
+          color: #fff;
+          font-size: 17px;
+          font-weight: bold;
+          line-height: 39px;
+
+          img {
+            width: 202px;
+          }
+        }
+      }
+    }
+    ul.right {
+      position: absolute;
+      line-height: 39px;
+      margin-bottom: 0;
+      right: 20px;
+      top: 30px;
+
+      a {
+        color: #01669B;
       }
     }
   }
-  ul.right {
-    float: right;
-    line-height: 39px;
-    margin-bottom: 0;
+  #search_div {
+    justify-content: center;
+    top: -50px;
 
-    a {
-      color: #fff;
+    input {
+      border: none;
+      border-radius: 2px;
+      box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
+      height: 44px;
+      margin: 0;
+      max-width: 484px;
+      transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
+    }
+    input:hover,
+    input:focus {
+      box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
     }
   }
 }
 
+body.home #main-ui {
+  height: 0;
+}
 #main-ui {
-  height: calc(100% - (45px + 38px)); //Full-height minus header and search
+  height: calc(100% - 123px); //Full-height minus header and search
+  transition: height .25s ease-out;
 }
 #shabad-block {
   border-top: 1px solid #000;
@@ -101,6 +163,14 @@ $gurmukhi-font-family: 'gurbaniakhar';
   #bottom_blocks {
     height: 50%;
   }
+  /*#results-block {
+    flex: 0 0 100%;
+    max-width: 100%;
+    transition: max-width 0.25s ease-out;
+  }
+  body.show-session #results-block {
+    max-width: 50%;
+  }*/
 }
 
 /* SESSION WINDOW */
@@ -115,12 +185,5 @@ $gurmukhi-font-family: 'gurbaniakhar';
 
   li {
     border: 0;
-  }
-}
-
-/* SEARCH BAR */
-#search_div {
-  input {
-    margin: 0;
   }
 }
