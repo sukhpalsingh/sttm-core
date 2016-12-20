@@ -16,6 +16,7 @@ $gurmukhi-font-family: 'gurbaniakhar';
 
 .gurmukhi {
   font-family: $gurmukhi-font-family;
+  font-size: 1.1em;
 }
 .english {
   font-family: $body-font-family;
@@ -136,8 +137,21 @@ body.home #main-ui {
   height: calc(100% - 123px); //Full-height minus header and search
   transition: height .25s ease-out;
 }
+
+.block-list li:first-child {
+  border-top-color: #ebebeb;
+}
+.block-list li {
+  border-bottom-color: #ebebeb;
+}
+.block-list li > a {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 #shabad-block {
-  border-top: 1px solid #000;
+  border-top: 1px solid #ebebeb;
   .block-list {
     margin: 0;
     width: 100%;
@@ -146,7 +160,7 @@ body.home #main-ui {
 
 /* SEARCH RESULTS */
 #results-block {
-  border-right: 1px solid #000;
+  border-right: 1px solid #ebebeb;
   .block-list {
     margin: 0;
     width: 100%;
