@@ -4,6 +4,13 @@ var db,
     cordova   = false,
     dbPath    = "./",
     storage;
+var sources = {
+  "G": "Guru Granth Sahib",
+  "D": "Dasam Granth Sahib",
+  "B": "Vaaran",
+  "N": "Gazals",
+  "A": "Amrit Keertan"
+}
 if (!scripts) {
   var scripts = [];
 }
@@ -89,11 +96,11 @@ function search() {
       db_query = db_query.substr(0, db_query.length - 1) + '%';
   }
   if (search_query.length > 2) {
-    var content = db.exec("SELECT _id, gurmukhi, shabad_no FROM shabad WHERE " + search_col + " LIKE '" + db_query + "'");
+    var content = db.exec("SELECT _id, gurmukhi, shabad_no, source_id, ang_id, writer_id, raag_id FROM shabad WHERE " + search_col + " LIKE '" + db_query + "'");
     if (content.length > 0) {
       $results.innerHTML = "";
       content[0].values.forEach(function(item, i) {
-        $results.innerHTML = $results.innerHTML + "<li><a href='#' class='panktee' data-shabad-id='" + item[2] + "' data-line-id='" + item[0] + "'>" + item[1] + "</a></li>";
+        $results.innerHTML = $results.innerHTML + "<li><a href='#' class='panktee' data-shabad-id='" + item[2] + "' data-line-id='" + item[0] + "'><span class='result gurmukhi'>" + item[1] + "</span><span class='meta english'>" + sources[item[3]] + " - " + item[4] + "</span></a></li>";
       });
     } else {
       $results.innerHTML = "<li class='english'>No results.</li>";
@@ -104,11 +111,11 @@ function search() {
 }
 
 function clickResult(e) {
-  if (e.target.classList.contains("panktee")) {
-    var $panktee  = e.target;
+  if (e.target.classList.contains("panktee") || e.target.parentElement.classList.contains("panktee")) {
+    var $panktee  = (e.target.tagName == "A" ? e.target : e.target.parentElement);
     var ShabadID  = $panktee.dataset.shabadId;
     var LineID    = $panktee.dataset.lineId;
-    $session.innerHTML = $session.innerHTML + '<li><a href="#" class="panktee" data-shabad-id="' + ShabadID + '" data-line-id="' + LineID + '">' + $panktee.innerText + '</a></li>';
+    $session.innerHTML = $session.innerHTML + '<li><a href="#" class="panktee" data-shabad-id="' + ShabadID + '" data-line-id="' + LineID + '">' + $panktee.children[0].innerText + '</a></li>';
     loadShabad(ShabadID);
   }
 }

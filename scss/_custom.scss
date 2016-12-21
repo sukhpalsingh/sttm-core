@@ -145,9 +145,6 @@ body.home #main-ui {
   border-bottom-color: #ebebeb;
 }
 .block-list li > a {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 #shabad-block {
@@ -164,6 +161,23 @@ body.home #main-ui {
   .block-list {
     margin: 0;
     width: 100%;
+    li {
+      a {
+        span.result {
+          display: block;
+          line-height: normal;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        span.meta {
+          color: grey;
+          display: block;
+          font-size: 0.9em;
+          line-height: normal;
+        }
+      }
+    }
   }
 }
 #session-block {
