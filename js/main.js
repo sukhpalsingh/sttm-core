@@ -140,9 +140,7 @@ function loadShabad(ShabadID) {
         });
       }
     })
-  })
-  var content = db.exec();
-  
+  });
 }
 
 function clickShabad(e) {

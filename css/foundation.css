@@ -5484,6 +5484,12 @@ blockquote p {
 /*
   Custom Styles
 */
+html {
+  overflow: hidden; }
+
+body {
+  overflow: auto; }
+
 #app-frame {
   height: 100%; }
 
