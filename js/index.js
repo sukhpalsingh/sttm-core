@@ -9,3 +9,5 @@ $shabad.addEventListener("click", clickShabad);
 $results.addEventListener("click", clickResult);
 $session.addEventListener("click", clickSession);
 $buttons.addEventListener("click", clickButtons);
+
+$search.focus();

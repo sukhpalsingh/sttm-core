@@ -103,7 +103,7 @@ function search() {
             $results.innerHTML = $results.innerHTML + "<li><a href='#' class='panktee' data-shabad-id='" + item.shabad_no + "' data-line-id='" + item._id + "'><span class='result gurmukhi'>" + item.gurmukhi + "</span><span class='meta english'>" + sources[item.source_id] + " - " + item.ang_id + "</span></a></li>";
           });
         } else {
-         $results.innerHTML = "<li class='english'>No results.</li>";
+         $results.innerHTML = "<li class='english'><span>No results</span></li>";
         }
       });
     });
