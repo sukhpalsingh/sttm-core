@@ -5545,10 +5545,8 @@ body.home #header {
         display: -ms-flexbox;
         display: flex; }
         #header .global-nav ul.title-area li.name h1 {
-          color: #fff;
-          font-size: 17px;
-          font-weight: bold;
-          line-height: 39px; }
+          color: #01669B;
+          font-size: 0.5em; }
           #header .global-nav ul.title-area li.name h1 img {
             width: 202px; }
     #header .global-nav ul.right {
@@ -5639,5 +5637,9 @@ body.home #main-ui {
   float: right; }
   .block-list ul.right li {
     border: 0; }
+
+/* ***** SHABAD CONTROLLER ***** */
+#shabad a.panktee.current {
+  background-color: #f4f4f4; }
 
 /*# sourceMappingURL=foundation.css.map */

@@ -102,10 +102,8 @@ body.home #header {
         display: flex;
 
         h1 {
-          color: #fff;
-          font-size: 17px;
-          font-weight: bold;
-          line-height: 39px;
+          color: #01669B;
+          font-size: 0.5em;
 
           img {
             width: 202px;
@@ -228,5 +226,12 @@ body.home #main-ui {
 
   li {
     border: 0;
+  }
+}
+
+/* ***** SHABAD CONTROLLER ***** */
+#shabad {
+  a.panktee.current {
+    background-color: #f4f4f4;
   }
 }

@@ -118,25 +118,26 @@ function clickResult(e) {
     var ShabadID  = $panktee.dataset.shabadId;
     var LineID    = $panktee.dataset.lineId;
     $session.innerHTML = $session.innerHTML + '<li><a href="#" class="panktee" data-shabad-id="' + ShabadID + '" data-line-id="' + LineID + '">' + $panktee.children[0].innerText + '</a></li>';
-    loadShabad(ShabadID);
+    loadShabad(ShabadID, LineID);
   }
 }
 
 function clickSession(e) {
   if (e.target.classList.contains("panktee")) {
-    var $panktee = e.target;
-    var ShabadID = $panktee.dataset.shabadId;
-    loadShabad(ShabadID);
+    var $panktee  = e.target;
+    var ShabadID  = $panktee.dataset.shabadId;
+    var LineID    = $panktee.dataset.lineId;
+    loadShabad(ShabadID, LineID);
   }
 }
 
-function loadShabad(ShabadID) {
+function loadShabad(ShabadID, LineID) {
   db.serialize(function() {
     db.all("SELECT _id, gurmukhi FROM shabad WHERE shabad_no = '" + ShabadID + "'", function(err, rows) {
       if (rows.length > 0) {
         $shabad.innerHTML = "";
         rows.forEach(function(item, i) {
-          $shabad.innerHTML = $shabad.innerHTML + '<li><a href="#" class="panktee" data-line-id="' + item._id + '">' + item.gurmukhi + '</a></li>';
+          $shabad.innerHTML = $shabad.innerHTML + '<li><a href="#" class="panktee' + (LineID == item._id ? ' current' : '') + '" data-line-id="' + item._id + '">' + item.gurmukhi + '</a></li>';
         });
       }
     })
