@@ -19,6 +19,7 @@ if (!scripts) {
 if (window && window.process && window.process.type == "renderer") {
   electron    = true;
   var storage = require("electron-json-storage");
+  var dbPath  = "../";
   scripts.unshift("../desktop_www/js/desktop_scripts.js");
 }
 

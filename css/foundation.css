@@ -5494,6 +5494,12 @@ blockquote p {
   /* Internet Explorer/Edge */
   user-select: none; }
 
+.nolink {
+  cursor: default; }
+
+.nolink:hover {
+  background-color: transparent !important; }
+
 /*
   Custom Styles
 */
@@ -5509,7 +5515,7 @@ body {
 /* HEADER */
 body.home #header {
   background-color: #fff;
-  height: 100%; }
+  height: calc(100% - 50px); }
   body.home #header .global-nav {
     height: 290px;
     padding-top: 198px; }
@@ -5544,11 +5550,8 @@ body.home #header {
         display: -webkit-flex;
         display: -ms-flexbox;
         display: flex; }
-        #header .global-nav ul.title-area li.name h1 {
-          color: #01669B;
-          font-size: 0.5em; }
-          #header .global-nav ul.title-area li.name h1 img {
-            width: 202px; }
+        #header .global-nav ul.title-area li.name h1 img {
+          width: 202px; }
     #header .global-nav ul.right {
       position: absolute;
       line-height: 39px;
@@ -5576,7 +5579,7 @@ body.home #main-ui {
   height: 0; }
 
 #main-ui {
-  height: calc(100% - 123px);
+  height: calc(100% - 123px - 50px);
   transition: height .25s ease-out; }
 
 .block-list li:first-child {
@@ -5641,5 +5644,27 @@ body.home #main-ui {
 /* ***** SHABAD CONTROLLER ***** */
 #shabad a.panktee.current {
   background-color: #f4f4f4; }
+
+#footer {
+  background-color: #fafafa;
+  border-top: 1px solid #ebebeb;
+  height: 50px; }
+  #footer .menu-bar {
+    background-color: transparent; }
+    #footer .menu-bar > li > a {
+      color: #01669B;
+      font-size: 0.8em;
+      line-height: 48px;
+      padding: 0 1rem; }
+      #footer .menu-bar > li > a .fa {
+        line-height: 47px; }
+
+#updating,
+#updatingText {
+  display: none; }
+
+body.updating #updating,
+body.updating #updatingText {
+  display: flex; }
 
 /*# sourceMappingURL=foundation.css.map */
