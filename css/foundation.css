@@ -5643,7 +5643,8 @@ body.home #main-ui {
 
 /* ***** SHABAD CONTROLLER ***** */
 #shabad a.panktee.current {
-  background-color: #f4f4f4; }
+  background-color: #01669b;
+  color: #fff; }
 
 #footer {
   background-color: #fafafa;
