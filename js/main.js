@@ -20,7 +20,8 @@ if (!scripts) {
 if (window && window.process && window.process.type == "renderer") {
   electron    = true;
   var storage = require("electron-json-storage");
-  var dbPath  = "../";
+  //If not in dev, DB path is outside of app.asar
+  var dbPath  = window.process.env.NODE_ENV != "development" ? "../../" : "../";
   scripts.unshift("../desktop_www/js/desktop_scripts.js");
 }
 
