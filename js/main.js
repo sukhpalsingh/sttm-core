@@ -97,16 +97,16 @@ function search() {
       db_query = db_query.substr(0, db_query.length - 1) + '%';
   }
   if (search_query.length > 2) {
-    var stmt = db.prepare("SELECT _id, gurmukhi, shabad_no, source_id, ang_id, writer_id, raag_id FROM shabad WHERE " + search_col + " LIKE '" + db_query + "'");
-    var rows = stmt.all();
-    if (rows.length > 0) {
-      $results.innerHTML = "";
-      rows.forEach(function(item, i) {
-        $results.innerHTML = $results.innerHTML + "<li><a href='#' class='panktee' data-shabad-id='" + item.shabad_no + "' data-line-id='" + item._id + "'><span class='result gurmukhi'>" + item.gurmukhi + "</span><span class='meta english'>" + sources[item.source_id] + " - " + item.ang_id + "</span></a></li>";
-      });
-    } else {
-     $results.innerHTML = "<li class='english'><span>No results</span></li>";
-    }
+    db.all("SELECT _id, gurmukhi, shabad_no, source_id, ang_id, writer_id, raag_id FROM shabad WHERE " + search_col + " LIKE '" + db_query + "'", function(err, rows) {
+      if (rows.length > 0) {
+        $results.innerHTML = "";
+        rows.forEach(function(item, i) {
+          $results.innerHTML = $results.innerHTML + "<li><a href='#' class='panktee' data-shabad-id='" + item.shabad_no + "' data-line-id='" + item._id + "'><span class='result gurmukhi'>" + item.gurmukhi + "</span><span class='meta english'>" + sources[item.source_id] + " - " + item.ang_id + "</span></a></li>";
+        });
+      } else {
+       $results.innerHTML = "<li class='english'><span>No results</span></li>";
+      }
+    });
   } else {
     $results.innerHTML = "";
   }
@@ -142,14 +142,14 @@ function clickSession(e) {
 }
 
 function loadShabad(ShabadID, LineID) {
-  var stmt = db.prepare("SELECT _id, gurmukhi FROM shabad WHERE shabad_no = '" + ShabadID + "'");
-  var rows = stmt.all();
-  if (rows.length > 0) {
-    $shabad.innerHTML = "";
-    rows.forEach(function(item, i) {
-      $shabad.innerHTML = $shabad.innerHTML + '<li><a href="#" class="panktee' + (LineID == item._id ? ' current' : '') + '" data-line-id="' + item._id + '">' + item.gurmukhi + '</a></li>';
-    });
-  }
+  db.all("SELECT _id, gurmukhi FROM shabad WHERE shabad_no = '" + ShabadID + "'", function(err, rows) {
+    if (rows.length > 0) {
+      $shabad.innerHTML = "";
+      rows.forEach(function(item, i) {
+        $shabad.innerHTML = $shabad.innerHTML + '<li><a href="#" class="panktee' + (LineID == item._id ? ' current' : '') + '" data-line-id="' + item._id + '">' + item.gurmukhi + '</a></li>';
+      });
+    }
+  });
 }
 
 function clickShabad(e) {
