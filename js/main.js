@@ -149,6 +149,8 @@ function loadShabad(ShabadID, LineID) {
       rows.forEach(function(item, i) {
         $shabad.innerHTML = $shabad.innerHTML + '<li><a href="#" class="panktee' + (LineID == item._id ? ' current' : '') + '" data-line-id="' + item._id + '">' + item.gurmukhi + '</a></li>';
       });
+      var cur_panktee_top = $shabad.querySelector(".current").parentNode.offsetTop;
+      $shabadContainer.scrollTop = cur_panktee_top;
     }
   });
 }
