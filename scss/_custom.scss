@@ -237,6 +237,12 @@ body.home #main-ui {
     }
   }
 }
+#session {
+  a.panktee.current {
+    background-color: #01669b;
+    color: #fff;
+  }
+}
 
 /* ***** SHABAD CONTROLLER ***** */
 #shabad {
@@ -275,4 +281,8 @@ body.home #main-ui {
 body.updating #updating,
 body.updating #updatingText {
   display: flex;
+}
+
+.modal {
+  overflow-y: auto;
 }

@@ -5644,6 +5644,10 @@ body.home #main-ui {
       line-height: 31px;
       padding: 0 1rem; }
 
+#session a.panktee.current {
+  background-color: #01669b;
+  color: #fff; }
+
 /* ***** SHABAD CONTROLLER ***** */
 #shabad a.panktee.current {
   background-color: #01669b;
@@ -5670,5 +5674,8 @@ body.home #main-ui {
 body.updating #updating,
 body.updating #updatingText {
   display: flex; }
+
+.modal {
+  overflow-y: auto; }
 
 /*# sourceMappingURL=foundation.css.map */

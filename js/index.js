@@ -3,6 +3,7 @@ var $shabad = document.getElementById("shabad");
 var $shabadContainer = document.getElementById("shabad-container");
 var $results = document.getElementById("results");
 const $session = document.getElementById("session");
+const $sessionContainer = document.getElementById("session-container");
 var $buttons = document.getElementById("buttons");
 var $changelog = document.getElementById("changelogModal");
 const $actions = document.querySelectorAll(".action");

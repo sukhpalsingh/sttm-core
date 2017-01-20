@@ -100,21 +100,39 @@ function search() {
 
 function clickResult(e) {
   if (e.target.classList.contains("panktee") || e.target.parentElement.classList.contains("panktee")) {
-    var $panktee  = (e.target.tagName == "A" ? e.target : e.target.parentElement);
-    var ShabadID  = $panktee.dataset.shabadId;
-    var LineID    = $panktee.dataset.lineId;
+    let $panktee  = (e.target.tagName == "A" ? e.target : e.target.parentElement);
+    let ShabadID  = $panktee.dataset.shabadId;
+    let LineID    = $panktee.dataset.lineId;
+    let sessionLines = $session.querySelectorAll("a.panktee");
+    Array.from(sessionLines).forEach(el => el.classList.remove("current"));
     if (sessionList.indexOf(ShabadID) < 0) {
-      $session.innerHTML = $session.innerHTML + '<li><a href="#" class="panktee" data-shabad-id="' + ShabadID + '" data-line-id="' + LineID + '">' + $panktee.children[0].innerText + '</a></li>';
+      let sessionItem = h(
+        'li',
+        {},
+        h(
+          'a',
+          {
+            "class": "panktee current",
+            "data-shabad-id": ShabadID,
+            "data-line-id": LineID
+          },
+          $panktee.children[0].innerText
+        )
+      );
+      $session.insertBefore(sessionItem, $session.firstChild);
       sessionList.push(ShabadID);
     } else {
-      var line = $session.querySelector("[data-shabad-id='" + ShabadID + "']");
+      let line = $session.querySelector("[data-shabad-id='" + ShabadID + "']");
       if (line.dataset.lineId != LineID) {
         line.dataset.lineId = LineID;
+        line.classList.add("current");
         line.innerText = $panktee.children[0].innerText;
+        $session.insertBefore(line.parentNode, $session.firstChild);
       }
     }
     sendLine(LineID);
     loadShabad(ShabadID, LineID);
+    $sessionContainer.scrollTop = 0;
   }
 }
 
@@ -126,10 +144,13 @@ function clearSession() {
 }
 function clickSession(e) {
   if (e.target.classList.contains("panktee")) {
-    var $panktee  = e.target;
-    var ShabadID  = $panktee.dataset.shabadId;
-    var LineID    = $panktee.dataset.lineId;
+    let $panktee  = e.target;
+    let ShabadID  = $panktee.dataset.shabadId;
+    let LineID    = $panktee.dataset.lineId;
     loadShabad(ShabadID, LineID);
+    let session_lines = $session.querySelectorAll('a.panktee');
+    Array.from(session_lines).forEach(el => el.classList.remove("current"));
+    $panktee.classList.add("current");
   }
 }
 
@@ -148,13 +169,11 @@ function loadShabad(ShabadID, LineID) {
 
 function clickShabad(e) {
   if (e.target.classList.contains("panktee")) {
-    var $panktee = e.target;
+    let $panktee = e.target;
     sendLine($panktee.dataset.lineId);
     //Remove 'current' class from all Panktees
-    var lines = $shabad.querySelectorAll("a.panktee");
-    Array.prototype.forEach.call(lines, function(el, i){
-      el.classList.remove("current");
-    });
+    let lines = $shabad.querySelectorAll("a.panktee");
+    Array.from(lines).forEach(el => el.classList.remove("current"));
     //Add 'current' to selected Panktee
     $panktee.classList.add("current");
   }
@@ -183,4 +202,28 @@ function clickChangelog(e) {
 }
 function openChangelog() {
   $changelog.classList.add("is-active");
+}
+
+
+function h(type = 'div', attributes = { }, children = '') {
+  let el = document.createElement(type);
+
+  Object.keys(attributes).forEach(key => {
+    let value = attributes[key];
+    if (typeof value === 'function') {
+      el.addEventListener(key, e => value(e), false);
+    } else {
+      el.setAttribute(key, value);
+    }
+  });
+
+  if (children instanceof Array) {
+    children.forEach(child => el.appendChild(child));
+  } else if (children instanceof HTMLElement) {
+    el.appendChild(children);
+  } else if (typeof children === 'string') {
+    el.textContent = children;
+  }
+
+  return el;
 }
