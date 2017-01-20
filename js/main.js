@@ -2,8 +2,8 @@ var db,
     new_search_timeout,
     electron    = false,
     cordova     = false,
-    dbPath      = "./",
-    sessionList = [];
+    dbPath      = "./";
+const sessionList = [];
 var sources = {
   "G": "Guru Granth Sahib",
   "D": "Dasam Granth Sahib",
@@ -118,6 +118,12 @@ function clickResult(e) {
   }
 }
 
+function clearSession() {
+  while ($session.firstChild) {
+    $session.removeChild($session.firstChild);
+    sessionList.splice(0,sessionList.length);
+  }
+}
 function clickSession(e) {
   if (e.target.classList.contains("panktee")) {
     var $panktee  = e.target;

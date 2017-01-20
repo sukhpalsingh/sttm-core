@@ -222,7 +222,7 @@ body.home #main-ui {
 .block-list ul.right {
   color: #666666;
   font-weight: bold;
-  margin-bottom: 0.5em;
+  margin-bottom: 0;
   font-size: 0.8em;
   cursor: default;
   text-transform: uppercase;
@@ -230,6 +230,11 @@ body.home #main-ui {
 
   li {
     border: 0;
+
+    a {
+      line-height: 31px;
+      padding: 0 1rem;
+    }
   }
 }
 

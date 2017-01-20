@@ -5633,13 +5633,16 @@ body.home #main-ui {
 .block-list ul.right {
   color: #666666;
   font-weight: bold;
-  margin-bottom: 0.5em;
+  margin-bottom: 0;
   font-size: 0.8em;
   cursor: default;
   text-transform: uppercase;
   float: right; }
   .block-list ul.right li {
     border: 0; }
+    .block-list ul.right li a {
+      line-height: 31px;
+      padding: 0 1rem; }
 
 /* ***** SHABAD CONTROLLER ***** */
 #shabad a.panktee.current {
