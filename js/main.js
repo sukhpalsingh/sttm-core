@@ -3,7 +3,6 @@ var db,
     electron    = false,
     cordova     = false,
     dbPath      = "./",
-    storage,
     sessionList = [];
 var sources = {
   "G": "Guru Granth Sahib",
@@ -19,7 +18,6 @@ if (!scripts) {
 //Check if we're in Electron
 if (window && window.process && window.process.type == "renderer") {
   electron    = true;
-  var storage = require("electron-json-storage");
   //If not in dev, DB path is outside of app.asar
   var dbPath  = window.process.env.NODE_ENV != "development" ? "../../" : "../";
   scripts.unshift("../desktop_www/js/desktop_scripts.js");
@@ -54,16 +52,6 @@ var defaults = {
   ]
 }
 
-//Settings
-var settings = {};
-storage.get('user-settings', function(error, data) {
-  if (error) throw error;
-  for (var key in defaults) {
-    settings[key] = data[key] || defaults[key];
-  }
-});
-
-
 if (scripts) {
   for (var key in scripts) {
     var s   = document.createElement("script");
@@ -72,7 +60,6 @@ if (scripts) {
     document.body.appendChild(s);
   }
 }
-
 
 function typeSearch() {
   document.body.className = document.body.className.replace("home","");
@@ -83,20 +70,18 @@ function typeSearch() {
 function search() {
   var search_col;
   var search_query  = $search.value;
-  switch (settings.searchType) {
-    case 'fls':
-      search_col    = "first_ltr_start";
-      var db_query  = '';
-      for (var x = 0, len = search_query.length; x < len; x++) {
-          var charCode = search_query.charCodeAt(x);
-          if (charCode < 100) {
-              charCode = '0' + charCode;
-          }
-          db_query += charCode + ',';
+  
+  search_col    = "first_ltr_start";
+  var db_query  = '';
+  for (var x = 0, len = search_query.length; x < len; x++) {
+      var charCode = search_query.charCodeAt(x);
+      if (charCode < 100) {
+          charCode = '0' + charCode;
       }
-      //Strip trailing comma and add a wildcard
-      db_query = db_query.substr(0, db_query.length - 1) + '%';
+      db_query += charCode + ',';
   }
+  //Strip trailing comma and add a wildcard
+  db_query = db_query.substr(0, db_query.length - 1) + '%';
   if (search_query.length > 2) {
     db.all("SELECT _id, gurmukhi, shabad_no, source_id, ang_id, writer_id, raag_id FROM shabad WHERE " + search_col + " LIKE '" + db_query + "'", function(err, rows) {
       if (rows.length > 0) {
@@ -174,4 +159,22 @@ function clickButtons(e) {
     var $msg = e.target;
     sendText($msg.innerText);
   }
+}
+
+function checkChangelogVersion() {
+  let last_seen = getPref("changelog-seen");
+  if (last_seen != appVersion) {
+    $search.blur();
+    openChangelog();
+    setPref("changelog-seen", appVersion);
+  }
+}
+function clickChangelog(e) {
+  var classList = e.target.classList;
+  if (classList.contains("modal-overlay") || classList.contains("close-button")) {
+    $changelog.classList.remove("is-active");
+  }
+}
+function openChangelog() {
+  $changelog.classList.add("is-active");
 }
