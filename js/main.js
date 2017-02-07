@@ -1,8 +1,6 @@
-var db,
-    new_search_timeout,
+var new_search_timeout,
     electron    = false,
-    cordova     = false,
-    dbPath      = "./";
+    cordova     = false;
 const sessionList = [];
 var sources = {
   "G": "Guru Granth Sahib",
@@ -18,8 +16,6 @@ if (!scripts) {
 //Check if we're in Electron
 if (window && window.process && window.process.type == "renderer") {
   electron    = true;
-  //If not in dev, DB path is outside of app.asar
-  var dbPath  = window.process.env.NODE_ENV != "development" ? "../../" : "../";
   scripts.unshift("../desktop_www/js/desktop_scripts.js");
 }
 
