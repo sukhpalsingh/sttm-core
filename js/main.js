@@ -1,7 +1,9 @@
 var new_search_timeout,
-    electron    = false,
-    cordova     = false;
-const sessionList = [];
+    electron        = false,
+    cordova         = false;
+const sessionList   = [];
+const currentShabad = [];
+let currentLine     = null;
 var sources = {
   "G": "Guru Granth Sahib",
   "D": "Dasam Granth Sahib",
@@ -154,8 +156,26 @@ function loadShabad(ShabadID, LineID) {
   db.all("SELECT _id, gurmukhi FROM shabad WHERE shabad_no = '" + ShabadID + "'", function(err, rows) {
     if (rows.length > 0) {
       $shabad.innerHTML = "";
+      currentShabad.splice(0, currentShabad.length);
       rows.forEach(function(item, i) {
-        $shabad.innerHTML = $shabad.innerHTML + '<li><a href="#" class="panktee' + (LineID == item._id ? ' current' : '') + '" data-line-id="' + item._id + '">' + item.gurmukhi + '</a></li>';
+        let shabadLine = h(
+          'li',
+          {},
+          h(
+            'a',
+            {
+              "class": "panktee" + (LineID == item._id ? " current" : ""),
+              "data-line-id": item._id,
+              "id": "line" + item._id
+            },
+            item.gurmukhi
+          )
+        );
+        $shabad.appendChild(shabadLine);
+        currentShabad.push(item._id);
+        if (LineID == item._id) {
+          currentLine = item._id;
+        }
       });
       var cur_panktee_top = $shabad.querySelector(".current").parentNode.offsetTop;
       $shabadContainer.scrollTop = cur_panktee_top;
@@ -166,7 +186,8 @@ function loadShabad(ShabadID, LineID) {
 function clickShabad(e) {
   if (e.target.classList.contains("panktee")) {
     let $panktee = e.target;
-    sendLine($panktee.dataset.lineId);
+    currentLine = parseInt($panktee.dataset.lineId);
+    sendLine(currentLine);
     //Remove 'current' class from all Panktees
     let lines = $shabad.querySelectorAll("a.panktee");
     Array.from(lines).forEach(el => el.classList.remove("current"));
