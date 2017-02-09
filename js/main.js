@@ -231,13 +231,13 @@ function checkChangelogVersion() {
   if (last_seen != appVersion) {
     $search.blur();
     openChangelog();
-    setPref("changelog-seen", appVersion);
   }
 }
 function clickChangelog(e) {
   var classList = e.target.classList;
   if (classList.contains("modal-overlay") || classList.contains("close-button")) {
     $changelog.classList.remove("is-active");
+    setPref("changelog-seen", appVersion);
   }
 }
 function openChangelog() {
