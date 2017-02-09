@@ -81,11 +81,34 @@ function search() {
   //Strip trailing comma and add a wildcard
   db_query = db_query.substr(0, db_query.length - 1) + '%';
   if (search_query.length > 2) {
-    db.all("SELECT _id, gurmukhi, shabad_no, source_id, ang_id, writer_id, raag_id FROM shabad WHERE " + search_col + " LIKE '" + db_query + "'", function(err, rows) {
+    db.all("SELECT s._id, s.gurmukhi, s.english_ssk, s.english_bms, s.transliteration, s.shabad_no, s.source_id, s.ang_id, w.writer_english AS writer, r.raag_english AS raag FROM shabad s JOIN writer w ON s.writer_id = w._id JOIN raag r ON s.raag_id = r._id WHERE " + search_col + " LIKE '" + db_query + "'", function(err, rows) {
       if (rows.length > 0) {
         $results.innerHTML = "";
         rows.forEach(function(item, i) {
-          $results.innerHTML = $results.innerHTML + "<li><a href='#' class='panktee' data-shabad-id='" + item.shabad_no + "' data-line-id='" + item._id + "'><span class='result gurmukhi'>" + item.gurmukhi + "</span><span class='meta english'>" + sources[item.source_id] + " - " + item.ang_id + "</span></a></li>";
+          let searchResultsPrefs = getPref("searchResults");
+          let resultNode = [];
+          resultNode.push(h("span", { "class": "result gurmukhi" }, item.gurmukhi));
+          if (searchResultsPrefs.translationEnglish) {
+            resultNode.push(h("span", { "class": "result english" }, item["english_" + searchResultsPrefs.translationEnglish]));
+          }
+          if (searchResultsPrefs.transliteration) {
+            resultNode.push(h("span", { "class": "result english" }, item.transliteration));
+          }
+          resultNode.push(h("span", { "class": "meta english" }, sources[item.source_id] + " - " + item.ang_id + " - " + item.raag + " - " + item.writer));
+          let result = h(
+            'li',
+            {},
+            h(
+              'a',
+              {
+                "class": "panktee",
+                "data-shabad-id": item.shabad_no,
+                "data-line-id": item._id
+              },
+              resultNode
+            )
+          );
+          $results.appendChild(result);
         });
       } else {
        $results.innerHTML = "<li class='english'><span>No results</span></li>";

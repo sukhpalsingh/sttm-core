@@ -5469,9 +5469,14 @@ blockquote p {
 */
 @font-face {
   font-family: "gurbaniakhar";
-  src: url("../fonts/gurbaniakhar-webfont.eot");
-  src: url("../fonts/gurbaniakhar-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/gurbaniakhar-webfont.woff2") format("woff2"), url("../fonts/gurbaniakhar-webfont.woff") format("woff"), url("../fonts/gurbaniakhar-webfont.ttf") format("truetype"), url("../fonts/gurbaniakhar-webfont.svg#gurbaniakharregular") format("svg");
+  src: url("../fonts/gurbaniakhartrue-webfont.woff2") format("woff2"), url("../fonts/gurbaniakhartrue-webfont.woff") format("woff"), url("../fonts/gurbaniakhartrue-webfont.ttf") format("truetype");
   font-weight: normal;
+  font-style: normal; }
+
+@font-face {
+  font-family: "gurbaniakhar";
+  src: url("../fonts/gurbaniakharheavytrue-webfont.woff2") format("woff2"), url("../fonts/gurbaniakharheavytrue-webfont.woff") format("woff"), url("../fonts/gurbaniakharheavytrue-webfont.ttf") format("truetype");
+  font-weight: bold;
   font-style: normal; }
 
 .gurmukhi {
@@ -5606,6 +5611,13 @@ body.home #main-ui {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap; }
+    #results-block .block-list li a span.result.gurmukhi {
+      color: #00669b;
+      font-weight: bold; }
+    #results-block .block-list li a span.result.english {
+      color: #222;
+      font-size: 0.8em;
+      line-height: 1.5em; }
     #results-block .block-list li a span.meta {
       color: grey;
       display: block;
