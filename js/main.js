@@ -19,6 +19,7 @@ if (!scripts) {
 if (window && window.process && window.process.type == "renderer") {
   electron    = true;
   scripts.unshift("../desktop_www/js/desktop_scripts.js");
+  scripts.push("../desktop_www/js/controller.js");
 }
 
 //Defaults

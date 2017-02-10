@@ -288,6 +288,38 @@ body.home #main-ui {
   }
 }
 
+#settings {
+  background-color: #fff;
+  display: none;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%;
+
+  &.animated {
+    display: flex;
+  }
+
+  h1 {
+    box-shadow: 0 0 5px rgba(0,0,0,0.25);
+    font-size: 1.75rem;
+    font-weight: bold;
+    line-height: 3.75rem;
+    margin-top: 0;
+    text-align: center;
+  }
+  .shrink.grid-content {
+    padding: 0;
+  }
+  .sections,
+  .options {
+    padding-top: 20px;
+  }
+  .sections {
+    text-align: right;
+  }
+}
+
 #updating,
 #updatingText {
   display: none;
@@ -300,3 +332,6 @@ body.updating #updatingText {
 .modal {
   overflow-y: auto;
 }
+
+@import
+  "animations";

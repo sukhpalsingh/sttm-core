@@ -5679,6 +5679,30 @@ body.home #main-ui {
       #footer .menu-bar > li > a .fa {
         line-height: 47px; }
 
+#settings {
+  background-color: #fff;
+  display: none;
+  left: 0;
+  position: fixed;
+  top: 0;
+  width: 100%; }
+  #settings.animated {
+    display: flex; }
+  #settings h1 {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+    font-size: 1.75rem;
+    font-weight: bold;
+    line-height: 3.75rem;
+    margin-top: 0;
+    text-align: center; }
+  #settings .shrink.grid-content {
+    padding: 0; }
+  #settings .sections,
+  #settings .options {
+    padding-top: 20px; }
+  #settings .sections {
+    text-align: right; }
+
 #updating,
 #updatingText {
   display: none; }
@@ -5689,5 +5713,31 @@ body.updating #updatingText {
 
 .modal {
   overflow-y: auto; }
+
+.animated {
+  animation-duration: 0.25s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-out; }
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 5%, 0); }
+  to {
+    opacity: 1;
+    transform: none; } }
+
+.fadeInUp {
+  animation-name: fadeInUp; }
+
+@keyframes fadeOutDown {
+  0% {
+    opacity: 1; }
+  to {
+    opacity: 0;
+    transform: translate3d(0, 5%, 0); } }
+
+.fadeOutDown {
+  animation-name: fadeOutDown; }
 
 /*# sourceMappingURL=foundation.css.map */

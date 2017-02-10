@@ -7,6 +7,7 @@ const $sessionContainer = document.getElementById("session-container");
 var $buttons = document.getElementById("buttons");
 var $changelog = document.getElementById("changelogModal");
 const $actions = document.querySelectorAll(".action");
+const $settings = document.getElementById("settings");
 
 $search.addEventListener("keyup", typeSearch);
 $shabad.addEventListener("click", clickShabad);
@@ -22,9 +23,15 @@ window.onload = () => {
   checkChangelogVersion();
 }
 
+Mousetrap.bind("esc", escKey);
 Mousetrap.bind(['up', 'left'], prevLine);
 Mousetrap.bind(['down', 'right'], nextLine);
 
+function escKey() {
+  if ($settings.classList.contains("animated")) {
+    closeSettings();
+  }
+}
 function prevLine() {
   //Find position of current line in Shabad
   let pos = currentShabad.indexOf(currentLine);
@@ -53,4 +60,15 @@ function highlightLine(new_line) {
   if (container_top + container_height < cur_panktee_top + cur_panktee_height) {
     $shabadContainer.scrollTop = cur_panktee_top - container_height + cur_panktee_height;
   }
+}
+
+function openSettings() {
+  $settings.classList.add("animated", "fadeInUp");
+  $search.blur();
+}
+function closeSettings() {
+  $settings.classList.add("fadeOutDown");
+  setTimeout(() => {
+    $settings.classList.remove("animated", "fadeInUp", "fadeOutDown");
+  }, 300);
 }
