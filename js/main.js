@@ -89,11 +89,11 @@ function search() {
           let searchResultsPrefs = getPref("searchResults");
           let resultNode = [];
           resultNode.push(h("span", { "class": "result gurmukhi" }, item.gurmukhi));
-          if (searchResultsPrefs.translationEnglish) {
-            resultNode.push(h("span", { "class": "result english" }, item["english_" + searchResultsPrefs.translationEnglish]));
-          }
           if (searchResultsPrefs.transliteration) {
             resultNode.push(h("span", { "class": "result english" }, item.transliteration));
+          }
+          if (searchResultsPrefs.translationEnglish) {
+            resultNode.push(h("span", { "class": "result english" }, item["english_" + searchResultsPrefs.translationEnglish]));
           }
           resultNode.push(h("span", { "class": "meta english" }, sources[item.source_id] + " - " + item.ang_id + " - " + item.raag + " - " + item.writer));
           let result = h(
