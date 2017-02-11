@@ -67,6 +67,7 @@ if (scripts) {
 
 function typeSearch(e) {
   if (e.which <= 90 && e.which >= 48 || allowedKeys.indexOf(e.which) > -1) {
+    document.body.classList.remove("home");
     clearTimeout(new_search_timeout);
     new_search_timeout = setTimeout(search, 100);
   }
@@ -88,7 +89,6 @@ function search() {
   //Strip trailing comma and add a wildcard
   db_query = db_query.substr(0, db_query.length - 1) + '%';
   if (search_query.length > 2) {
-  document.body.classList.remove("home");
     db.all("SELECT s._id, s.gurmukhi, s.english_ssk, s.english_bms, s.transliteration, s.shabad_no, s.source_id, s.ang_id, w.writer_english AS writer, r.raag_english AS raag FROM shabad s JOIN writer w ON s.writer_id = w._id JOIN raag r ON s.raag_id = r._id WHERE " + search_col + " LIKE '" + db_query + "'", function(err, rows) {
       if (rows.length > 0) {
         $results.innerHTML = "";
