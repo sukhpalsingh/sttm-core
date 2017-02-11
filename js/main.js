@@ -62,7 +62,7 @@ if (scripts) {
 
 function typeSearch() {
   clearTimeout(new_search_timeout);
-  new_search_timeout = setTimeout(search, 500);
+  new_search_timeout = setTimeout(search, 100);
 }
 
 function search() {
