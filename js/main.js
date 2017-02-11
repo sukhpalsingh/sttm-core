@@ -4,6 +4,11 @@ var new_search_timeout,
 const sessionList   = [];
 const currentShabad = [];
 let currentLine     = null;
+const allowedKeys = [
+  8,  //Backspace
+  32, //Spacebar
+  46  //Delete
+]
 var sources = {
   "G": "Guru Granth Sahib",
   "D": "Dasam Granth Sahib",
@@ -60,9 +65,11 @@ if (scripts) {
   }
 }
 
-function typeSearch() {
-  clearTimeout(new_search_timeout);
-  new_search_timeout = setTimeout(search, 100);
+function typeSearch(e) {
+  if (e.which <= 90 && e.which >= 48 || allowedKeys.indexOf(e.which) > -1) {
+    clearTimeout(new_search_timeout);
+    new_search_timeout = setTimeout(search, 100);
+  }
 }
 
 function search() {
