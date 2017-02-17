@@ -25,7 +25,7 @@
       </nav>
     </div>
     <div id="main-ui" class="vertical grid-block noselect">
-      <div class="grid-block vertical medium-horizontal" id="bottom_blocks">
+      <div class="grid-block vertical medium-horizontal" id="top-blocks">
         <div class="grid-block vertical order-1 medium-6" id="results-block">
           <div class="grid-block shrink">
             <section class="block-list">
@@ -86,7 +86,7 @@
         <div class="menu-group-right">
           <ul class="menu-bar">
             <li>
-              <a class="action" data-action="openSettings">Settings</a>
+              <a class="action" data-action="settings.openSettings">Settings</a>
             </li>
           </ul>
         </div>
@@ -96,13 +96,28 @@
   <div id="settings" class="grid-frame vertical">
     <div class="grid-content shrink">
       <h1>Settings</h1>
+      <a class="action" data-action="settings.closeSettings">×</a>
     </div>
-    <div class="grid-block">
+    <div class="settings-container grid-block">
       <div class="grid-content small-4 sections">
         Search Results
       </div>
       <div class="grid-content small-8 options">
-        options
+        <div id="searchResults_settings" class="settings-section">
+          <h4>Fields Displayed</h4>
+          <div class="grid-block">
+            <div class="grid-content small-6">
+              <input type="checkbox" id="searchResults_transliteration" class="setting"> <label for="searchResults_transliteration">Transliteration</label><br>
+              <input type="checkbox" id="searchResults_translationEnglish" value="ssk" class="setting"> <label for="searchResults_translationEnglish">English Translation</label><br>
+              <input type="checkbox" id="searchResults_meta" class="setting"> <label for="searchResults_meta">Meta Data</label>
+            </div>
+            <div class="grid-content small-6">
+              <div id="searchResults_settings_preview" class="preview panktee search-result noselect">
+                <span class="gurmukhi">Awie imlu gurisK Awie imlu qU myry gurU ky ipAwry ] rhwau ]</span><span class="roman transliteration">Aae Mil Gurasikh Aae Mil Thoo Maerae Guroo Kae Piaarae || Rehaao ||</span><span class="roman translation english">Come, join with me, O Sikh of the Guru, come and join with me. You are my Guru's Beloved. ||Pause||</span><span class="roman meta">Guru Granth Sahib - 725 - Raag Tilang - Guru Raam Das Ji</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

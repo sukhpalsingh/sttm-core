@@ -1,14 +1,18 @@
-var $search = document.getElementById("search");
-var $shabad = document.getElementById("shabad");
-var $shabadContainer = document.getElementById("shabad-container");
-var $results = document.getElementById("results");
-const $session = document.getElementById("session");
+const $search           = document.getElementById("search");
+const $mainUI           = document.getElementById("main-ui");
+const $shabad           = document.getElementById("shabad");
+const $shabadContainer  = document.getElementById("shabad-container");
+const $results          = document.getElementById("results");
+const $session          = document.getElementById("session");
 const $sessionContainer = document.getElementById("session-container");
-var $buttons = document.getElementById("buttons");
-var $changelog = document.getElementById("changelogModal");
-const $actions = document.querySelectorAll(".action");
-const $settings = document.getElementById("settings");
+const $buttons          = document.getElementById("buttons");
+const $changelog        = document.getElementById("changelogModal");
+const $actions          = document.querySelectorAll(".action");
 
+const Settings          = require('../desktop_www/js/settings');
+const settings          = new Settings(platform.store);
+
+$search.addEventListener("focus", focusSearch);
 $search.addEventListener("keyup", typeSearch);
 $shabad.addEventListener("click", clickShabad);
 $results.addEventListener("click", clickResult);
@@ -28,8 +32,8 @@ Mousetrap.bind(['up', 'left'], prevLine);
 Mousetrap.bind(['down', 'right'], nextLine);
 
 function escKey() {
-  if ($settings.classList.contains("animated")) {
-    closeSettings();
+  if (settings.$settings.classList.contains("animated")) {
+    settings.closeSettings();
   }
 }
 function prevLine() {
@@ -60,15 +64,4 @@ function highlightLine(new_line) {
   if (container_top + container_height < cur_panktee_top + cur_panktee_height) {
     $shabadContainer.scrollTop = cur_panktee_top - container_height + cur_panktee_height;
   }
-}
-
-function openSettings() {
-  $settings.classList.add("animated", "fadeInUp");
-  $search.blur();
-}
-function closeSettings() {
-  $settings.classList.add("fadeOutDown");
-  setTimeout(() => {
-    $settings.classList.remove("animated", "fadeInUp", "fadeOutDown");
-  }, 300);
 }
