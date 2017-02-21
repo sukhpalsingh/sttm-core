@@ -1,0 +1,64 @@
+[
+  [
+    [
+      ["a","A","e","s","h"],
+      ["k","K","g","G","|"]
+    ],
+    [
+      ["c","C","j","J","\\"],
+      ["t","T","f","F","x"]
+    ],
+    [
+      ["q","Q","d","D","n"],
+      ["p","P","b","B","m"]
+    ],
+    [
+      ["x","r","l","v","V"],
+      ["&nbsp;","&nbsp;",
+        {
+          "action": "close",
+          "char": "<i class=\"fa fa-times\"></i>"
+        },
+        {
+          "action": "page-2",
+          "char": "uI"
+        },
+        {
+          "action": "bksp",
+          "char": "<i class=\"fa fa-long-arrow-left\"></i>"
+        }
+      ]
+    ]
+  ],
+  [
+    [
+      ["1","2","3","4","5"],
+      ["6","7","8","9","0"]
+    ],
+    [
+      ["w","i","I","u","U"],
+      ["y","Y","o","O","M"]
+    ],
+    [
+      ["N","W","`","~","R"],
+      ["H","˜","´","Í","Ï"]
+    ],
+    [
+      ["ç","E","^","&nbsp;","&nbsp;"],
+      ["&nbsp;","&nbsp;",
+        {
+          "action": "close",
+          "char": "<i class=\"fa fa-times\"></i>"
+        },
+        {
+          "action": "page-1",
+          "char": "a"
+        },
+        {
+          "action": "bksp",
+          "char": "<i class=\"fa fa-long-arrow-left\"></i>"
+        }
+      ]
+    ]
+  ]
+]

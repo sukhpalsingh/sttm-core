@@ -12,6 +12,8 @@ const $actions          = document.querySelectorAll(".action");
 const Settings          = require('../desktop_www/js/settings');
 const settings          = new Settings(platform.store);
 
+const searchBar         = require("./js/search-bar");
+
 $search.addEventListener("focus", focusSearch);
 $search.addEventListener("keyup", typeSearch);
 $shabad.addEventListener("click", clickShabad);

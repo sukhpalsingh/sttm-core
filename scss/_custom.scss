@@ -90,7 +90,6 @@ body.home #header {
   border-bottom: 1px solid #ebebeb;
   height: 123px;
   margin-bottom: 0px;
-  overflow: hidden;
   padding: 20px 10px 0;
   transition: height 600ms cubic-bezier(0.165, 0.84, 0.44, 1);
 
@@ -130,24 +129,6 @@ body.home #header {
       a {
         color: #01669B;
       }
-    }
-  }
-  #search_div {
-    justify-content: center;
-    top: -50px;
-
-    input {
-      border: none;
-      border-radius: 2px;
-      box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);
-      height: 44px;
-      margin: 0;
-      max-width: 484px;
-      transition: box-shadow 200ms cubic-bezier(0.4, 0.0, 0.2, 1);
-    }
-    input:hover,
-    input:focus {
-      box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
     }
   }
 }
@@ -409,4 +390,5 @@ body.updating #updatingText {
 }
 
 @import
-  "animations";
+  "animations",
+  "search-bar";

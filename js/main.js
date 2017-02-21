@@ -74,7 +74,7 @@ function focusSearch() {
 }
 
 function typeSearch(e) {
-  if (e.which <= 90 && e.which >= 48 || allowedKeys.indexOf(e.which) > -1) {
+  if (e == "gKB" || (e.which <= 90 && e.which >= 48) || allowedKeys.indexOf(e.which) > -1) {
     document.body.classList.remove("home");
     $mainUI.classList.add("search");
     clearTimeout(new_search_timeout);
@@ -134,6 +134,7 @@ function search() {
 }
 
 function clickResult(e) {
+  searchBar.closeGurmukhiKB();
   if (e.target.classList.contains("panktee") || e.target.parentElement.classList.contains("panktee")) {
     $mainUI.classList.add("shabad");
     $mainUI.classList.remove("search");
