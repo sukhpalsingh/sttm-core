@@ -125,7 +125,7 @@ function search() {
           $results.appendChild(result);
         });
       } else {
-       $results.innerHTML = "<li class='english'><span>No results</span></li>";
+       $results.innerHTML = "<li class='roman'><span>No results</span></li>";
       }
     });
   } else {
