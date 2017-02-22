@@ -25,6 +25,7 @@ if (window && window.process && window.process.type == "renderer") {
 }
 const platform = require(platform_scripts);
 const controller  = require("../desktop_www/js/controller.js");
+const h           = require("./js/h");
 
 //Defaults
 var defaults = {
@@ -250,28 +251,4 @@ function clickChangelog(e) {
 }
 function openChangelog() {
   $changelog.classList.add("is-active");
-}
-
-
-function h(type = 'div', attributes = { }, children = '') {
-  let el = document.createElement(type);
-
-  Object.keys(attributes).forEach(key => {
-    let value = attributes[key];
-    if (typeof value === 'function') {
-      el.addEventListener(key, e => value(e), false);
-    } else {
-      el.setAttribute(key, value);
-    }
-  });
-
-  if (children instanceof Array) {
-    children.forEach(child => el.appendChild(child));
-  } else if (children instanceof HTMLElement) {
-    el.appendChild(children);
-  } else if (typeof children === 'string') {
-    el.innerHTML = children;
-  }
-
-  return el;
 }
