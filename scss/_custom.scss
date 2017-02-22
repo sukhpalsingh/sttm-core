@@ -1,3 +1,6 @@
+$sttm-orange: #f39c1d;
+$sttm-blue: #29679b;
+
 /*
   Fonts
 */
@@ -127,7 +130,7 @@ body.home #header {
       top: 30px;
 
       a {
-        color: #01669B;
+        color: $sttm-blue;
       }
     }
   }
@@ -241,7 +244,7 @@ body.searchResults_meta .search-result .meta {
 }
 #session {
   a.panktee.current {
-    background-color: #01669b;
+    background-color: $sttm-blue;
     color: #fff;
   }
 }
@@ -249,7 +252,7 @@ body.searchResults_meta .search-result .meta {
 /* ***** SHABAD CONTROLLER ***** */
 #shabad {
   a.panktee.current {
-    background-color: #01669b;
+    background-color: $sttm-blue;
     color: #fff;
   }
 }
@@ -263,7 +266,7 @@ body.searchResults_meta .search-result .meta {
     background-color: transparent;
     > li {
       > a {
-        color: #01669B;
+        color: $sttm-blue;
         font-size: 0.8em;
         line-height: 48px;
         padding: 0 1rem;
