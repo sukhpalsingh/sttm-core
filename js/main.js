@@ -17,9 +17,6 @@ var sources = {
   "N": "Gazals",
   "A": "Amrit Keertan"
 }
-if (!scripts) {
-  var scripts = [];
-}
 
 //Check if we're in Electron
 if (window && window.process && window.process.type == "renderer") {
@@ -56,15 +53,6 @@ var defaults = {
       colour: "#cff"
     }
   ]
-}
-
-if (scripts) {
-  for (var key in scripts) {
-    var s   = document.createElement("script");
-    s.type  = "text/javascript";
-    s.src   = scripts[key];
-    document.body.appendChild(s);
-  }
 }
 
 function focusSearch() {
