@@ -68,6 +68,9 @@ if (scripts) {
 }
 
 function focusSearch() {
+  if (platform.getPref("gurmukhiKB")) {
+    searchBar.openGurmukhiKB();
+  }
   if (!$mainUI.classList.contains("home")) {
     $mainUI.classList.add("search");
   }

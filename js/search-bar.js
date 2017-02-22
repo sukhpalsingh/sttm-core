@@ -37,13 +37,25 @@ module.exports = {
   $search: document.getElementById("search"),
   $gurmukhiKB: $gurmukhiKB,
   $kbPages: $gurmukhiKB.querySelectorAll(".page"),
-  toggleGurmukhiKB: function() {
-    focusSearch();
-    $gurmukhiKB.classList.toggle("active");
+  toggleGurmukhiKB: function(e) {
+    const gurmukhiKBPref = platform.getPref("gurmukhiKB");
+    if (!$gurmukhiKB.classList.contains("active") && gurmukhiKBPref) {
+      this.openGurmukhiKB();
+    } else {
+      platform.setPref("gurmukhiKB", !gurmukhiKBPref);
+      focusSearch();
+      $gurmukhiKB.classList.toggle("active");
+    }
   },
+
+  openGurmukhiKB: function() {
+    $gurmukhiKB.classList.add("active");
+  },
+
   closeGurmukhiKB: function() {
     $gurmukhiKB.classList.remove("active");
   },
+
   clickKBButton: function(e) {
     const button  = e.currentTarget;
     const action  = button.dataset.kbaction;
@@ -68,7 +80,7 @@ module.exports = {
   }
 }
 
-$gurmukhiKBToggle.addEventListener("click", module.exports.toggleGurmukhiKB);
+$gurmukhiKBToggle.addEventListener("click", e => module.exports.toggleGurmukhiKB(e));
 Array.from($gurmukhiKBButtons).forEach(el => {
   el.addEventListener("click", e => module.exports.clickKBButton(e))
 });
