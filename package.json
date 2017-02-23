@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "The HTML for STTM Everywhere, to be used as a submodule for the desktop and mobile apps",
   "scripts": {
-    "build-css": "node-sass --output-style nested --source-map true --include-path scss scss/foundation.scss css/bundle.css",
+    "build-css": "node-sass --output-style compressed --source-map true --include-path scss scss/foundation.scss css/bundle.css",
     "watch-css": "nodemon -e scss -x \"npm run build-css\""
   },
   "author": "Khalis Foundation",
