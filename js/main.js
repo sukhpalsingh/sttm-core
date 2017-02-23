@@ -160,7 +160,7 @@ function clickResult(e) {
         $session.insertBefore(line.parentNode, $session.firstChild);
       }
     }
-    controller.sendLine(LineID);
+    controller.sendLine(ShabadID, LineID);
     loadShabad(ShabadID, LineID);
     $sessionContainer.scrollTop = 0;
   }
@@ -197,6 +197,7 @@ function loadShabad(ShabadID, LineID) {
             'a',
             {
               "class": "panktee" + (LineID == item._id ? " current" : ""),
+              "data-shabad-id": ShabadID,
               "data-line-id": item._id,
               "id": "line" + item._id
             },
@@ -219,7 +220,8 @@ function clickShabad(e) {
   if (e.target.classList.contains("panktee")) {
     let $panktee = e.target;
     currentLine = parseInt($panktee.dataset.lineId);
-    controller.sendLine(currentLine);
+    let shabadID = parseInt($panktee.dataset.shabadId);
+    controller.sendLine(shabadID, currentLine);
     //Remove 'current' class from all Panktees
     let lines = $shabad.querySelectorAll("a.panktee");
     Array.from(lines).forEach(el => el.classList.remove("current"));
