@@ -361,11 +361,13 @@ body.searchResults_meta .search-result .meta {
 }
 
 #updating,
-#updatingText {
+#updatingText,
+#offline {
   display: none;
 }
 body.updating #updating,
-body.updating #updatingText {
+body.updating #updatingText,
+body.offline #offline {
   display: flex;
 }
 
