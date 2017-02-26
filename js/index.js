@@ -33,11 +33,15 @@ Mousetrap.bind("esc", escKey);
 Mousetrap.bind(['up', 'left'], prevLine);
 Mousetrap.bind(['down', 'right'], nextLine);
 Mousetrap.bind("/", () => $search.focus(), "keyup");
+Mousetrap.bind("space", spaceBar);
 
 function escKey() {
   if (settings.$settings.classList.contains("animated")) {
     settings.closeSettings();
   }
+}
+function spaceBar() {
+  $shabad.querySelector("a.panktee.main").click();
 }
 function prevLine() {
   //Find position of current line in Shabad

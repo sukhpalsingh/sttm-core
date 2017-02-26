@@ -251,6 +251,12 @@ body.searchResults_meta .search-result .meta {
     background-color: $sttm-blue;
     color: #fff;
   }
+  i.fa-home {
+    color: transparent;
+  }
+  a.panktee.main i.fa-home {
+    color: inherit;
+  }
 }
 
 #footer {

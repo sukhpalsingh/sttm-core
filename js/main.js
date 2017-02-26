@@ -196,12 +196,15 @@ function loadShabad(ShabadID, LineID) {
           h(
             'a',
             {
-              "class": "panktee" + (LineID == item._id ? " current" : ""),
+              "class": "panktee" + (LineID == item._id ? " current main" : ""),
               "data-shabad-id": ShabadID,
               "data-line-id": item._id,
               "id": "line" + item._id
             },
-            item.gurmukhi
+            [
+              '<i class="fa fa-fw fa-home"></i> ',
+              item.gurmukhi
+            ]
           )
         );
         $shabad.appendChild(shabadLine);
