@@ -29,7 +29,7 @@ window.onload = () => {
   checkChangelogVersion();
 }
 
-Mousetrap.bind("esc", escKey);
+Mousetrap.bindGlobal("esc", escKey);
 Mousetrap.bind(['up', 'left'], prevLine);
 Mousetrap.bind(['down', 'right'], nextLine);
 Mousetrap.bind("/", () => $search.focus(), "keyup");

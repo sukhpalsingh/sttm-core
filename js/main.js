@@ -21,6 +21,7 @@ var sources = {
 //Check if we're in Electron
 if (window && window.process && window.process.type == "renderer") {
   electron          = true;
+  document.body.classList.add(process.platform);
   platform_scripts  = "../desktop_www/js/desktop_scripts.js";
 }
 const platform = require(platform_scripts);

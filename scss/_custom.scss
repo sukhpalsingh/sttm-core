@@ -51,6 +51,10 @@ body {
   overflow: auto;
 }
 
+#titlebar {
+  display: none;
+}
+
 #app-frame {
   height: 100%;
 }
@@ -95,7 +99,7 @@ body.home #header {
   .global-nav {
     padding-top: 0;
     transition: padding-top 600ms cubic-bezier(0.165, 0.84, 0.44, 1);
-    
+
     ul.title-area {
       margin-bottom: 0px;
       position: relative;
@@ -287,7 +291,6 @@ body.searchResults_meta .search-result .meta {
   left: 0;
   position: fixed;
   top: 0;
-  width: 100%;
 
   &.animated {
     display: flex;
@@ -426,4 +429,5 @@ body.offline #offline {
 
 @import
   "animations",
-  "search-bar";
+  "search-bar",
+  "win32";
