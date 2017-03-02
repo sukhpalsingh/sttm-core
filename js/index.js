@@ -6,13 +6,13 @@ const $results          = document.getElementById("results");
 const $session          = document.getElementById("session");
 const $sessionContainer = document.getElementById("session-container");
 const $buttons          = document.getElementById("buttons");
-const $changelog        = document.getElementById("changelogModal");
 const $actions          = document.querySelectorAll(".action");
 
 const Settings          = require('../desktop_www/js/settings');
 const settings          = new Settings(platform.store);
 
 const searchBar         = require("./js/search-bar");
+const changelog         = require("./js/changelog");
 
 $search.addEventListener("focus", focusSearch);
 $search.addEventListener("keyup", typeSearch);
@@ -20,13 +20,12 @@ $shabad.addEventListener("click", clickShabad);
 $results.addEventListener("click", clickResult);
 $session.addEventListener("click", clickSession);
 $buttons.addEventListener("click", clickButtons);
-$changelog.addEventListener("click", clickChangelog);
 //Allow any link with "action" class to execute a function name in "data-action"
 Array.from($actions).forEach(el => el.addEventListener("click", e => eval(el.dataset.action + "()")));
 
 window.onload = () => {
   $search.focus();
-  checkChangelogVersion();
+  changelog.checkChangelogVersion();
 }
 
 Mousetrap.bindGlobal("esc", escKey);

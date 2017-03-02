@@ -240,21 +240,3 @@ function clickButtons(e) {
     controller.sendText($msg.innerText);
   }
 }
-
-function checkChangelogVersion() {
-  let last_seen = platform.getPref("changelog-seen");
-  if (last_seen != appVersion) {
-    $search.blur();
-    openChangelog();
-  }
-}
-function clickChangelog(e) {
-  var classList = e.target.classList;
-  if (classList.contains("modal-overlay") || classList.contains("close-button")) {
-    $changelog.classList.remove("is-active");
-    platform.setPref("changelog-seen", appVersion);
-  }
-}
-function openChangelog() {
-  $changelog.classList.add("is-active");
-}
