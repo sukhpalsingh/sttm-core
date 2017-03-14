@@ -39,8 +39,10 @@ function escKey() {
     settings.closeSettings();
   }
 }
-function spaceBar() {
-  $shabad.querySelector("a.panktee.main").click();
+function spaceBar(e) {
+  const mainLineID = $shabad.querySelector("a.panktee.main").dataset.lineId;
+  highlightLine(mainLineID);
+  e.preventDefault();
 }
 function prevLine() {
   //Find position of current line in Shabad
