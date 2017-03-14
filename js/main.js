@@ -28,35 +28,6 @@ const platform = require(platform_scripts);
 const controller  = require("../desktop_www/js/controller.js");
 const h           = require("./js/h");
 
-//Defaults
-var defaults = {
-  searchType:     "fls",
-  bgColour:       "#333",
-  view:           "slide",
-  slideTemplate:  [
-    {
-      tag:    "h1",
-      data:   "gurmukhi",
-      colour: "#fff"
-    },
-    {
-      tag:    "h2",
-      data:   "english_ssk",
-      colour:  "#ccc"
-    },
-    {
-      tag:    "h2",
-      data:   "transliteration",
-      colour: "#ffc"
-    },
-    {
-      tag:    "h2",
-      data:   "sggs_darpan",
-      colour: "#cff"
-    }
-  ]
-}
-
 function focusSearch() {
   if (platform.getPref("gurmukhiKB")) {
     searchBar.openGurmukhiKB();
