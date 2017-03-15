@@ -192,13 +192,19 @@ function loadShabad(ShabadID, LineID) {
 }
 
 function clickShabad(e) {
-  if (e.target.classList.contains("panktee")) {
+  let lines = $shabad.querySelectorAll("a.panktee");
+  if (e.target.classList.contains("fa-home")) {
+    //Change main line
+    let $panktee  = e.target.parentNode;
+    Array.from(lines).forEach(el => el.classList.remove("main"));
+    $panktee.classList.add("main");
+  } else if (e.target.classList.contains("panktee")) {
+    //Change line to click target
     let $panktee = e.target;
     currentLine = parseInt($panktee.dataset.lineId);
     let shabadID = parseInt($panktee.dataset.shabadId);
     controller.sendLine(shabadID, currentLine);
     //Remove 'current' class from all Panktees
-    let lines = $shabad.querySelectorAll("a.panktee");
     Array.from(lines).forEach(el => el.classList.remove("current"));
     //Add 'current' to selected Panktee
     $panktee.classList.add("current");

@@ -251,15 +251,34 @@ body.searchResults_meta .search-result .meta {
 
 /* ***** SHABAD CONTROLLER ***** */
 #shabad {
+  a:hover {
+    i.fa-home {
+      color: #ccc;
+
+      &:hover {
+        color: #666;
+      }
+    }
+  }
   a.panktee.current {
     background-color: $sttm-blue;
     color: #fff;
+
+    &:hover {
+      i.fa-home {
+        color: #999;
+
+        &:hover {
+          color: #ccc;
+        }
+      }
+    }
   }
   i.fa-home {
     color: transparent;
   }
   a.panktee.main i.fa-home {
-    color: inherit;
+    color: inherit !important;
   }
 }
 
