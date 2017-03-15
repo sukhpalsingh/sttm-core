@@ -1,7 +1,7 @@
 {
-  "name": "sttm-everywhere-html",
+  "name": "sttm3-html",
   "version": "1.0.0",
-  "description": "The HTML for STTM Everywhere, to be used as a submodule for the desktop and mobile apps",
+  "description": "The HTML for SikhiToTheMax 3, to be used as a submodule for the desktop and mobile apps",
   "scripts": {
     "build-css": "node-sass --output-style compressed --source-map true --include-path scss scss/foundation.scss css/bundle.css",
     "watch-css": "nodemon -e scss -x \"npm run build-css\""
