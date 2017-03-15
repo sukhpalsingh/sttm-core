@@ -304,14 +304,20 @@ body.searchResults_meta .search-result .meta {
   }
 }
 
+#checkingForUpdates,
 #updating,
 #updatingText,
-#offline {
+#offline,
+#noUpdate,
+#updateReady {
   display: none;
 }
+body.checkingForUpdates #checkingForUpdates,
 body.updating #updating,
 body.updating #updatingText,
-body.offline #offline {
+body.offline #offline,
+body.no-update #noUpdate,
+body.updateReady #updateReady {
   display: flex;
 }
 

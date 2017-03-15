@@ -116,14 +116,23 @@
             <li>
               <a class="action" data-action="changelog.openChangelog">Changelog</a>
             </li>
+            <li id="checkingForUpdates">
+              <a class="nolink">Checking for updates...</a>
+            </li>
             <li id="updating">
               <a class="nolink"><i class="fa fa-refresh fa-spin fa-fw"></i> </a>
             </li>
             <li id="updatingText">
-              <a class="nolink">New version downloading. App will automatically relaunch.</a>
+              <a class="nolink">New version downloading...</a>
             </li>
             <li id="offline">
               <a class="nolink">Device is offline. Cannot check for updates.</a>
+            </li>
+            <li id="noUpdate">
+              <a class="nolink">No update available.</a>
+            </li>
+            <li id="updateReady">
+              <a class="action" data-action="platform.ipc.send('quitAndInstall')">Update ready. Click to install.</a>
             </li>
           </ul>
         </div>
