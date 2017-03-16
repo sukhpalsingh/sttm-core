@@ -7,6 +7,7 @@ const $session          = document.getElementById("session");
 const $sessionContainer = document.getElementById("session-container");
 const $buttons          = document.getElementById("buttons");
 const $actions          = document.querySelectorAll(".action");
+const $headers          = document.querySelectorAll(".block-list header");
 
 const Settings          = require('../desktop_www/js/settings');
 const settings          = new Settings(platform.store);
@@ -22,6 +23,7 @@ $session.addEventListener("click", clickSession);
 $buttons.addEventListener("click", clickButtons);
 //Allow any link with "action" class to execute a function name in "data-action"
 Array.from($actions).forEach(el => el.addEventListener("click", e => eval(el.dataset.action + "()")));
+Array.from($headers).forEach(el => el.addEventListener("click", clickHeader));
 
 window.onload = () => {
   $search.focus();
@@ -72,4 +74,8 @@ function highlightLine(new_line) {
   if (container_top + container_height < cur_panktee_top + cur_panktee_height) {
     $shabadContainer.scrollTop = cur_panktee_top - container_height + cur_panktee_height;
   }
+}
+
+function clickHeader(e) {
+  $mainUI.classList.toggle("search");
 }
