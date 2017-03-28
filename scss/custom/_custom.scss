@@ -84,7 +84,7 @@ body.home #header {
     }
   }
 
-  #search_div {
+  #search-div {
     top: auto;
   }
 }
@@ -313,20 +313,20 @@ body.searchResults_meta .search-result .meta {
   }
 }
 
-#checkingForUpdates,
+#checking-for-updates,
 #updating,
-#updatingText,
+#updating-text,
 #offline,
-#noUpdate,
-#updateReady {
+#no-update,
+#update-ready {
   display: none;
 }
-body.checkingForUpdates #checkingForUpdates,
+body.checking-for-updates #checking-for-updates,
 body.updating #updating,
-body.updating #updatingText,
+body.updating #updating-text,
 body.offline #offline,
-body.no-update #noUpdate,
-body.updateReady #updateReady {
+body.no-update #no-update,
+body.update-ready #update-ready {
   display: flex;
 }
 

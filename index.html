@@ -10,7 +10,7 @@
 <body class="home">
   <div id="titlebar">
     <a href="#" class="menu-button">
-      <svg x="0px" y="0px" viewBox="0 0 10 10">
+      <svg x="0px" y="0px" viewbox="0 0 10 10">
         <rect fill="#ffffff" width="10" height="1" x="0" y="2"></rect>
         <rect fill="#ffffff" width="10" height="1" x="0" y="5"></rect>
         <rect fill="#ffffff" width="10" height="1" x="0" y="8"></rect>
@@ -20,29 +20,29 @@
     <ul class="controls">
       <li>
         <a href="#" data-window-action="minimize">
-          <svg x="0px" y="0px" viewBox="0 0 10 1">
+          <svg x="0px" y="0px" viewbox="0 0 10 1">
             <rect fill="#ffffff" width="10" height="1"></rect>
           </svg>
         </a>
       </li>
       <li>
         <a href="#" data-window-action="max-restore">
-          <svg class="maximize" x="0px" y="0px" viewBox="0 0 10 10">
+          <svg class="maximize" x="0px" y="0px" viewbox="0 0 10 10">
             <path fill="#ffffff" d="M 0 0 L 0 10 L 10 10 L 10 0 L 0 0 z M 1 1 L 9 1 L 9 9 L 1 9 L 1 1 z "/>
           </svg>
-          <svg class="restore" x="0px" y="0px" viewBox="0 0 10 10">
-            <mask id="Mask">
+          <svg class="restore" x="0px" y="0px" viewbox="0 0 10 10">
+            <mask id="mask">
               <rect fill="#ffffff" width="10" height="10"></rect>
               <path fill="#000000" d="M 3 1 L 9 1 L 9 7 L 8 7 L 8 2 L 3 2 L 3 1 z"/>
               <path fill="#000000" d="M 1 3 L 7 3 L 7 9 L 1 9 L 1 3 z"/>
             </mask>
-            <path fill="#ffffff" d="M 2 0 L 10 0 L 10 8 L 8 8 L 8 10 L 0 10 L 0 2 L 2 2 L 2 0 z" mask="url(#Mask)"/>
+            <path fill="#ffffff" d="M 2 0 L 10 0 L 10 8 L 8 8 L 8 10 L 0 10 L 0 2 L 2 2 L 2 0 z" mask="url(#mask)"/>
           </svg>
         </a>
       </li>
       <li>
         <a href="#" data-window-action="close">
-          <svg x="0px" y="0px" viewBox="0 0 10 10">
+          <svg x="0px" y="0px" viewbox="0 0 10 10">
             <polygon fill="#ffffff" points="10,1 9,0 5,4 1,0 0,1 4,5 0,9 1,10 5,6 9,10 10,9 6,5"></polygon>
           </svg>
         </a>
@@ -54,10 +54,10 @@
       <nav class="global-nav">
         <ul class="title-area no-bullet noselect">
           <li class="name">
-            <h1><img src="img/sttm_logo_beta.png"></h1>
+            <h1><img src="img/sttm_logo_beta.png" id="logo" alt="STTM Logo"></h1>
           </li>
         </ul>
-        <div class="shrink collapse grid-block" id="search_div">
+        <div class="shrink collapse grid-block" id="search-div">
           <div id="search-container"><input id="search" class="gurmukhi" type="search" placeholder="Koj"><button id="gurmukhi-keyboard-toggle" type="button"><i class="fa fa-keyboard-o"></i></button></div>
         </div>
         <ul class="right no-bullet noselect" id="buttons">
@@ -82,7 +82,7 @@
         <div class="grid-block vertical order-2 medium-6" id="session-block">
           <div class="grid-block shrink">
             <section class="block-list">
-              <ul class="right"><li><a href="#" class="action" data-action="clearSession" id="clear_session"><i class="fa fa-trash"></i></a></li></ul>
+              <ul class="right"><li><a href="#" class="action" data-action="clearSession"><i class="fa fa-trash"></i></a></li></ul>
               <header>Recent Shabads</header>
             </section>
           </div>
@@ -116,22 +116,22 @@
             <li>
               <a class="action" data-action="changelog.openChangelog">Changelog</a>
             </li>
-            <li id="checkingForUpdates">
               <a class="nolink">Checking for updates...</a>
+            <li id="checking-for-updates">
             </li>
             <li id="updating">
               <a class="nolink"><i class="fa fa-refresh fa-spin fa-fw"></i> </a>
             </li>
-            <li id="updatingText">
               <a class="nolink">New version downloading...</a>
+            <li id="updating-text">
             </li>
             <li id="offline">
               <a class="nolink">Device is offline. Cannot check for updates.</a>
             </li>
-            <li id="noUpdate">
+            <li id="no-update">
               <a class="nolink">No update available.</a>
             </li>
-            <li id="updateReady">
+            <li id="update-ready">
               <a class="action" data-action="platform.ipc.send('quitAndInstall')">Update ready. Click to install.</a>
             </li>
           </ul>
@@ -184,17 +184,13 @@
       </div>
     </div>
   </div>
-  <div class="modal-overlay" id="changelogModal">
+  <div class="modal-overlay" id="changelog-modal">
     <div class="modal" animation-in="slideInDown" animation-out="slideOutDown">
       <a class="close-button action" data-action="changelog.closeChangelog">×</a>
       <h3>Changelog</h3>
       <div id="changelog"></div>
     </div>
   </div>
-  <script>
-    const appVersion = require("../package.json").version;
-    document.getElementById("appVersion").innerText = "v"+appVersion;
-  </script>
   <script src="js/mousetrap.min.js" type="text/javascript"></script>
   <script src="js/main.js" type="text/javascript"></script>
   <script src="js/index.js" type="text/javascript"></script>

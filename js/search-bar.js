@@ -27,7 +27,7 @@ for (i in keyboardLayout) {
   pages.push(h("div", { id: "gurmukhi-keyboard-page-" + (parseInt(i)+1), class: "page" + (i == 0 ? " active" : "") }, page));
 }
 const keyboard = h("div", { id: "gurmukhi-keyboard", class: "gurmukhi" }, pages);
-document.getElementById("search_div").appendChild(keyboard);
+document.getElementById("search-div").appendChild(keyboard);
 
 const $gurmukhiKBToggle   = document.getElementById("gurmukhi-keyboard-toggle");
 const $gurmukhiKB         = document.getElementById("gurmukhi-keyboard");
