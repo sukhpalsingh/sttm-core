@@ -1,6 +1,6 @@
 /* global platform */
 
-const appVersion = require('../package.json').version;
+const appVersion = require('../../package.json').version;
 const marked = require('marked');
 const fs = require('fs');
 const path = require('path');
