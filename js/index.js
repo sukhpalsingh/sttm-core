@@ -1,3 +1,4 @@
+const $logo             = document.getElementById("logo");
 const $search           = document.getElementById("search");
 const $mainUI           = document.getElementById("main-ui");
 const $shabad           = document.getElementById("shabad");
@@ -15,6 +16,7 @@ const settings          = new Settings(platform.store);
 const searchBar         = require("./js/search-bar");
 const changelog         = require("./js/changelog");
 
+$logo.addEventListener("click", clickLogo);
 $search.addEventListener("focus", focusSearch);
 $search.addEventListener("keyup", typeSearch);
 $shabad.addEventListener("click", clickShabad);
@@ -24,6 +26,13 @@ $buttons.addEventListener("click", clickButtons);
 //Allow any link with "action" class to execute a function name in "data-action"
 Array.from($actions).forEach(el => el.addEventListener("click", e => eval(el.dataset.action + "()")));
 Array.from($headers).forEach(el => el.addEventListener("click", clickHeader));
+
+function clickLogo() {
+  $mainUI.classList.remove("search");
+  document.body.classList.add("home");
+  $search.value = "";
+  $search.focus();
+}
 
 window.onload = () => {
   $search.focus();
