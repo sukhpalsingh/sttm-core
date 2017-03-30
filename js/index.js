@@ -6,18 +6,18 @@ globals.electron = false;
 globals.cordova = false;
 globals.platformScripts = 'js';
 
-const platform = require(globals.platformScripts);
-const controller = require('../desktop_www/js/controller.js');
-const Settings = require('../desktop_www/js/settings');
-const search = require('./js/search');
-const changelog = require('./js/changelog');
-
 // Check if we're in Electron
 if (window && window.process && window.process.type === 'renderer') {
   globals.electron = true;
   document.body.classList.add(process.platform);
   globals.platformScripts = '../desktop_www/js/desktop_scripts.js';
 }
+
+const platform = require(globals.platformScripts);
+const controller = require('../desktop_www/js/controller.js');
+const Settings = require('../desktop_www/js/settings');
+const search = require('./js/search');
+const changelog = require('./js/changelog');
 
 const settings = new Settings(platform.store);
 
