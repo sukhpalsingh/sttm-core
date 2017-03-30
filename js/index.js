@@ -1,27 +1,41 @@
+const globals = {};
+
+globals.electron = false;
+globals.cordova = false;
+globals.platformScripts = 'js';
+
+// Check if we're in Electron
+if (window && window.process && window.process.type == 'renderer') {
+  globals.electron = true;
+  document.body.classList.add(process.platform);
+  globals.platformScripts = '../desktop_www/js/desktop_scripts.js';
+}
+const platform = require(globals.platformScripts);
+const controller = require('../desktop_www/js/controller.js');
+
+function clickButtons(e) {
+  if (e.target.classList.contains('msg')) {
+    const $msg = e.target;
+    controller.sendText($msg.innerText);
+  }
+}
+
+const Settings          = require('../desktop_www/js/settings');
+const settings          = new Settings(platform.store);
+
+const search            = require("./js/search");
+const changelog         = require("./js/changelog");
+
 const $logo             = document.getElementById("logo");
 const $search           = document.getElementById("search");
 const $mainUI           = document.getElementById("main-ui");
 const $shabad           = document.getElementById("shabad");
 const $shabadContainer  = document.getElementById("shabad-container");
-const $results          = document.getElementById("results");
-const $session          = document.getElementById("session");
-const $sessionContainer = document.getElementById("session-container");
 const $buttons          = document.getElementById("buttons");
 const $actions          = document.querySelectorAll(".action");
 const $headers          = document.querySelectorAll(".block-list header");
 
-const Settings          = require('../desktop_www/js/settings');
-const settings          = new Settings(platform.store);
-
-const searchBar         = require("./js/search-bar");
-const changelog         = require("./js/changelog");
-
 $logo.addEventListener("click", clickLogo);
-$search.addEventListener("focus", focusSearch);
-$search.addEventListener("keyup", typeSearch);
-$shabad.addEventListener("click", clickShabad);
-$results.addEventListener("click", clickResult);
-$session.addEventListener("click", clickSession);
 $buttons.addEventListener("click", clickButtons);
 //Allow any link with "action" class to execute a function name in "data-action"
 Array.from($actions).forEach(el => el.addEventListener("click", e => eval(el.dataset.action + "()")));
@@ -57,14 +71,14 @@ function spaceBar(e) {
 }
 function prevLine() {
   //Find position of current line in Shabad
-  let pos = currentShabad.indexOf(currentLine);
+  let pos = currentShabad.indexOf(globals.currentLine);
   if (pos > 0) {
     highlightLine(currentShabad[pos-1]);
   }
 }
 function nextLine() {
   //Find position of current line in Shabad
-  let pos = currentShabad.indexOf(currentLine);
+  let pos = currentShabad.indexOf(globals.currentLine);
   if (pos < (currentShabad.length-1)) {
     highlightLine(currentShabad[pos+1]);
   }

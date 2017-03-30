@@ -12,6 +12,7 @@
     "nodemon": "^1.9.1"
   },
   "dependencies": {
+    "hyperscript": "^2.0.2",
     "marked": "^0.3.6"
   }
 }
