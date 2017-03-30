@@ -1,4 +1,4 @@
-/* global platform globals */
+/* global platform */
 
 // functions to be able to communicate with app.js
 const controller = require('../../desktop_www/js/controller');
@@ -15,6 +15,7 @@ const allowedKeys = [
 ];
 const sessionList = [];
 const currentShabad = [];
+let currentLine;
 const kbPages = [];
 let newSearchTimeout;
 
@@ -54,9 +55,21 @@ Object.keys(keyboardLayout).forEach((i) => {
       Object.keys(klRowSet).forEach((l) => {
         const klButton = klRowSet[l];
         if (typeof klButton === 'object') {
-          rowSet.push(h('button', { type: 'button', onclick: e => module.exports.clickKBButton(e, klButton.action) }, (klButton.icon ? h(klButton.icon) : klButton.char)));
+          rowSet.push(h(
+            'button',
+            {
+              type: 'button',
+              onclick: e => module.exports.clickKBButton(e, klButton.action),
+            },
+            (klButton.icon ? h(klButton.icon) : klButton.char)));
         } else {
-          rowSet.push(h('button', { type: 'button', onclick: e => module.exports.clickKBButton(e) }, klButton));
+          rowSet.push(h(
+            'button',
+            {
+              type: 'button',
+              onclick: e => module.exports.clickKBButton(e),
+            },
+            klButton));
         }
       });
       row.push(h('div.keyboard-row-set', rowSet));
@@ -90,21 +103,28 @@ module.exports = {
   $search,
   $results,
   $kbPages: $gurmukhiKB.querySelectorAll('.page'),
+  currentShabad,
+  currentLine,
 
   // eslint-disable-next-line no-unused-vars
   focusSearch(e) {
+    // open the Gurmukhi keyboard if it was previously open
     if (platform.getPref('gurmukhiKB')) {
       this.openGurmukhiKB();
     }
     if (!$mainUI.classList.contains('home')) {
+      // add the 'search' class to #main-ui for animating the results and session blocks open
       $mainUI.classList.add('search');
     }
   },
 
   typeSearch(e) {
+    // if a key is pressed in the Gurmukhi KB or is one of the allowed keys
     if (e === 'gKB' || (e.which <= 90 && e.which >= 48) || allowedKeys.indexOf(e.which) > -1) {
+      // animate out of the home screen and pop up the results and session blocks
       document.body.classList.remove('home');
       $mainUI.classList.add('search');
+      // don't search if there is less than a 100ms gap in between key presses
       clearTimeout(newSearchTimeout);
       newSearchTimeout = setTimeout(() => this.search(), 100);
     }
@@ -113,6 +133,7 @@ module.exports = {
   // eslint-disable-next-line no-unused-vars
   toggleGurmukhiKB(e) {
     const gurmukhiKBPref = platform.getPref('gurmukhiKB');
+    // no need to set a preference if user is just re-opening after KB was auto-closed
     if (!$gurmukhiKB.classList.contains('active') && gurmukhiKBPref) {
       this.openGurmukhiKB();
     } else {
@@ -145,8 +166,11 @@ module.exports = {
         document.getElementById(`gurmukhi-keyboard-${action}`).classList.add('active');
       }
     } else {
+      // some buttons may have a different value than what is displayed on the key,
+      // in which case use the data-value attribute
       const char = button.dataset.value || button.innerText;
       $search.value += char;
+      // simulate a physical keyboard button press
       this.typeSearch('gKB');
     }
   },
@@ -154,7 +178,6 @@ module.exports = {
   // eslint-disable-next-line no-unused-vars
   search(e) {
     const searchQuery = $search.value;
-
     const searchCol = 'first_ltr_start';
     let dbQuery = '';
     for (let x = 0, len = searchQuery.length; x < len; x += 1) {
@@ -185,15 +208,16 @@ module.exports = {
               h(
                 'a.panktee.search-result',
                 {
-                  'data-shabad-id': item.shabad_no,
-                  'data-line-id': item._id,
-                  onclick: ev => this.clickResult(ev, item.shabad_no, item._id),
+                  onclick: ev => this.clickResult(ev, item.shabad_no, item._id, item.gurmukhi),
                 },
                 resultNode));
             $results.appendChild(result);
           });
         } else {
-          $results.innerHTML = "<li class='roman'><span>No results</span></li>";
+          $results.innerHTML = '';
+          $results.appendChild(h(
+            'li.roman',
+            h('span', 'No results')));
         }
       });
     } else {
@@ -201,46 +225,48 @@ module.exports = {
     }
   },
 
-  clickResult(e, ShabadID, LineID) {
+  clickResult(e, ShabadID, LineID, Gurmukhi) {
     this.closeGurmukhiKB();
-    if (e.target.classList.contains('panktee') || e.target.parentElement.classList.contains('panktee')) {
-      $mainUI.classList.add('shabad');
-      $mainUI.classList.remove('search');
-      const $panktee = (e.target.tagName === 'A' ? e.target : e.target.parentElement);
-      const sessionLines = $session.querySelectorAll('a.panktee');
-      Array.from(sessionLines).forEach(el => el.classList.remove('current'));
-      if (sessionList.indexOf(ShabadID) < 0) {
-        const sessionItem = h(
-          'li',
-          {},
-          h(
-            'a.panktee.current',
-            {
-              'data-shabad-id': ShabadID,
-              'data-line-id': LineID,
-              onclick: ev => this.clickSession(ev, ShabadID, LineID),
-            },
-            $panktee.children[0].innerText));
-        $session.insertBefore(sessionItem, $session.firstChild);
-        sessionList.push(ShabadID);
-      } else {
-        const line = $session.querySelector(`[data-shabad-id='${ShabadID}']`);
-        if (line.dataset.lineId !== LineID) {
-          line.dataset.lineId = LineID;
-          line.classList.add('current');
-          line.innerText = $panktee.children[0].innerText;
-          $session.insertBefore(line.parentNode, $session.firstChild);
-        }
-      }
-      controller.sendLine(ShabadID, LineID);
-      this.loadShabad(ShabadID, LineID);
-      $sessionContainer.scrollTop = 0;
+    // animate up the Shabad controller block
+    $mainUI.classList.add('shabad');
+    // animate out the results and session blocks
+    $mainUI.classList.remove('search');
+    const sessionItem = h(
+      `li#session-${ShabadID}`,
+      {},
+      h(
+        'a.panktee.current',
+        {
+          onclick: ev => this.clickSession(ev, ShabadID, LineID),
+        },
+        Gurmukhi));
+    // get all the lines in the session block and remove the .current class from them
+    const sessionLines = $session.querySelectorAll('a.panktee');
+    Array.from(sessionLines).forEach(el => el.classList.remove('current'));
+    // if the ShabadID of the clicked Panktee isn't in the sessionList variable,
+    // add it to the variable
+    if (sessionList.indexOf(ShabadID) < 0) {
+      sessionList.push(ShabadID);
+    } else {
+      // if the ShabadID is already in the session, just remove the HTMLElement,
+      // and leave the sessionList
+      const line = $session.querySelector(`#session-${ShabadID}`);
+      $session.removeChild(line);
     }
+    // add the line to the top of the session block
+    $session.insertBefore(sessionItem, $session.firstChild);
+    // send the line to app.js, which will send it to the viewer window
+    controller.sendLine(ShabadID, LineID);
+    // load the Shabad into the controller
+    this.loadShabad(ShabadID, LineID);
+    // scroll the session block to the top to see the highlighted line
+    $sessionContainer.scrollTop = 0;
   },
 
   loadShabad(ShabadID, LineID) {
     platform.db.all(`SELECT _id, gurmukhi FROM shabad WHERE shabad_no = '${ShabadID}'`, (err, rows) => {
       if (rows.length > 0) {
+        // clear the Shabad controller and empty out the currentShabad array
         $shabad.innerHTML = '';
         currentShabad.splice(0, currentShabad.length);
         rows.forEach((item) => {
@@ -257,12 +283,15 @@ module.exports = {
                 ' ',
                 item.gurmukhi,
               ]));
+          // write the Panktee to the controller
           $shabad.appendChild(shabadLine);
+          // append the currentShabad array
           currentShabad.push(item._id);
           if (LineID === item._id) {
-            globals.currentLine = item._id;
+            currentLine = item._id;
           }
         });
+        // scroll the Shabad controller to the current Panktee
         const curPankteeTop = $shabad.querySelector('.current').parentNode.offsetTop;
         $shabadContainer.scrollTop = curPankteeTop;
       }
@@ -294,7 +323,7 @@ module.exports = {
     } else if (e.target.classList.contains('panktee')) {
       // Change line to click target
       const $panktee = e.target;
-      globals.currentLine = LineID;
+      currentLine = LineID;
       controller.sendLine(ShabadID, LineID);
       // Remove 'current' class from all Panktees
       Array.from(lines).forEach(el => el.classList.remove('current'));
