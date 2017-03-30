@@ -1,7 +1,8 @@
-#search-div {
+.search-div {
   justify-content: center;
   top: -50px;
 }
+
 #search-container {
   background-color: #fff;
   border-radius: 2px;
@@ -11,7 +12,7 @@
   max-width: 484px;
   transition: box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
   width: calc(100% - 40px);
-  
+
   input {
     background: transparent;
     border: none;
@@ -23,6 +24,7 @@
     position: relative;
     width: calc(100% - 44px);
   }
+
   > button {
     background-color: #fff;
     color: #999;
@@ -32,6 +34,7 @@
     width: 44px;
   }
 }
+
 #gurmukhi-keyboard {
   background-color: #fff;
   border-radius: 2px;
@@ -58,17 +61,21 @@
       display: block;
     }
   }
+
   .keyboard-row {
     border-bottom: 2px solid #999;
   }
+
   .keyboard-row-set {
     display: inline-block;
     width: 50%;
   }
+
   .keyboard-row:nth-child(2n-1) .keyboard-row-set:nth-child(1),
   .keyboard-row:nth-child(2n) .keyboard-row-set:nth-child(2) {
     background-color: #ccc;
   }
+
   button {
     color: #333;
     font-size: 1rem;
@@ -82,8 +89,8 @@ button {
   -webkit-appearance: none;
   -moz-appearance: none;
   background: transparent;
-  padding: 0;
   border: 0;
   border-radius: 0;
   line-height: 1;
+  padding: 0;
 }
