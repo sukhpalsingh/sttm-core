@@ -18,10 +18,10 @@ const controller = require('../desktop_www/js/controller.js');
 const Settings = require('../desktop_www/js/settings');
 const search = require('./js/search');
 const changelog = require('./js/changelog');
+const h = require('hyperscript');
 
 const settings = new Settings(platform.store);
 
-const $logo = document.getElementById('logo');
 const $mainUI = document.getElementById('main-ui');
 const $shabad = document.getElementById('shabad');
 const $shabadContainer = document.getElementById('shabad-container');
@@ -96,13 +96,24 @@ function clickHeader() {
   $mainUI.classList.toggle('search');
 }
 
+// Keyboard shortcuts
 Mousetrap.bindGlobal('esc', escKey);
 Mousetrap.bind(['up', 'left'], prevLine);
 Mousetrap.bind(['down', 'right'], nextLine);
 Mousetrap.bind('/', () => search.$search.focus(), 'keyup');
 Mousetrap.bind('space', spaceBar);
 
-$logo.addEventListener('click', clickLogo);
+// HTMLElements
+document.querySelector('.name')
+  .appendChild(h(
+    'img.logo',
+    {
+      src: 'img/sttm_logo_beta.png',
+      alt: 'STTM Logo',
+      onclick: e => clickLogo(e),
+    }));
+
+// Event listeners
 $buttons.addEventListener('click', clickButtons);
 // Allow any link with "action" class to execute a function name in "data-action"
 Array.from($actions).forEach(el => el.addEventListener('click', e => eval(`${el.dataset.action}(${e})`)));
