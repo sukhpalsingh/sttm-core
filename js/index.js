@@ -116,5 +116,5 @@ document.querySelector('.name')
 // Event listeners
 $buttons.addEventListener('click', clickButtons);
 // Allow any link with "action" class to execute a function name in "data-action"
-Array.from($actions).forEach(el => el.addEventListener('click', e => eval(`${el.dataset.action}(${e})`)));
+Array.from($actions).forEach(el => el.addEventListener('click', e => eval(`${el.dataset.action}()`)));
 Array.from($headers).forEach(el => el.addEventListener('click', clickHeader));
