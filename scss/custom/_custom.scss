@@ -277,7 +277,7 @@ body.searchResults_meta .search-result .meta {
 #checking-for-update,
 #updating,
 #updating-text,
-#offline,
+#update-error,
 #no-update,
 #update-ready {
   display: none;
@@ -286,7 +286,7 @@ body.searchResults_meta .search-result .meta {
 body.checking-for-update #checking-for-update,
 body.updating #updating,
 body.updating #updating-text,
-body.offline #offline,
+body.update-error #update-error,
 body.no-update #no-update,
 body.update-ready #update-ready {
   display: flex;
