@@ -7,7 +7,7 @@ const path = require('path');
 
 document.getElementById('app-version').innerText = `v${appVersion}`;
 
-const changelogMD = fs.readFileSync(path.resolve(__dirname, '../../CHANGELOG'), 'utf8');
+const changelogMD = fs.readFileSync(path.resolve(__dirname, '../../CHANGELOG.md'), 'utf8');
 
 const $changelogModal = document.getElementById('changelog-modal');
 const $changelog = document.getElementById('changelog');
