@@ -1,18 +1,18 @@
 body.win32 {
   #titlebar {
-    -webkit-app-region: drag;
-    -webkit-user-select: none;
     background-color: #333;
     color: #fff;
-    display: block;
     font-family: "Segoe UI", sans-serif;
     font-size: 12px;
     height: 32px;
     left: 1px;
     line-height: 32px;
-    position: fixed;
     top: 1px;
     width: calc(100% - 2px);
+
+    > * {
+      display: initial;
+    }
 
     a.menu-button {
       -webkit-app-region: no-drag;
@@ -27,6 +27,7 @@ body.win32 {
         shape-rendering: crispEdges;
         width: 10px;
       }
+
       &:hover {
         background-color: rgba(255, 255, 255, 0.1);
       }
@@ -55,30 +56,36 @@ body.win32 {
             width: 10px;
           }
         }
+
         &:hover {
           background-color: rgba(255, 255, 255, 0.1);
         }
       }
     }
   }
-  &:after,
-  .controls:after {
+
+  &::after,
+  .controls::after {
     clear: both;
     content: ' ';
     display: table;
   }
+
   #app-frame {
     border: 1px solid #333;
     padding-top: 32px;
   }
+
   #header {
     .global-nav ul.right {
       top: 43px;
     }
   }
+
   #settings {
     height: auto;
   }
+
   #settings,
   .modal-overlay {
     bottom: 1px;
@@ -86,11 +93,13 @@ body.win32 {
     right: 1px;
     top: 33px;
   }
+
   &.maximized {
     .controls .maximize {
       display: none;
     }
   }
+
   &:not(.maximized) {
     .controls .restore {
       display: none;
