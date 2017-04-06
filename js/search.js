@@ -188,8 +188,8 @@ module.exports = {
       }
       dbQuery += `,${charCode}`;
     }
-    // Strip trailing comma and add a wildcard
-    dbQuery = `${dbQuery.substr(0, dbQuery.length - 1)}%`;
+    // Add trailing wildcard
+    dbQuery += '%';
     if (searchQuery.length > 1) {
       const query = `SELECT v.ID, v.Gurmukhi, v.English, v.Transliteration, s.ShabadID, v.SourceID, v.PageNo AS PageNo, w.WriterEnglish, r.RaagEnglish FROM Verse v
         LEFT JOIN Shabad s ON s.VerseID = v.ID AND s.ShabadID < 5000000
