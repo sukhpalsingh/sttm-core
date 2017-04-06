@@ -87,6 +87,7 @@ const sources = {
   B: 'Vaaran',
   N: 'Gazals',
   A: 'Amrit Keertan',
+  S: 'Vaaran',
 };
 
 const $mainUI = document.getElementById('main-ui');
@@ -178,37 +179,39 @@ module.exports = {
   // eslint-disable-next-line no-unused-vars
   search(e) {
     const searchQuery = $search.value;
-    const searchCol = 'first_ltr_start';
+    const searchCol = 'v.FirstLetterStr';
     let dbQuery = '';
     for (let x = 0, len = searchQuery.length; x < len; x += 1) {
       let charCode = searchQuery.charCodeAt(x);
       if (charCode < 100) {
         charCode = `0${charCode}`;
       }
-      dbQuery += `${charCode},`;
+      dbQuery += `,${charCode}`;
     }
     // Strip trailing comma and add a wildcard
     dbQuery = `${dbQuery.substr(0, dbQuery.length - 1)}%`;
-    if (searchQuery.length > 2) {
-      platform.db.all(`SELECT s._id, s.gurmukhi, s.english_ssk, s.english_bms, s.transliteration, s.shabad_no, s.source_id, s.ang_id, w.writer_english AS writer, r.raag_english AS raag FROM shabad s JOIN writer w ON s.writer_id = w._id JOIN raag r ON s.raag_id = r._id WHERE ${searchCol} LIKE '${dbQuery}'`, (err, rows) => {
+    if (searchQuery.length > 1) {
+      const query = `SELECT v.ID, v.Gurmukhi, v.English, v.Transliteration, s.ShabadID, v.SourceID, v.PageNo AS PageNo, w.WriterEnglish, r.RaagEnglish FROM Verse v
+        LEFT JOIN Shabad s ON s.VerseID = v.ID AND s.ShabadID < 5000000
+        LEFT JOIN Writer w USING(WriterID)
+        LEFT JOIN Raag r USING(RaagID)
+        WHERE ${searchCol} LIKE '${dbQuery}' LIMIT 0,20`;
+      platform.db.all(query, (err, rows) => {
         if (rows.length > 0) {
           $results.innerHTML = '';
           rows.forEach((item) => {
             const resultNode = [];
-            resultNode.push(h('span.gurmukhi', item.gurmukhi));
-            resultNode.push(h('span.transliteration.roman', item.transliteration));
-
-            const translationEnglish = platform.getUserPref('searchResults.translationEnglish') || 'ssk';
-            resultNode.push(h('span.translation.english.roman', item[`english_${translationEnglish}`]));
-            resultNode.push(h('span.meta.roman', `${sources[item.source_id]} - ${item.ang_id} - ${item.raag} - ${item.writer}`));
+            resultNode.push(h('span.gurmukhi', item.Gurmukhi));
+            resultNode.push(h('span.transliteration.roman', item.Transliteration));
+            resultNode.push(h('span.translation.english.roman', item.English));
+            resultNode.push(h('span.meta.roman', `${sources[item.SourceID]} - ${item.PageNo} - ${item.RaagEnglish} - ${item.WriterEnglish}`));
             const result = h(
               'li',
               {},
-              // eslint-disable-next-line no-underscore-dangle
               h(
                 'a.panktee.search-result',
                 {
-                  onclick: ev => this.clickResult(ev, item.shabad_no, item._id, item.gurmukhi),
+                  onclick: ev => this.clickResult(ev, item.ShabadID, item.ID, item.Gurmukhi),
                 },
                 resultNode));
             $results.appendChild(result);
@@ -264,7 +267,7 @@ module.exports = {
   },
 
   loadShabad(ShabadID, LineID) {
-    platform.db.all(`SELECT _id, gurmukhi FROM shabad WHERE shabad_no = '${ShabadID}'`, (err, rows) => {
+    platform.db.all(`SELECT v.ID, v.Gurmukhi FROM Verse v LEFT JOIN Shabad s ON v.ID = s.VerseID WHERE s.ShabadID = '${ShabadID}' ORDER BY v.ID`, (err, rows) => {
       if (rows.length > 0) {
         // clear the Shabad controller and empty out the currentShabad array
         $shabad.innerHTML = '';
@@ -274,21 +277,21 @@ module.exports = {
             'li',
             {},
             h(
-              `a#line${item._id}.panktee${(parseInt(LineID, 10) === item._id ? '.current.main' : '')}`,
+              `a#line${item.ID}.panktee${(parseInt(LineID, 10) === item.ID ? '.current.main' : '')}`,
               {
-                onclick: e => this.clickShabad(e, ShabadID, item._id),
+                onclick: e => this.clickShabad(e, ShabadID, item.ID),
               },
               [
                 h('i.fa.fa-fw.fa-home'),
                 ' ',
-                item.gurmukhi,
+                item.Gurmukhi,
               ]));
           // write the Panktee to the controller
           $shabad.appendChild(shabadLine);
           // append the currentShabad array
-          currentShabad.push(item._id);
-          if (LineID === item._id) {
-            currentLine = item._id;
+          currentShabad.push(item.ID);
+          if (LineID === item.ID) {
+            currentLine = item.ID;
           }
         });
         // scroll the Shabad controller to the current Panktee
