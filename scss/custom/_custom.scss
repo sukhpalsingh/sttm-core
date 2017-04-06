@@ -1,6 +1,9 @@
 $sttm-orange: #f39c1d;
 $sttm-blue: #29679b;
 
+$transition-time: 600ms;
+$transition-easing: cubic-bezier(0.165, 0.84, 0.44, 1);
+
 /*
   Fonts
 */
@@ -76,7 +79,7 @@ body.home #main-ui {
 #main-ui {
   height: calc(100% - 123px - 50px); //Full-height minus header and search and footer
   overflow: hidden;
-  transition: height 600ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: height $transition-time $transition-easing;
 }
 
 .block-list {
@@ -112,7 +115,7 @@ body.home #main-ui {
   background-color: #fff;
   height: 100%;
   position: absolute;
-  transition: transform 600ms cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: transform $transition-time $transition-easing;
   width: 100%;
   will-change: transform;
 }
