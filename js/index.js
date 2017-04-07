@@ -10,14 +10,14 @@ globals.platformScripts = 'js';
 if (window && window.process && window.process.type === 'renderer') {
   globals.electron = true;
   document.body.classList.add(process.platform);
-  globals.platformScripts = '../desktop_www/js/desktop_scripts.js';
+  globals.platformScripts = './js/desktop_scripts.js';
 }
 
 const platform = require(globals.platformScripts);
-const controller = require('../desktop_www/js/controller.js');
-const Settings = require('../desktop_www/js/settings');
-const search = require('./js/search');
-const changelog = require('./js/changelog');
+const controller = require('./js/controller.js');
+const Settings = require('./js/settings');
+const search = require('./core/js/search');
+const changelog = require('./core/js/changelog');
 const h = require('hyperscript');
 
 const settings = new Settings(platform.store);
@@ -108,7 +108,7 @@ document.querySelector('.name')
   .appendChild(h(
     'img.logo',
     {
-      src: 'img/sttm_logo_beta.png',
+      src: 'core/img/sttm_logo_beta.png',
       alt: 'STTM Logo',
       onclick: e => clickLogo(e),
     }));

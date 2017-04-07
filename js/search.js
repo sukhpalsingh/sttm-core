@@ -1,7 +1,7 @@
 /* global platform */
 
 // functions to be able to communicate with app.js
-const controller = require('../../desktop_www/js/controller');
+const controller = require('../../js/controller');
 // Gurmukhi keyboard layout file
 const keyboardLayout = require('./keyboard.json');
 // HTMLElement builder
