@@ -1,5 +1,5 @@
 /* eslint import/no-dynamic-require: 0, import/no-unresolved: 0 */
-/* global Mousetrap */
+/* global Mousetrap, platform */
 const globals = {};
 
 globals.electron = false;
@@ -9,15 +9,12 @@ globals.platformScripts = 'js';
 // Check if we're in Electron
 if (window && window.process && window.process.type === 'renderer') {
   globals.electron = true;
-  document.body.classList.add(process.platform);
-  globals.platformScripts = './js/desktop_scripts.js';
 }
 
-const platform = require(globals.platformScripts);
-const controller = require('./js/controller.js');
-const Settings = require('./js/settings');
-const search = require('./core/js/search');
-const changelog = require('./core/js/changelog');
+const controller = require('../../js/controller.js');
+const Settings = require('../../js/settings');
+const search = require('./search');
+const changelog = require('./changelog');
 const h = require('hyperscript');
 
 const settings = new Settings(platform.store);
