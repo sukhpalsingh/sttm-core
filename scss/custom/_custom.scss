@@ -57,21 +57,6 @@ body {
   overflow: auto;
 }
 
-#titlebar {
-  -webkit-app-region: drag;
-  height: 22px;
-  position: fixed;
-  width: 100%;
-
-  > * {
-    display: none;
-  }
-}
-
-#app-frame {
-  height: 100%;
-}
-
 body.home #main-ui {
   height: 0;
 }
@@ -356,5 +341,4 @@ body.update-ready #update-ready {
   "animations",
   "header",
   "search-bar",
-  "settings",
-  "win32";
+  "settings";
