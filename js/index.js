@@ -12,11 +12,11 @@ if (window && window.process && window.process.type === 'renderer') {
 }
 
 const controller = require('../../js/controller.js');
-const Settings = require('../../js/settings');
 const search = require('./search');
 const h = require('hyperscript');
 
-const settings = new Settings(platform.store);
+/* const Settings = require('../../js/settings');
+const settings = new Settings(platform.store); */
 
 const $mainUI = document.getElementById('main-ui');
 const $shabad = document.getElementById('shabad');
@@ -29,24 +29,10 @@ window.onload = () => {
   search.$search.focus();
 };
 
-function clickButtons(e) {
-  if (e.target.classList.contains('msg')) {
-    const $msg = e.target;
-    controller.sendText($msg.innerText);
-  }
-}
-
-function clickLogo() {
-  $mainUI.classList.remove('search');
-  document.body.classList.add('home');
-  search.$search.value = '';
-  search.$search.focus();
-}
-
 function escKey() {
-  if (settings.$settings.classList.contains('animated')) {
+  /* if (settings.$settings.classList.contains('animated')) {
     settings.closeSettings();
-  }
+  } */
 }
 
 function highlightLine(newLine) {
@@ -98,18 +84,7 @@ Mousetrap.bind(['down', 'right'], nextLine);
 Mousetrap.bind('/', () => search.$search.focus(), 'keyup');
 Mousetrap.bind('space', spaceBar);
 
-// HTMLElements
-document.querySelector('.name')
-  .appendChild(h(
-    'img.logo',
-    {
-      src: 'core/img/sttm_logo_beta.png',
-      alt: 'STTM Logo',
-      onclick: e => clickLogo(e),
-    }));
-
 // Event listeners
-$buttons.addEventListener('click', clickButtons);
 // Allow any link with "action" class to execute a function name in "data-action"
 Array.from($actions).forEach(el => el.addEventListener('click', e => eval(`${el.dataset.action}()`)));
 Array.from($headers).forEach(el => el.addEventListener('click', clickHeader));

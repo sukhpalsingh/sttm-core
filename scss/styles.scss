@@ -265,24 +265,6 @@ body.searchResults_meta .search-result .meta {
   }
 }
 
-#checking-for-update,
-#updating,
-#updating-text,
-#update-error,
-#no-update,
-#update-ready {
-  display: none;
-}
-
-body.checking-for-update #checking-for-update,
-body.updating #updating,
-body.updating #updating-text,
-body.update-error #update-error,
-body.no-update #no-update,
-body.update-ready #update-ready {
-  display: flex;
-}
-
 @media only screen and (min-width: 40em) {
   #results-block,
   #session-block {
