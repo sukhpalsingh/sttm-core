@@ -33,13 +33,6 @@ $gurmukhi-font-family: 'gurbaniakhar';
   font-family: $body-font-family;
 }
 
-.noselect {
-  cursor: default;
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Chrome/Safari/Opera */
-  user-select: none;
-}
-
 .nolink {
   cursor: default;
 }
@@ -56,8 +49,17 @@ html {
 }
 
 body {
+  background-color: #fff;
+  color: #222;
   font-family: $body-font-family;
+  -webkit-font-smoothing: antialiased;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  margin: 0;
   overflow: auto;
+  padding: 0;
+  position: relative;
 }
 
 #main-ui {
@@ -317,5 +319,6 @@ body.searchResults_meta .search-result .meta {
 @import
   "animations",
   "header",
+  "helpers",
   "search-bar",
   "settings";
