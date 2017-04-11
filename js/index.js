@@ -14,7 +14,6 @@ if (window && window.process && window.process.type === 'renderer') {
 const controller = require('../../js/controller.js');
 const Settings = require('../../js/settings');
 const search = require('./search');
-const changelog = require('./changelog');
 const h = require('hyperscript');
 
 const settings = new Settings(platform.store);
@@ -28,7 +27,6 @@ const $headers = document.querySelectorAll('.block-list header');
 
 window.onload = () => {
   search.$search.focus();
-  changelog.checkChangelogVersion();
 };
 
 function clickButtons(e) {

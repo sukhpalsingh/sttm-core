@@ -7,6 +7,7 @@ $transition-easing: cubic-bezier(0.165, 0.84, 0.44, 1);
 /*
   Fonts
 */
+$body-font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif !default;
 $gurmukhi-font-family: 'gurbaniakhar';
 
 @font-face {
@@ -33,6 +34,7 @@ $gurmukhi-font-family: 'gurbaniakhar';
 }
 
 .noselect {
+  cursor: default;
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Chrome/Safari/Opera */
   user-select: none;
@@ -54,11 +56,8 @@ html {
 }
 
 body {
+  font-family: $body-font-family;
   overflow: auto;
-}
-
-body.home #main-ui {
-  height: 0;
 }
 
 #main-ui {
@@ -282,10 +281,6 @@ body.update-error #update-error,
 body.no-update #no-update,
 body.update-ready #update-ready {
   display: flex;
-}
-
-.modal {
-  overflow-y: auto;
 }
 
 @media only screen and (min-width: 40em) {
