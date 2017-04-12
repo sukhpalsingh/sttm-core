@@ -63,7 +63,7 @@ body {
 }
 
 #main-ui {
-  height: calc(100% - 123px - 50px); //Full-height minus header and search and footer
+  height: calc(100% - 120px); //Full-height minus header, search, and footer
   overflow: hidden;
   transition: height $transition-time $transition-easing;
 }
@@ -226,7 +226,7 @@ body.searchResults_meta .search-result .meta {
 #footer {
   background-color: #fafafa;
   border-top: 1px solid #ebebeb;
-  height: 50px;
+  height: 40px;
 
   .menu-group > .menu-group-left,
   .menu-group > .menu-group-right {
@@ -249,71 +249,6 @@ body.searchResults_meta .search-result .meta {
       }
     }
   }
-
-  .medium {
-    display: none;
-  }
-}
-
-@media (min-width: 40em) {
-  #footer {
-    .medium {
-      display: initial;
-    }
-
-    .small {
-      display: none;
-    }
-  }
-}
-
-@media only screen and (min-width: 40em) {
-  #results-block,
-  #session-block {
-    max-width: none;
-  }
-
-  #results-block {
-    flex-basis: 50%;
-  }
-
-  #session-block {
-    flex-basis: 50%;
-  }
-
-  #main-ui {
-    &.shabad {
-      #top-blocks {
-        //flex-basis: 31.5px;
-      }
-
-      #shabad-block {
-        height: calc(100% - 31px);
-        transform: translateY(31px);
-      }
-
-      &.search {
-        #shabad-block {
-          transform: translateY(50%);
-        }
-
-        #results-block,
-        #session-block {
-          height: 100%;
-
-          > .grid-block:nth-of-type(2) {
-            max-height: calc(50% - 48px);
-          }
-        }
-
-        #shabad-block {
-          > .grid-block:nth-of-type(2) {
-            max-height: 50%;
-          }
-        }
-      }
-    }
-  }
 }
 
 @import
@@ -321,4 +256,6 @@ body.searchResults_meta .search-result .meta {
   "header",
   "helpers",
   "search-bar",
-  "settings";
+  "settings",
+  "theme-dark",
+  "theme-light";

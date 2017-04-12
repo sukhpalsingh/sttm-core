@@ -1,0 +1,30 @@
+$dark: #212121;
+$text-color: #999;
+
+.dark-theme {
+  #header {
+    background-color: $dark;
+    color: $text-color;
+
+    a {
+      color: $text-color;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
+
+  #search-container {
+    background-color: #333;
+
+    input {
+      color: $text-color;
+    }
+
+    > button {
+      background-color: #333;
+      color: $text-color;
+    }
+  }
+}

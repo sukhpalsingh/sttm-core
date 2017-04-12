@@ -1,0 +1,30 @@
+$light: #fafafa;
+$text-color: #222;
+
+.light-theme {
+  #header {
+    background-color: $light;
+    color: $text-color;
+
+    a {
+      color: $text-color;
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  #search-container {
+    background-color: #fff;
+
+    input {
+      color: $text-color;
+    }
+
+    > button {
+      background-color: #fff;
+      color: $text-color;
+    }
+  }
+}
