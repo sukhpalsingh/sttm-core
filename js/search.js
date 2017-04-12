@@ -1,7 +1,5 @@
 /* global platform */
 
-// functions to be able to communicate with app.js
-const controller = require('../../js/controller');
 // Gurmukhi keyboard layout file
 const keyboardLayout = require('./keyboard.json');
 // HTMLElement builder
@@ -37,7 +35,6 @@ const searchInputs = h('div#search-container', [
     },
     h('i.fa.fa-keyboard-o')),
 ]);
-document.querySelector('.search-div').appendChild(searchInputs);
 
 // build the Gurmukhi keyboard and append to HTML
 Object.keys(keyboardLayout).forEach((i) => {
@@ -79,7 +76,6 @@ Object.keys(keyboardLayout).forEach((i) => {
   kbPages.push(h(`div#gurmukhi-keyboard-page-${parseInt(i, 10) + 1}.page${(parseInt(i, 10) === 0 ? '.active' : '')}`, page));
 });
 const keyboard = h('div#gurmukhi-keyboard.gurmukhi', kbPages);
-document.querySelector('.search-div').appendChild(keyboard);
 
 const sources = {
   G: 'Guru Granth Sahib',
@@ -91,21 +87,26 @@ const sources = {
 };
 
 const $mainUI = document.getElementById('main-ui');
-const $search = document.getElementById('search');
 const $results = document.getElementById('results');
-const $gurmukhiKB = document.getElementById('gurmukhi-keyboard');
 const $session = document.getElementById('session');
 const $sessionContainer = document.getElementById('session-container');
 const $shabad = document.getElementById('shabad');
 const $shabadContainer = document.getElementById('shabad-container');
 
 module.exports = {
-  $gurmukhiKB,
-  $search,
   $results,
-  $kbPages: $gurmukhiKB.querySelectorAll('.page'),
   currentShabad,
   currentLine,
+
+  init() {
+    document.querySelector('.search-div').appendChild(searchInputs);
+    document.querySelector('.search-div').appendChild(keyboard);
+    this.$search = document.getElementById('search');
+    this.$gurmukhiKB = document.getElementById('gurmukhi-keyboard');
+    this.$kbPages = this.$gurmukhiKB.querySelectorAll('.page');
+
+    this.$search.focus();
+  },
 
   // eslint-disable-next-line no-unused-vars
   focusSearch(e) {
@@ -135,28 +136,28 @@ module.exports = {
   toggleGurmukhiKB(e) {
     const gurmukhiKBPref = platform.getPref('gurmukhiKB');
     // no need to set a preference if user is just re-opening after KB was auto-closed
-    if (!$gurmukhiKB.classList.contains('active') && gurmukhiKBPref) {
+    if (!this.$gurmukhiKB.classList.contains('active') && gurmukhiKBPref) {
       this.openGurmukhiKB();
     } else {
       platform.setPref('gurmukhiKB', !gurmukhiKBPref);
       this.focusSearch();
-      $gurmukhiKB.classList.toggle('active');
+      this.$gurmukhiKB.classList.toggle('active');
     }
   },
 
   openGurmukhiKB() {
-    $gurmukhiKB.classList.add('active');
+    this.$gurmukhiKB.classList.add('active');
   },
 
   closeGurmukhiKB() {
-    $gurmukhiKB.classList.remove('active');
+    this.$gurmukhiKB.classList.remove('active');
   },
 
   clickKBButton(e, action = false) {
     const button = e.currentTarget;
     if (action) {
       if (action === 'bksp') {
-        $search.value = $search.value.substring(0, $search.value.length - 1);
+        this.$search.value = this.$search.value.substring(0, this.$search.value.length - 1);
         this.typeSearch('gKB');
       } else if (action === 'close') {
         this.toggleGurmukhiKB();
@@ -170,7 +171,7 @@ module.exports = {
       // some buttons may have a different value than what is displayed on the key,
       // in which case use the data-value attribute
       const char = button.dataset.value || button.innerText;
-      $search.value += char;
+      this.$search.value += char;
       // simulate a physical keyboard button press
       this.typeSearch('gKB');
     }
@@ -178,7 +179,7 @@ module.exports = {
 
   // eslint-disable-next-line no-unused-vars
   search(e) {
-    const searchQuery = $search.value;
+    const searchQuery = this.$search.value;
     const searchCol = 'v.FirstLetterStr';
     let dbQuery = '';
     for (let x = 0, len = searchQuery.length; x < len; x += 1) {
@@ -259,7 +260,7 @@ module.exports = {
     // add the line to the top of the session block
     $session.insertBefore(sessionItem, $session.firstChild);
     // send the line to app.js, which will send it to the viewer window
-    controller.sendLine(ShabadID, LineID);
+    global.controller.sendLine(ShabadID, LineID);
     // load the Shabad into the controller
     this.loadShabad(ShabadID, LineID);
     // scroll the session block to the top to see the highlighted line
@@ -327,7 +328,7 @@ module.exports = {
       // Change line to click target
       const $panktee = e.target;
       currentLine = LineID;
-      controller.sendLine(ShabadID, LineID);
+      global.controller.sendLine(ShabadID, LineID);
       // Remove 'current' class from all Panktees
       Array.from(lines).forEach(el => el.classList.remove('current'));
       // Add 'current' to selected Panktee

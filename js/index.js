@@ -1,33 +1,12 @@
 /* eslint import/no-dynamic-require: 0, import/no-unresolved: 0 */
-/* global Mousetrap, platform */
-const globals = {};
-
-globals.electron = false;
-globals.cordova = false;
-globals.platformScripts = 'js';
-
-// Check if we're in Electron
-if (window && window.process && window.process.type === 'renderer') {
-  globals.electron = true;
-}
-
-const controller = require('../../js/controller.js');
+/* global Mousetrap */
 const search = require('./search');
-const h = require('hyperscript');
 
 /* const Settings = require('../../js/settings');
 const settings = new Settings(platform.store); */
 
-const $mainUI = document.getElementById('main-ui');
 const $shabad = document.getElementById('shabad');
 const $shabadContainer = document.getElementById('shabad-container');
-const $buttons = document.getElementById('buttons');
-const $actions = document.querySelectorAll('.action');
-const $headers = document.querySelectorAll('.block-list header');
-
-window.onload = () => {
-  search.$search.focus();
-};
 
 function escKey() {
   /* if (settings.$settings.classList.contains('animated')) {
@@ -73,10 +52,6 @@ function nextLine() {
   }
 }
 
-function clickHeader() {
-  $mainUI.classList.toggle('search');
-}
-
 // Keyboard shortcuts
 Mousetrap.bindGlobal('esc', escKey);
 Mousetrap.bind(['up', 'left'], prevLine);
@@ -84,7 +59,6 @@ Mousetrap.bind(['down', 'right'], nextLine);
 Mousetrap.bind('/', () => search.$search.focus(), 'keyup');
 Mousetrap.bind('space', spaceBar);
 
-// Event listeners
-// Allow any link with "action" class to execute a function name in "data-action"
-Array.from($actions).forEach(el => el.addEventListener('click', e => eval(`${el.dataset.action}()`)));
-Array.from($headers).forEach(el => el.addEventListener('click', clickHeader));
+module.exports = {
+  search,
+};
