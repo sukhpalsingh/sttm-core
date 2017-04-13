@@ -99,7 +99,10 @@ ul {
     cursor: pointer;
     display: block;
     line-height: normal;
+    overflow: hidden;
     padding: 0.3rem 1rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
