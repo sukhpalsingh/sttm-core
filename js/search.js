@@ -109,16 +109,16 @@ module.exports = {
     this.$search = document.getElementById('search');
     this.$results = document.getElementById('results');
     this.$session = document.getElementById('session');
-    this.$sessionContainer = document.getElementById('session-container');
+    this.$sessionContainer = document.querySelector('#session-page .block-list');
     this.$shabad = document.getElementById('shabad');
-    this.$shabadContainer = document.getElementById('shabad-container');
+    this.$shabadContainer = document.querySelector('#shabad-page .block-list');
     this.$gurmukhiKB = document.getElementById('gurmukhi-keyboard');
     this.$kbPages = this.$gurmukhiKB.querySelectorAll('.page');
     this.$navPages = document.querySelectorAll('.nav-page');
     this.$navPageLinks = document.querySelectorAll('#footer .menu-group-left a');
 
-    this.$search.focus();
     this.navPage('search');
+    this.$search.focus();
   },
 
   // eslint-disable-next-line no-unused-vars
@@ -267,14 +267,15 @@ module.exports = {
     this.loadShabad(ShabadID, LineID);
     // scroll the session block to the top to see the highlighted line
     this.$sessionContainer.scrollTop = 0;
+    this.navPage('shabad');
   },
 
   loadShabad(ShabadID, LineID) {
+    // clear the Shabad controller and empty out the currentShabad array
+    this.$shabad.innerHTML = '';
+    currentShabad.splice(0, currentShabad.length);
     platform.db.all(`SELECT v.ID, v.Gurmukhi FROM Verse v LEFT JOIN Shabad s ON v.ID = s.VerseID WHERE s.ShabadID = '${ShabadID}' ORDER BY v.ID`, (err, rows) => {
       if (rows.length > 0) {
-        // clear the Shabad controller and empty out the currentShabad array
-        this.$shabad.innerHTML = '';
-        currentShabad.splice(0, currentShabad.length);
         rows.forEach((item) => {
           const shabadLine = h(
             'li',
@@ -317,6 +318,7 @@ module.exports = {
     const sessionLines = this.$session.querySelectorAll('a.panktee');
     Array.from(sessionLines).forEach(el => el.classList.remove('current'));
     $panktee.classList.add('current');
+    this.navPage('shabad');
   },
 
   clickShabad(e, ShabadID, LineID) {

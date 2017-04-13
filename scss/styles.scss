@@ -24,9 +24,11 @@ $gurmukhi-font-family: 'gurbaniakhar';
   src: url('../../core/fonts/gurbaniakharheavytrue-webfont.ttf') format('truetype');
 }
 
-.gurmukhi {
-  font-family: $gurmukhi-font-family;
-  font-size: 1.1em;
+#navigator {
+  .gurmukhi {
+    font-family: $gurmukhi-font-family;
+    font-size: 1.1em;
+  }
 }
 
 .roman {
@@ -85,6 +87,7 @@ ul {
 .block-list {
   height: 100%;
   overflow-y: auto;
+  position: relative;
   width: 100%;
 
   ul {
@@ -96,6 +99,7 @@ ul {
   li > a {
     cursor: pointer;
     display: block;
+    line-height: normal;
     padding: 0.3rem 1rem;
   }
 }
@@ -144,7 +148,7 @@ body.searchResults_meta .search-result .meta {
 
 #session {
   a.panktee.current {
-    background-color: $sttm-blue;
+    background-color: $sttm-orange;
     color: #fff;
   }
 }
@@ -162,7 +166,7 @@ body.searchResults_meta .search-result .meta {
   }
 
   a.panktee.current {
-    background-color: $sttm-blue;
+    background-color: $sttm-orange;
     color: #fff;
 
     &:hover {
