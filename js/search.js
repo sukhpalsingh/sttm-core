@@ -86,24 +86,22 @@ const sources = {
   S: 'Vaaran',
 };
 
-const $mainUI = document.getElementById('main-ui');
-const $results = document.getElementById('results');
-const $session = document.getElementById('session');
-const $sessionContainer = document.getElementById('session-container');
-const $shabad = document.getElementById('shabad');
-const $shabadContainer = document.getElementById('shabad-container');
 
 module.exports = {
-  $results,
   currentShabad,
   currentLine,
 
   init() {
     document.querySelector('.search-div').appendChild(searchInputs);
     document.querySelector('.search-div').appendChild(keyboard);
-    this.$search = document.getElementById('search');
     this.$gurmukhiKB = document.getElementById('gurmukhi-keyboard');
     this.$kbPages = this.$gurmukhiKB.querySelectorAll('.page');
+    this.$search = document.getElementById('search');
+    this.$results = document.getElementById('results');
+    this.$session = document.getElementById('session');
+    this.$sessionContainer = document.getElementById('session-container');
+    this.$shabad = document.getElementById('shabad');
+    this.$shabadContainer = document.getElementById('shabad-container');
 
     this.$search.focus();
   },
@@ -114,18 +112,11 @@ module.exports = {
     if (platform.getPref('gurmukhiKB')) {
       this.openGurmukhiKB();
     }
-    if (!$mainUI.classList.contains('home')) {
-      // add the 'search' class to #main-ui for animating the results and session blocks open
-      $mainUI.classList.add('search');
-    }
   },
 
   typeSearch(e) {
     // if a key is pressed in the Gurmukhi KB or is one of the allowed keys
     if (e === 'gKB' || (e.which <= 90 && e.which >= 48) || allowedKeys.indexOf(e.which) > -1) {
-      // animate out of the home screen and pop up the results and session blocks
-      document.body.classList.remove('home');
-      $mainUI.classList.add('search');
       // don't search if there is less than a 100ms gap in between key presses
       clearTimeout(newSearchTimeout);
       newSearchTimeout = setTimeout(() => this.search(), 100);
@@ -199,7 +190,7 @@ module.exports = {
         WHERE ${searchCol} LIKE '${dbQuery}' LIMIT 0,20`;
       platform.db.all(query, (err, rows) => {
         if (rows.length > 0) {
-          $results.innerHTML = '';
+          this.$results.innerHTML = '';
           rows.forEach((item) => {
             const resultNode = [];
             resultNode.push(h('span.gurmukhi', item.Gurmukhi));
@@ -215,26 +206,22 @@ module.exports = {
                   onclick: ev => this.clickResult(ev, item.ShabadID, item.ID, item.Gurmukhi),
                 },
                 resultNode));
-            $results.appendChild(result);
+            this.$results.appendChild(result);
           });
         } else {
-          $results.innerHTML = '';
-          $results.appendChild(h(
+          this.$results.innerHTML = '';
+          this.$results.appendChild(h(
             'li.roman',
             h('span', 'No results')));
         }
       });
     } else {
-      $results.innerHTML = '';
+      this.$results.innerHTML = '';
     }
   },
 
   clickResult(e, ShabadID, LineID, Gurmukhi) {
     this.closeGurmukhiKB();
-    // animate up the Shabad controller block
-    $mainUI.classList.add('shabad');
-    // animate out the results and session blocks
-    $mainUI.classList.remove('search');
     const sessionItem = h(
       `li#session-${ShabadID}`,
       {},
@@ -245,7 +232,7 @@ module.exports = {
         },
         Gurmukhi));
     // get all the lines in the session block and remove the .current class from them
-    const sessionLines = $session.querySelectorAll('a.panktee');
+    const sessionLines = this.$session.querySelectorAll('a.panktee');
     Array.from(sessionLines).forEach(el => el.classList.remove('current'));
     // if the ShabadID of the clicked Panktee isn't in the sessionList variable,
     // add it to the variable
@@ -254,24 +241,24 @@ module.exports = {
     } else {
       // if the ShabadID is already in the session, just remove the HTMLElement,
       // and leave the sessionList
-      const line = $session.querySelector(`#session-${ShabadID}`);
-      $session.removeChild(line);
+      const line = this.$session.querySelector(`#session-${ShabadID}`);
+      this.$session.removeChild(line);
     }
     // add the line to the top of the session block
-    $session.insertBefore(sessionItem, $session.firstChild);
+    this.$session.insertBefore(sessionItem, this.$session.firstChild);
     // send the line to app.js, which will send it to the viewer window
     global.controller.sendLine(ShabadID, LineID);
     // load the Shabad into the controller
     this.loadShabad(ShabadID, LineID);
     // scroll the session block to the top to see the highlighted line
-    $sessionContainer.scrollTop = 0;
+    this.$sessionContainer.scrollTop = 0;
   },
 
   loadShabad(ShabadID, LineID) {
     platform.db.all(`SELECT v.ID, v.Gurmukhi FROM Verse v LEFT JOIN Shabad s ON v.ID = s.VerseID WHERE s.ShabadID = '${ShabadID}' ORDER BY v.ID`, (err, rows) => {
       if (rows.length > 0) {
         // clear the Shabad controller and empty out the currentShabad array
-        $shabad.innerHTML = '';
+        this.$shabad.innerHTML = '';
         currentShabad.splice(0, currentShabad.length);
         rows.forEach((item) => {
           const shabadLine = h(
@@ -288,7 +275,7 @@ module.exports = {
                 item.Gurmukhi,
               ]));
           // write the Panktee to the controller
-          $shabad.appendChild(shabadLine);
+          this.$shabad.appendChild(shabadLine);
           // append the currentShabad array
           currentShabad.push(item.ID);
           if (LineID === item.ID) {
@@ -296,15 +283,15 @@ module.exports = {
           }
         });
         // scroll the Shabad controller to the current Panktee
-        const curPankteeTop = $shabad.querySelector('.current').parentNode.offsetTop;
-        $shabadContainer.scrollTop = curPankteeTop;
+        const curPankteeTop = this.$shabad.querySelector('.current').parentNode.offsetTop;
+        this.$shabadContainer.scrollTop = curPankteeTop;
       }
     });
   },
 
   clearSession() {
-    while ($session.firstChild) {
-      $session.removeChild($session.firstChild);
+    while (this.$session.firstChild) {
+      this.$session.removeChild(this.$session.firstChild);
       sessionList.splice(0, sessionList.length);
     }
   },
@@ -312,13 +299,13 @@ module.exports = {
   clickSession(e, ShabadID, LineID) {
     const $panktee = e.target;
     this.loadShabad(ShabadID, LineID);
-    const sessionLines = $session.querySelectorAll('a.panktee');
+    const sessionLines = this.$session.querySelectorAll('a.panktee');
     Array.from(sessionLines).forEach(el => el.classList.remove('current'));
     $panktee.classList.add('current');
   },
 
   clickShabad(e, ShabadID, LineID) {
-    const lines = $shabad.querySelectorAll('a.panktee');
+    const lines = this.$shabad.querySelectorAll('a.panktee');
     if (e.target.classList.contains('fa-home')) {
       // Change main line
       const $panktee = e.target.parentNode;
