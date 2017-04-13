@@ -2,6 +2,7 @@
 
 // Gurmukhi keyboard layout file
 const keyboardLayout = require('./keyboard.json');
+const pageNavJSON = require('./footer-left.json');
 // HTMLElement builder
 const h = require('hyperscript');
 
@@ -77,6 +78,16 @@ Object.keys(keyboardLayout).forEach((i) => {
 });
 const keyboard = h('div#gurmukhi-keyboard.gurmukhi', kbPages);
 
+const navPageLinks = [];
+Object.keys(pageNavJSON).forEach((id) => {
+  navPageLinks.push(h('li',
+    h(`a#${id}-pageLink`,
+      {
+        onclick: () => module.exports.navPage(id) },
+      h(`i.fa.fa-${pageNavJSON[id].icon}`))));
+});
+const footerNav = h('ul.menu-bar', navPageLinks);
+
 const sources = {
   G: 'Guru Granth Sahib',
   D: 'Dasam Granth Sahib',
@@ -94,16 +105,20 @@ module.exports = {
   init() {
     document.querySelector('.search-div').appendChild(searchInputs);
     document.querySelector('.search-div').appendChild(keyboard);
-    this.$gurmukhiKB = document.getElementById('gurmukhi-keyboard');
-    this.$kbPages = this.$gurmukhiKB.querySelectorAll('.page');
+    document.querySelector('#footer .menu-group-left').appendChild(footerNav);
     this.$search = document.getElementById('search');
     this.$results = document.getElementById('results');
     this.$session = document.getElementById('session');
     this.$sessionContainer = document.getElementById('session-container');
     this.$shabad = document.getElementById('shabad');
     this.$shabadContainer = document.getElementById('shabad-container');
+    this.$gurmukhiKB = document.getElementById('gurmukhi-keyboard');
+    this.$kbPages = this.$gurmukhiKB.querySelectorAll('.page');
+    this.$navPages = document.querySelectorAll('.nav-page');
+    this.$navPageLinks = document.querySelectorAll('#footer .menu-group-left a');
 
     this.$search.focus();
+    this.navPage('search');
   },
 
   // eslint-disable-next-line no-unused-vars
@@ -321,5 +336,17 @@ module.exports = {
       // Add 'current' to selected Panktee
       $panktee.classList.add('current');
     }
+  },
+
+  navPage(page) {
+    this.$navPages.forEach(($navPage) => {
+      $navPage.classList.remove('active');
+    });
+    this.$navPageLinks.forEach(($navPageLink) => {
+      $navPageLink.classList.remove('active');
+    });
+    document.querySelector(`#${page}-page`).classList.add('active');
+    document.querySelector(`#${page}-pageLink`).classList.add('active');
+    document.querySelector('.navigator-header').innerText = pageNavJSON[page].label;
   },
 };

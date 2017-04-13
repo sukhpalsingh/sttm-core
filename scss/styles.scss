@@ -100,7 +100,7 @@ ul {
   }
 }
 
-#search-block {
+#search-page {
   .block-list {
     height: calc(100% - 40px);
   }
@@ -194,14 +194,18 @@ body.searchResults_meta .search-result .meta {
   }
 
   .menu-bar {
-    background-color: transparent;
+    list-style-type: none;
 
     > li {
+      display: inline-block;
+
       > a {
-        color: $sttm-blue;
+        cursor: pointer;
+        display: block;
         font-size: 0.8em;
-        line-height: 48px;
-        padding: 0 1rem;
+        line-height: 40px;
+        text-align: center;
+        width: 40px;
 
         .fa {
           line-height: 40px;
