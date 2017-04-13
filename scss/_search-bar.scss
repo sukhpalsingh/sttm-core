@@ -1,3 +1,7 @@
+.search-div {
+  position: relative;
+}
+
 #search-container {
   height: 40px;
   margin: 0;
@@ -26,16 +30,15 @@
 #gurmukhi-keyboard {
   background-color: #fff;
   border-radius: 2px;
+  bottom: 80px;
   box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
   display: none;
   font-size: 0;
   left: 50%;
-  max-width: 484px;
   overflow: hidden;
   position: absolute;
-  top: 50px;
   transform: translateX(-50%);
-  width: calc(100% - 40px);
+  width: calc(100%);
   z-index: 2;
 
   &.active {
