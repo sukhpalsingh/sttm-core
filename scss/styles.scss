@@ -62,57 +62,47 @@ body {
   position: relative;
 }
 
+ul {
+  margin: 0;
+  padding: 0;
+}
+
 #main-ui {
-  height: calc(100% - 120px); //Full-height minus header, search, and footer
+  height: calc(100% - 80px); //Full-height minus header, search, and footer
   overflow: hidden;
-  transition: height $transition-time $transition-easing;
 }
 
-.block-list {
-  header {
-    cursor: pointer;
-    margin: 0;
-    padding: 1em 0 0.5em 1rem;
-  }
-}
-
-.block-list {
-  li {
-    border-bottom-color: #ebebeb;
-
-    &:first-child {
-      border-top-color: #ebebeb;
-    }
-  }
-}
-
-#shabad-block {
-  border-top: 1px solid #ebebeb;
-  transform: translateY(100%);
-
-  .block-list {
-    margin: 0;
-    width: 100%;
-  }
-}
-
-#top-blocks,
-#shabad-block {
-  background-color: #fff;
+.nav-page {
+  display: none;
   height: 100%;
-  position: absolute;
-  transition: transform $transition-time $transition-easing;
   width: 100%;
-  will-change: transform;
+
+  &.active {
+    display: block;
+  }
 }
 
-/* SEARCH RESULTS */
-#results-block {
-  border-right: 1px solid #ebebeb;
+.block-list {
+  height: 100%;
+  overflow-y: auto;
+  width: 100%;
 
-  .block-list {
+  ul {
+    list-style-type: none;
     margin: 0;
-    width: 100%;
+    padding: 0;
+  }
+
+  li > a {
+    cursor: pointer;
+    display: block;
+    padding: 0.3rem 1rem;
+  }
+}
+
+#search-block {
+  .block-list {
+    height: calc(100% - 40px);
   }
 }
 
@@ -123,7 +113,6 @@ body {
   }
 
   .gurmukhi {
-    color: #00669b;
     display: block;
     font-weight: bold;
     overflow: hidden;
@@ -151,33 +140,6 @@ body.searchResults_transliteration .search-result .transliteration,
 body.searchResults_translationEnglish .search-result .translation.english,
 body.searchResults_meta .search-result .meta {
   display: block;
-}
-
-#session-block {
-  .block-list {
-    margin: 0;
-    width: 100%;
-  }
-}
-
-/* SESSION WINDOW */
-.block-list ul.right {
-  color: #666;
-  cursor: default;
-  float: right;
-  font-size: 0.8em;
-  font-weight: bold;
-  margin-bottom: 0;
-  text-transform: uppercase;
-
-  li {
-    border: 0;
-
-    a {
-      line-height: 31px;
-      padding: 0 1rem;
-    }
-  }
 }
 
 #session {
@@ -224,8 +186,6 @@ body.searchResults_meta .search-result .meta {
 }
 
 #footer {
-  background-color: #fafafa;
-  border-top: 1px solid #ebebeb;
   height: 40px;
 
   .menu-group > .menu-group-left,
@@ -244,7 +204,7 @@ body.searchResults_meta .search-result .meta {
         padding: 0 1rem;
 
         .fa {
-          line-height: 47px;
+          line-height: 40px;
         }
       }
     }
@@ -253,6 +213,7 @@ body.searchResults_meta .search-result .meta {
 
 @import
   "animations",
+  "forms",
   "header",
   "helpers",
   "search-bar",

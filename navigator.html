@@ -1,7 +1,7 @@
 <div id="header">
   <nav class="global-nav">
     <!-- <a href="#" class="menu-button">
-      
+
     </a> -->
     <div class="navigator-header">SikhiToTheMax</div>
     <!-- <ul class="right no-bullet noselect" id="buttons">
@@ -9,49 +9,25 @@
     </ul> -->
   </nav>
 </div>
-<div class="search-div"></div>
-<div id="main-ui" class="vertical grid-block noselect">
-  <div class="grid-block vertical medium-horizontal" id="top-blocks">
-    <div class="grid-block vertical order-1 medium-6" id="results-block">
-      <div class="grid-block shrink">
-        <section class="block-list">
-          <header>Search Results</header>
-        </section>
-      </div>
-      <div class="grid-block">
-        <section class="block-list">
-          <ul id="results" class="gurmukhi"></ul>
-        </section>
-      </div>
-    </div>
-    <div class="grid-block vertical order-2 medium-6" id="session-block">
-      <div class="grid-block shrink">
-        <section class="block-list">
-          <ul class="right"><li><a href="#" class="action" data-action="search.clearSession"><i class="fa fa-trash"></i></a></li></ul>
-          <header>Recent Shabads</header>
-        </section>
-      </div>
-      <div class="grid-block" id="session-container">
-        <section class="block-list">
-          <ul id="session" class="gurmukhi"></ul>
-        </section>
-      </div>
-    </div>
+<div id="main-ui">
+  <div class="nav-page active" id="search-block">
+    <div class="search-div"></div>
+    <section class="block-list">
+      <ul id="results" class="gurmukhi"></ul>
+    </section>
   </div>
-  <div class="grid-block vertical" id="shabad-block">
-    <div class="grid-block shrink">
-      <section class="block-list">
-        <header>Current Shabad</header>
-      </section>
-    </div>
-    <div class="grid-block" id="shabad-container">
-      <section class="block-list">
-        <ul id="shabad" class="gurmukhi"></ul>
-      </section>
-    </div>
+  <div class="nav-page" id="session-block">
+    <section class="block-list">
+      <ul id="session" class="gurmukhi"></ul>
+    </section>
+  </div>
+  <div class="nav-page" id="shabad-block">
+    <section class="block-list">
+      <ul id="shabad" class="gurmukhi"></ul>
+    </section>
   </div>
 </div>
-<div id="footer" class="shrink collapse grid-content noselect">
+<div id="footer">
   <div class="menu-group">
     <div class="menu-group-left">
       <ul class="menu-bar"></ul>
