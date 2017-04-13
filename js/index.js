@@ -5,9 +5,6 @@ const search = require('./search');
 /* const Settings = require('../../js/settings');
 const settings = new Settings(platform.store); */
 
-const $shabad = document.getElementById('shabad');
-const $shabadContainer = document.getElementById('shabad-container');
-
 function escKey() {
   /* if (settings.$settings.classList.contains('animated')) {
     settings.closeSettings();
@@ -15,23 +12,23 @@ function escKey() {
 }
 
 function highlightLine(newLine) {
-  const $line = $shabad.querySelector(`#line${newLine}`);
+  const $line = search.$shabad.querySelector(`#line${newLine}`);
   $line.click();
   const curPankteeTop = $line.parentNode.offsetTop;
   const curPankteeHeight = $line.parentNode.offsetHeight;
-  const containerTop = $shabadContainer.scrollTop;
-  const containerHeight = $shabadContainer.offsetHeight;
+  const containerTop = search.$shabadContainer.scrollTop;
+  const containerHeight = search.$shabadContainer.offsetHeight;
 
   if (containerTop > curPankteeTop) {
-    $shabadContainer.scrollTop = curPankteeTop;
+    search.$shabadContainer.scrollTop = curPankteeTop;
   }
   if (containerTop + containerHeight < curPankteeTop + curPankteeHeight) {
-    $shabadContainer.scrollTop = (curPankteeTop - containerHeight) + curPankteeHeight;
+    search.$shabadContainer.scrollTop = (curPankteeTop - containerHeight) + curPankteeHeight;
   }
 }
 
 function spaceBar(e) {
-  const mainLineID = $shabad.querySelector('a.panktee.main').dataset.lineId;
+  const mainLineID = search.$shabad.querySelector('a.panktee.main').dataset.lineId;
   highlightLine(mainLineID);
   e.preventDefault();
 }

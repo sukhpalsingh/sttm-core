@@ -14,7 +14,6 @@ const allowedKeys = [
 ];
 const sessionList = [];
 const currentShabad = [];
-let currentLine;
 const kbPages = [];
 let newSearchTimeout;
 
@@ -100,7 +99,6 @@ const sources = {
 
 module.exports = {
   currentShabad,
-  currentLine,
 
   init() {
     document.querySelector('.search-div').appendChild(searchInputs);
@@ -283,6 +281,7 @@ module.exports = {
             h(
               `a#line${item.ID}.panktee${(parseInt(LineID, 10) === item.ID ? '.current.main' : '')}`,
               {
+                'data-line-id': item.ID,
                 onclick: e => this.clickShabad(e, ShabadID, item.ID),
               },
               [
@@ -295,7 +294,7 @@ module.exports = {
           // append the currentShabad array
           currentShabad.push(item.ID);
           if (LineID === item.ID) {
-            currentLine = item.ID;
+            this.currentLine = item.ID;
           }
         });
         // scroll the Shabad controller to the current Panktee
@@ -331,7 +330,7 @@ module.exports = {
     } else if (e.target.classList.contains('panktee')) {
       // Change line to click target
       const $panktee = e.target;
-      currentLine = LineID;
+      this.currentLine = LineID;
       global.controller.sendLine(ShabadID, LineID);
       // Remove 'current' class from all Panktees
       Array.from(lines).forEach(el => el.classList.remove('current'));
