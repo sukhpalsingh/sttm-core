@@ -38,6 +38,19 @@ $text-color: #222;
 
   #footer {
     background-color: #fafafa;
+
+    a {
+      color: $text-color;
+
+      &.active,
+      &:hover {
+        background-color: #ccc;
+      }
+
+      &.active {
+        color: $sttm-blue;
+      }
+    }
   }
 
   ::-webkit-scrollbar {
