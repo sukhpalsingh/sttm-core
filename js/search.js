@@ -234,6 +234,7 @@ module.exports = {
   },
 
   clickResult(e, ShabadID, LineID, Gurmukhi) {
+    document.body.classList.remove('home');
     this.closeGurmukhiKB();
     const sessionItem = h(
       `li#session-${ShabadID}`,
