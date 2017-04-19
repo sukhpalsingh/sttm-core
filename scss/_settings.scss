@@ -15,16 +15,17 @@
     padding: 0;
 
     h1 {
-      box-shadow: 0 0 5px rgba(0,0,0,0.25);
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
       font-size: 1.75rem;
       font-weight: bold;
       line-height: 3.75rem;
       margin-top: 0;
       text-align: center;
     }
+
     a {
       color: #666;
-      font-size: 2.50rem;
+      font-size: 2.5rem;
       line-height: 3.75rem;
       position: absolute;
       right: 0;
@@ -33,6 +34,7 @@
       width: 3.75rem;
     }
   }
+
   .settings-container {
     padding: 2rem;
 
@@ -55,11 +57,12 @@
             background-color: $sttm-orange;
             color: #fff;
             font-weight: 700;
-            text-shadow: 0 1px 0 rgba(0,0,0,0.1);
+            text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
           }
         }
       }
     }
+
     .options {
       .settings-tab {
         display: none;
@@ -67,6 +70,7 @@
         &.active {
           display: block;
         }
+
         .settings-section {
           border-bottom: 1px solid #e8e8e8;
           padding: 1rem;
