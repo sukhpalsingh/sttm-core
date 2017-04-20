@@ -50,11 +50,13 @@ function nextLine() {
 }
 
 // Keyboard shortcuts
-Mousetrap.bindGlobal('esc', escKey);
-Mousetrap.bind(['up', 'left'], prevLine);
-Mousetrap.bind(['down', 'right'], nextLine);
-Mousetrap.bind('/', () => search.$search.focus(), 'keyup');
-Mousetrap.bind('space', spaceBar);
+if (typeof Mousetrap !== 'undefined') {
+  Mousetrap.bindGlobal('esc', escKey);
+  Mousetrap.bind(['up', 'left'], prevLine);
+  Mousetrap.bind(['down', 'right'], nextLine);
+  Mousetrap.bind('/', () => search.$search.focus(), 'keyup');
+  Mousetrap.bind('space', spaceBar);
+}
 
 module.exports = {
   menu,
