@@ -71,39 +71,67 @@ ul {
 
 #main-ui {
   height: calc(100% - 80px); //Full-height minus header, search, and footer
+  position: relative;
 }
 
-.nav-page {
+.nav-page,
+.takeover-page {
   display: none;
   height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
   width: 100%;
 
   &.active {
     display: block;
   }
+
+  .block-list {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
-.block-list {
-  height: 100%;
-  overflow-y: auto;
-  position: relative;
-  width: 100%;
+.nav-page {
+  z-index: 2;
 
-  ul {
-    list-style-type: none;
+  .block-list li:first-child {
+    border-top: none;
+  }
+
+  .block-list {
+    height: 100%;
     margin: 0;
-    padding: 0;
-  }
+    overflow-y: auto;
+    position: relative;
+    width: 100%;
 
-  li > a {
-    cursor: pointer;
-    display: block;
-    line-height: normal;
-    overflow: hidden;
-    padding: 0.3rem 1rem;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    li {
+      border-bottom: none;
+    }
+
+    li > a {
+      cursor: pointer;
+      display: block;
+      line-height: normal;
+      overflow: hidden;
+      padding: 0.3rem 1rem;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
+}
+
+.takeover-page {
+  overflow-y: auto;
+  z-index: 3;
 }
 
 #search-page {
@@ -222,6 +250,7 @@ body.searchResults_meta .search-result .meta {
 }
 
 @import
+  "foundation/foundation",
   "animations",
   "forms",
   "header",

@@ -1,0 +1,15 @@
+{
+  "app": {
+    "title": "App Settings",
+    "settings": {
+      "theme": {
+        "title": "App Theme",
+        "type": "radio",
+        "options": {
+          "light-theme": "Light Theme",
+          "dark-theme": "Dark Theme"
+        }
+      }
+    }
+  }
+}

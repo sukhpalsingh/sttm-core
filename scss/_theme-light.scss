@@ -9,13 +9,15 @@ $text-color: #222;
     a {
       color: $text-color;
 
-      &:hover {
+      &:hover,
+      &.active {
         background-color: rgba(0, 0, 0, 0.1);
       }
     }
   }
 
-  .nav-page {
+  .nav-page,
+  .takeover-page {
     background-color: #fff;
   }
 

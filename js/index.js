@@ -1,6 +1,6 @@
-/* eslint import/no-dynamic-require: 0, import/no-unresolved: 0 */
 /* global Mousetrap */
 const search = require('./search');
+const menu = require('./menu');
 
 /* const Settings = require('../../js/settings');
 const settings = new Settings(platform.store); */
@@ -57,5 +57,6 @@ Mousetrap.bind('/', () => search.$search.focus(), 'keyup');
 Mousetrap.bind('space', spaceBar);
 
 module.exports = {
+  menu,
   search,
 };
