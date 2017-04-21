@@ -130,6 +130,7 @@ ul {
 }
 
 .takeover-page {
+  height: calc(100% + 40px);
   overflow-y: auto;
   z-index: 3;
 }
