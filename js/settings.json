@@ -23,6 +23,13 @@
           "display-transliteration": "Transliteration",
           "display-teeka": "Punjabi Teeka"
         }
+      },
+      "display-options": {
+        "title": "Display Options",
+        "type": "switch",
+        "options": {
+          "larivaar": "Larivaar"
+        }
       }
     }
   }

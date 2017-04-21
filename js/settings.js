@@ -92,6 +92,38 @@ Object.keys(settings).forEach((catKey) => {
         settingCat.appendChild(checkboxList);
         break;
       }
+      case 'switch': {
+        const switchList = h('ul');
+        Object.keys(setting.options).forEach((option) => {
+          const optionId = `setting-${catKey}-${settingKey}-${option}`;
+          const switchListAttrs = {
+            name: `setting-${catKey}-${settingKey}`,
+            onclick: (e) => {
+              const newVal = e.target.checked;
+              global.platform.setUserPref(`${catKey}.${settingKey}.${option}`, newVal);
+              updateCheckboxSetting(option);
+            },
+            type: 'checkbox',
+            value: option,
+          };
+          if (userPrefs[catKey][settingKey][option]) {
+            switchListAttrs.checked = true;
+          }
+          switchList.appendChild(
+            h('li',
+              [
+                h('span', setting.options[option]),
+                h('div.switch',
+                  [
+                    h(`input#${optionId}`,
+                      switchListAttrs),
+                    h('label',
+                      {
+                        htmlFor: optionId })])]));
+        });
+        settingCat.appendChild(switchList);
+        break;
+      }
       default:
         break;
     }
@@ -122,9 +154,12 @@ module.exports = {
             break;
 
           case 'checkbox':
+          case 'switch':
             Object.keys(setting.options).forEach((option) => {
               if (newUserPrefs[catKey][settingKey][option]) {
                 document.body.classList.add(option);
+              } else {
+                document.body.classList.remove(option);
               }
             });
             break;
