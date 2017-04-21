@@ -11,5 +11,19 @@
         }
       }
     }
+  },
+  "slide-layout": {
+    "title": "Slide Layout",
+    "settings": {
+      "fields": {
+        "title": "Fields to Display",
+        "type": "checkbox",
+        "options": {
+          "display-translation": "English Translation",
+          "display-transliteration": "Transliteration",
+          "display-teeka": "Punjabi Teeka"
+        }
+      }
+    }
   }
 }

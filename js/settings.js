@@ -12,6 +12,13 @@ function updateMultipleChoiceSetting(key, val) {
   }
 }
 
+function updateCheckboxSetting(val) {
+  document.body.classList.toggle(val);
+  if (global.electron) {
+    global.platform.ipc.send('update-settings');
+  }
+}
+
 const userPrefs = global.platform.getAllPrefs();
 
 const settingsPage = h('div#settings');
@@ -55,6 +62,36 @@ Object.keys(settings).forEach((catKey) => {
         settingCat.appendChild(radioList);
         break;
       }
+      case 'checkbox': {
+        const checkboxList = h('ul');
+        Object.keys(setting.options).forEach((option) => {
+          const optionId = `setting-${catKey}-${settingKey}-${option}`;
+          const checkboxListAttrs = {
+            name: `setting-${catKey}-${settingKey}`,
+            onclick: (e) => {
+              const newVal = e.target.checked;
+              global.platform.setUserPref(`${catKey}.${settingKey}.${option}`, newVal);
+              updateCheckboxSetting(option);
+            },
+            type: 'checkbox',
+            value: option,
+          };
+          if (userPrefs[catKey][settingKey][option]) {
+            checkboxListAttrs.checked = true;
+          }
+          checkboxList.appendChild(
+            h('li',
+              [
+                h(`input#${optionId}`,
+                  checkboxListAttrs),
+                h('label',
+                  {
+                    htmlFor: optionId },
+                  setting.options[option])]));
+        });
+        settingCat.appendChild(checkboxList);
+        break;
+      }
       default:
         break;
     }
@@ -77,13 +114,21 @@ module.exports = {
       Object.keys(cat.settings).forEach((settingKey) => {
         const setting = cat.settings[settingKey];
         switch (setting.type) {
-          case 'radio': {
+          case 'radio':
             Object.keys(setting.options).forEach((optionToRemove) => {
               document.body.classList.remove(optionToRemove);
             });
             document.body.classList.add(newUserPrefs[catKey][settingKey]);
             break;
-          }
+
+          case 'checkbox':
+            Object.keys(setting.options).forEach((option) => {
+              if (newUserPrefs[catKey][settingKey][option]) {
+                document.body.classList.add(option);
+              }
+            });
+            break;
+
           default:
             break;
         }
