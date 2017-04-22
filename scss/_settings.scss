@@ -8,3 +8,20 @@
     text-align: center;
   }
 }
+
+.switch input + label {
+  border-radius: 999px;
+}
+
+.block-list .range {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+
+  input::before {
+    content: attr(data-value);
+    display: inherit;
+    transform: translateX(-150%);
+  }
+}

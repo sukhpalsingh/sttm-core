@@ -19,6 +19,18 @@ function updateCheckboxSetting(val) {
   }
 }
 
+function updateRangeSetting(key, val) {
+  const option = ldGet(settings, key);
+  const optionKey = key.split('.').pop();
+  for (let i = option.min; i <= option.max; i += option.step) {
+    document.body.classList.remove(`${optionKey}-${i}`);
+  }
+  document.body.classList.add(`${optionKey}-${val}`);
+  if (global.electron) {
+    global.platform.ipc.send('update-settings');
+  }
+}
+
 const userPrefs = global.platform.getAllPrefs();
 
 const settingsPage = h('div#settings');
@@ -33,6 +45,36 @@ Object.keys(settings).forEach((catKey) => {
     settingCat.appendChild(
       h('header', setting.title));
     switch (setting.type) {
+      case 'checkbox': {
+        const checkboxList = h('ul');
+        Object.keys(setting.options).forEach((option) => {
+          const optionId = `setting-${catKey}-${settingKey}-${option}`;
+          const checkboxListAttrs = {
+            name: `setting-${catKey}-${settingKey}`,
+            onclick: (e) => {
+              const newVal = e.target.checked;
+              global.platform.setUserPref(`${catKey}.${settingKey}.${option}`, newVal);
+              updateCheckboxSetting(option);
+            },
+            type: 'checkbox',
+            value: option,
+          };
+          if (userPrefs[catKey][settingKey][option]) {
+            checkboxListAttrs.checked = true;
+          }
+          checkboxList.appendChild(
+            h('li',
+              [
+                h(`input#${optionId}`,
+                  checkboxListAttrs),
+                h('label',
+                  {
+                    htmlFor: optionId },
+                  setting.options[option])]));
+        });
+        settingCat.appendChild(checkboxList);
+        break;
+      }
       case 'radio': {
         const radioList = h('ul');
         Object.keys(setting.options).forEach((option) => {
@@ -62,34 +104,38 @@ Object.keys(settings).forEach((catKey) => {
         settingCat.appendChild(radioList);
         break;
       }
-      case 'checkbox': {
-        const checkboxList = h('ul');
-        Object.keys(setting.options).forEach((option) => {
-          const optionId = `setting-${catKey}-${settingKey}-${option}`;
-          const checkboxListAttrs = {
-            name: `setting-${catKey}-${settingKey}`,
-            onclick: (e) => {
-              const newVal = e.target.checked;
-              global.platform.setUserPref(`${catKey}.${settingKey}.${option}`, newVal);
-              updateCheckboxSetting(option);
+      case 'range': {
+        const rangeList = h('ul');
+        Object.keys(setting.options).forEach((optionKey) => {
+          const option = setting.options[optionKey];
+          const optionId = `setting-${catKey}-${settingKey}-${optionKey}`;
+          const switchListAttrs = {
+            'data-value': userPrefs[catKey][settingKey][optionKey],
+            max: option.max,
+            min: option.min,
+            oninput: (e) => {
+              const newVal = e.target.value;
+              e.target.dataset.value = newVal;
+              global.platform.setUserPref(`${catKey}.${settingKey}.${optionKey}`, newVal);
+              updateRangeSetting(`${catKey}.settings.${settingKey}.options.${optionKey}`, newVal);
             },
-            type: 'checkbox',
-            value: option,
+            step: option.step,
+            type: 'range',
+            value: userPrefs[catKey][settingKey][optionKey],
           };
-          if (userPrefs[catKey][settingKey][option]) {
-            checkboxListAttrs.checked = true;
-          }
-          checkboxList.appendChild(
+          rangeList.appendChild(
             h('li',
               [
-                h(`input#${optionId}`,
-                  checkboxListAttrs),
-                h('label',
-                  {
-                    htmlFor: optionId },
-                  setting.options[option])]));
+                h('span', option.title),
+                h('div.range',
+                  [
+                    h(`input#${optionId}`,
+                      switchListAttrs),
+                    h('label',
+                      {
+                        htmlFor: optionId })])]));
         });
-        settingCat.appendChild(checkboxList);
+        settingCat.appendChild(rangeList);
         break;
       }
       case 'switch': {
@@ -146,13 +192,6 @@ module.exports = {
       Object.keys(cat.settings).forEach((settingKey) => {
         const setting = cat.settings[settingKey];
         switch (setting.type) {
-          case 'radio':
-            Object.keys(setting.options).forEach((optionToRemove) => {
-              document.body.classList.remove(optionToRemove);
-            });
-            document.body.classList.add(newUserPrefs[catKey][settingKey]);
-            break;
-
           case 'checkbox':
           case 'switch':
             Object.keys(setting.options).forEach((option) => {
@@ -161,6 +200,22 @@ module.exports = {
               } else {
                 document.body.classList.remove(option);
               }
+            });
+            break;
+          case 'radio':
+            Object.keys(setting.options).forEach((optionToRemove) => {
+              document.body.classList.remove(optionToRemove);
+            });
+            document.body.classList.add(newUserPrefs[catKey][settingKey]);
+            break;
+
+          case 'range':
+            Object.keys(setting.options).forEach((optionKey) => {
+              const option = setting.options[optionKey];
+              for (let i = option.min; i <= option.max; i += option.step) {
+                document.body.classList.remove(`${optionKey}-${i}`);
+              }
+              document.body.classList.add(`${optionKey}-${newUserPrefs[catKey][settingKey][optionKey]}`);
             });
             break;
 

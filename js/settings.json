@@ -24,6 +24,36 @@
           "display-teeka": "Punjabi Teeka"
         }
       },
+      "font-sizes": {
+        "title": "Font Sizes",
+        "type": "range",
+        "options": {
+          "gurbani": {
+            "title": "Gurbani",
+            "max": 12,
+            "min": 1,
+            "step": 1
+          },
+          "translation": {
+            "title": "English Translation",
+            "max": 12,
+            "min": 1,
+            "step": 1
+          },
+          "transliteration": {
+            "title": "Transliteration",
+            "max": 12,
+            "min": 1,
+            "step": 1
+          },
+          "teeka": {
+            "title": "Punjabi Teeka",
+            "max": 12,
+            "min": 1,
+            "step": 1
+          }
+        }
+      },
       "display-options": {
         "title": "Display Options",
         "type": "switch",
