@@ -38,6 +38,20 @@ $text-color: #999;
     color: $text-color;
   }
 
+  .block-list {
+    li {
+      > a,
+      > span,
+      > label {
+        color: $text-color;
+
+        &:hover {
+          background-color: #444;
+        }
+      }
+    }
+  }
+
   #footer {
     background-color: $dark;
 
