@@ -26,6 +26,13 @@ const searchInputs = h('div#search-container', [
       onkeyup: e => module.exports.typeSearch(e),
     }),
   h(
+    'button#search-options-toggle',
+    {
+      type: 'button',
+      onclick: e => module.exports.toggleSearchOptions(e),
+    },
+    h('i.fa.fa-cog')),
+  h(
     'button#gurmukhi-keyboard-toggle',
     {
       type: 'button',
@@ -75,6 +82,21 @@ Object.keys(keyboardLayout).forEach((i) => {
 });
 const keyboard = h('div#gurmukhi-keyboard.gurmukhi', kbPages);
 
+const searchTypes = ['First Letter Start', 'First Letter Anywhere', 'Full Word (Gurmukhi)', 'English Translations (Full Word)', 'Transliteration', 'Ang'];
+
+const searchTypeOptions = searchTypes.map((string, value) => h('option', { value }, string));
+
+const searchOptions = h('div#search-options',
+  h('select#search-type',
+    {
+      onchange() {
+        global.platform.setPref('searchOptions.searchType', this.value);
+      },
+    },
+    searchTypeOptions));
+
+searchOptions.querySelector('#search-type').value = global.platform.getPref('searchOptions.searchType');
+
 const navPageLinks = [];
 Object.keys(pageNavJSON).forEach((id) => {
   navPageLinks.push(h('li',
@@ -101,7 +123,9 @@ module.exports = {
   init() {
     document.querySelector('.search-div').appendChild(searchInputs);
     document.querySelector('.search-div').appendChild(keyboard);
+    document.querySelector('.search-div').appendChild(searchOptions);
     document.querySelector('#footer .menu-group-left').appendChild(footerNav);
+    this.$searchPage = document.getElementById('search-page');
     this.$search = document.getElementById('search');
     this.$results = document.getElementById('results');
     this.$session = document.getElementById('session');
@@ -132,6 +156,11 @@ module.exports = {
       clearTimeout(newSearchTimeout);
       newSearchTimeout = setTimeout(() => this.search(), 100);
     }
+  },
+
+  // eslint-disable-next-line
+  toggleSearchOptions(e) {
+    this.$searchPage.classList.toggle('search-options-open');
   },
 
   // eslint-disable-next-line no-unused-vars

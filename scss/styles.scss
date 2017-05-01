@@ -127,48 +127,6 @@ ul {
   z-index: 3;
 }
 
-#search-page {
-  .block-list {
-    height: calc(100% - 40px);
-  }
-}
-
-.panktee.search-result {
-  span {
-    display: none;
-    line-height: normal;
-  }
-
-  .gurmukhi {
-    display: block;
-    font-weight: bold;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .translation,
-  .transliteration {
-    color: #222;
-    font-size: 0.8em;
-    line-height: 1.5em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .meta {
-    color: grey;
-    font-size: 0.9em;
-  }
-}
-
-body.searchResults_transliteration .search-result .transliteration,
-body.searchResults_translationEnglish .search-result .translation.english,
-body.searchResults_meta .search-result .meta {
-  display: block;
-}
-
 #session {
   a.panktee.current {
     background-color: $sttm-orange;
@@ -247,7 +205,7 @@ body.searchResults_meta .search-result .meta {
   "forms",
   "header",
   "helpers",
-  "search-bar",
+  "search",
   "settings",
   "theme-dark",
   "theme-light";
