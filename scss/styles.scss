@@ -35,14 +35,6 @@ $gurmukhi-font-family: 'gurbaniakhar';
   font-family: $body-font-family;
 }
 
-.nolink {
-  cursor: default;
-}
-
-.nolink:hover {
-  background-color: transparent !important;
-}
-
 /*
   Custom Styles
 */
@@ -118,7 +110,7 @@ ul {
     }
 
     li > a {
-      cursor: pointer;
+      cursor: default;
       display: block;
       line-height: normal;
       overflow: hidden;
@@ -235,7 +227,6 @@ body.searchResults_meta .search-result .meta {
       display: inline-block;
 
       > a {
-        cursor: pointer;
         display: block;
         font-size: 0.8em;
         line-height: 40px;

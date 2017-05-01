@@ -7,21 +7,28 @@
     margin-top: 0;
     text-align: center;
   }
-}
 
-.switch input + label {
-  border-radius: 999px;
-}
+  .block-list li {
+    a,
+    label {
+      cursor: default;
+    }
+  }
 
-.block-list .range {
-  position: absolute;
-  right: 1rem;
-  top: 50%;
-  transform: translateY(-50%);
+  .switch input + label {
+    border-radius: 999px;
+  }
 
-  input::before {
-    content: attr(data-value);
-    display: inherit;
-    transform: translateX(-150%);
+  .range {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+
+    input::before {
+      content: attr(data-value);
+      display: inherit;
+      transform: translateX(-150%);
+    }
   }
 }
