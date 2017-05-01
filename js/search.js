@@ -1,5 +1,3 @@
-/* global platform */
-
 // Gurmukhi keyboard layout file
 const keyboardLayout = require('./keyboard.json');
 const pageNavJSON = require('./footer-left.json');
@@ -122,7 +120,7 @@ module.exports = {
   // eslint-disable-next-line no-unused-vars
   focusSearch(e) {
     // open the Gurmukhi keyboard if it was previously open
-    if (platform.getPref('gurmukhiKB')) {
+    if (global.platform.getPref('gurmukhiKB')) {
       this.openGurmukhiKB();
     }
   },
@@ -138,12 +136,12 @@ module.exports = {
 
   // eslint-disable-next-line no-unused-vars
   toggleGurmukhiKB(e) {
-    const gurmukhiKBPref = platform.getPref('gurmukhiKB');
+    const gurmukhiKBPref = global.platform.getPref('gurmukhiKB');
     // no need to set a preference if user is just re-opening after KB was auto-closed
     if (!this.$gurmukhiKB.classList.contains('active') && gurmukhiKBPref) {
       this.openGurmukhiKB();
     } else {
-      platform.setPref('gurmukhiKB', !gurmukhiKBPref);
+      global.platform.setPref('gurmukhiKB', !gurmukhiKBPref);
       this.focusSearch();
       this.$gurmukhiKB.classList.toggle('active');
     }
@@ -201,7 +199,7 @@ module.exports = {
         LEFT JOIN Writer w USING(WriterID)
         LEFT JOIN Raag r USING(RaagID)
         WHERE ${searchCol} LIKE '${dbQuery}' LIMIT 0,20`;
-      platform.db.all(query, (err, rows) => {
+      global.platform.db.all(query, (err, rows) => {
         if (rows.length > 0) {
           this.$results.innerHTML = '';
           rows.forEach((item) => {
@@ -273,7 +271,7 @@ module.exports = {
     // clear the Shabad controller and empty out the currentShabad array
     this.$shabad.innerHTML = '';
     currentShabad.splice(0, currentShabad.length);
-    platform.db.all(`SELECT v.ID, v.Gurmukhi FROM Verse v LEFT JOIN Shabad s ON v.ID = s.VerseID WHERE s.ShabadID = '${ShabadID}' ORDER BY v.ID`, (err, rows) => {
+    global.platform.db.all(`SELECT v.ID, v.Gurmukhi FROM Verse v LEFT JOIN Shabad s ON v.ID = s.VerseID WHERE s.ShabadID = '${ShabadID}' ORDER BY v.ID`, (err, rows) => {
       if (rows.length > 0) {
         rows.forEach((item) => {
           const shabadLine = h(
