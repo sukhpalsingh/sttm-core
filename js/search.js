@@ -82,7 +82,7 @@ Object.keys(keyboardLayout).forEach((i) => {
 });
 const keyboard = h('div#gurmukhi-keyboard.gurmukhi', kbPages);
 
-const searchTypes = ['First Letter Start', 'First Letter Anywhere', 'Full Word (Gurmukhi)', 'English Translations (Full Word)', 'Transliteration', 'Ang'];
+const searchTypes = ['First Letter Start (Gurmukhi)', 'First Letter Anywhere (Gurmukhi)', 'Full Word (Gurmukhi)', 'English Translations (Full Word)'];
 const searchType = global.platform.getPref('searchOptions.searchType');
 
 const searchTypeOptions = searchTypes.map((string, value) => h('option', { value }, string));
@@ -91,8 +91,7 @@ const searchOptions = h('div#search-options',
   h('select#search-type',
     {
       onchange() {
-        module.exports.searchType = parseInt(this.value, 10);
-        global.platform.setPref('searchOptions.searchType', module.exports.searchType);
+        module.exports.changeSearchType(parseInt(this.value, 10));
       },
     },
     searchTypeOptions));
@@ -130,6 +129,7 @@ module.exports = {
     document.querySelector('#footer .menu-group-left').appendChild(footerNav);
     this.$searchPage = document.getElementById('search-page');
     this.$search = document.getElementById('search');
+    this.$searchType = document.getElementById('search-type');
     this.$results = document.getElementById('results');
     this.$session = document.getElementById('session');
     this.$sessionContainer = document.querySelector('#session-page .block-list');
@@ -142,6 +142,7 @@ module.exports = {
 
     this.navPage('search');
     this.$search.focus();
+    this.changeSearchType(this.searchType);
   },
 
   // eslint-disable-next-line no-unused-vars
@@ -164,6 +165,29 @@ module.exports = {
   // eslint-disable-next-line
   toggleSearchOptions(e) {
     this.$searchPage.classList.toggle('search-options-open');
+  },
+
+  changeSearchType(value) {
+    this.searchType = value;
+    this.search();
+    global.platform.setPref('searchOptions.searchType', this.searchType);
+    if (value >= 3) {
+      this.$search.classList.add('roman');
+      this.$search.classList.remove('gurmukhi');
+    } else {
+      this.$search.classList.remove('roman');
+      this.$search.classList.add('gurmukhi');
+    }
+    document.body.classList.remove('searchResults_translationEnglish', 'searchResults_transliteration');
+    switch (value) {
+      case 3:
+        document.body.classList.add('searchResults_translationEnglish');
+        break;
+      default:
+        break;
+    }
+    this.$search.placeholder = this.$searchType.options[this.$searchType.selectedIndex].label;
+    this.$search.focus();
   },
 
   // eslint-disable-next-line no-unused-vars

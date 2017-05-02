@@ -17,6 +17,11 @@
     margin: 0;
     position: relative;
     width: calc(100% - 80px);
+
+    &::-webkit-input-placeholder {
+      font-family: $body-font-family;
+      font-size: 0.8em;
+    }
   }
 
   > button {
