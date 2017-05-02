@@ -83,6 +83,7 @@ Object.keys(keyboardLayout).forEach((i) => {
 const keyboard = h('div#gurmukhi-keyboard.gurmukhi', kbPages);
 
 const searchTypes = ['First Letter Start', 'First Letter Anywhere', 'Full Word (Gurmukhi)', 'English Translations (Full Word)', 'Transliteration', 'Ang'];
+const searchType = global.platform.getPref('searchOptions.searchType');
 
 const searchTypeOptions = searchTypes.map((string, value) => h('option', { value }, string));
 
@@ -90,12 +91,13 @@ const searchOptions = h('div#search-options',
   h('select#search-type',
     {
       onchange() {
-        global.platform.setPref('searchOptions.searchType', this.value);
+        module.exports.searchType = parseInt(this.value, 10);
+        global.platform.setPref('searchOptions.searchType', module.exports.searchType);
       },
     },
     searchTypeOptions));
 
-searchOptions.querySelector('#search-type').value = global.platform.getPref('searchOptions.searchType');
+searchOptions.querySelector('#search-type').value = searchType;
 
 const navPageLinks = [];
 Object.keys(pageNavJSON).forEach((id) => {
@@ -119,6 +121,7 @@ const sources = {
 
 module.exports = {
   currentShabad,
+  searchType,
 
   init() {
     document.querySelector('.search-div').appendChild(searchInputs);
@@ -211,52 +214,38 @@ module.exports = {
   // eslint-disable-next-line no-unused-vars
   search(e) {
     const searchQuery = this.$search.value;
-    const searchCol = 'v.FirstLetterStr';
-    let dbQuery = '';
-    for (let x = 0, len = searchQuery.length; x < len; x += 1) {
-      let charCode = searchQuery.charCodeAt(x);
-      if (charCode < 100) {
-        charCode = `0${charCode}`;
-      }
-      dbQuery += `,${charCode}`;
-    }
-    // Add trailing wildcard
-    dbQuery += '%';
     if (searchQuery.length > 1) {
-      const query = `SELECT v.ID, v.Gurmukhi, v.English, v.Transliteration, s.ShabadID, v.SourceID, v.PageNo AS PageNo, w.WriterEnglish, r.RaagEnglish FROM Verse v
-        LEFT JOIN Shabad s ON s.VerseID = v.ID AND s.ShabadID < 5000000
-        LEFT JOIN Writer w USING(WriterID)
-        LEFT JOIN Raag r USING(RaagID)
-        WHERE ${searchCol} LIKE '${dbQuery}' LIMIT 0,20`;
-      global.platform.db.all(query, (err, rows) => {
-        if (rows.length > 0) {
-          this.$results.innerHTML = '';
-          rows.forEach((item) => {
-            const resultNode = [];
-            resultNode.push(h('span.gurmukhi', item.Gurmukhi));
-            resultNode.push(h('span.transliteration.roman', item.Transliteration));
-            resultNode.push(h('span.translation.english.roman', item.English));
-            resultNode.push(h('span.meta.roman', `${sources[item.SourceID]} - ${item.PageNo} - ${item.RaagEnglish} - ${item.WriterEnglish}`));
-            const result = h(
-              'li',
-              {},
-              h(
-                'a.panktee.search-result',
-                {
-                  onclick: ev => this.clickResult(ev, item.ShabadID, item.ID, item.Gurmukhi),
-                },
-                resultNode));
-            this.$results.appendChild(result);
-          });
-        } else {
-          this.$results.innerHTML = '';
-          this.$results.appendChild(h(
-            'li.roman',
-            h('span', 'No results')));
-        }
+      global.platform.search.search(searchQuery, this.searchType);
+    } else {
+      this.$results.innerHTML = '';
+    }
+  },
+
+  printResults(rows) {
+    if (rows.length > 0) {
+      this.$results.innerHTML = '';
+      rows.forEach((item) => {
+        const resultNode = [];
+        resultNode.push(h('span.gurmukhi', item.Gurmukhi));
+        resultNode.push(h('span.transliteration.roman', item.Transliteration));
+        resultNode.push(h('span.translation.english.roman', item.English));
+        resultNode.push(h('span.meta.roman', `${sources[item.SourceID]} - ${item.PageNo} - ${item.RaagEnglish} - ${item.WriterEnglish}`));
+        const result = h(
+          'li',
+          {},
+          h(
+            'a.panktee.search-result',
+            {
+              onclick: ev => this.clickResult(ev, item.ShabadID, item.ID, item.Gurmukhi),
+            },
+            resultNode));
+        this.$results.appendChild(result);
       });
     } else {
       this.$results.innerHTML = '';
+      this.$results.appendChild(h(
+        'li.roman',
+        h('span', 'No results')));
     }
   },
 
@@ -300,36 +289,36 @@ module.exports = {
     // clear the Shabad controller and empty out the currentShabad array
     this.$shabad.innerHTML = '';
     currentShabad.splice(0, currentShabad.length);
-    global.platform.db.all(`SELECT v.ID, v.Gurmukhi FROM Verse v LEFT JOIN Shabad s ON v.ID = s.VerseID WHERE s.ShabadID = '${ShabadID}' ORDER BY v.ID`, (err, rows) => {
-      if (rows.length > 0) {
-        rows.forEach((item) => {
-          const shabadLine = h(
-            'li',
-            {},
-            h(
-              `a#line${item.ID}.panktee${(parseInt(LineID, 10) === item.ID ? '.current.main' : '')}`,
-              {
-                'data-line-id': item.ID,
-                onclick: e => this.clickShabad(e, ShabadID, item.ID),
-              },
-              [
-                h('i.fa.fa-fw.fa-home'),
-                ' ',
-                item.Gurmukhi,
-              ]));
-          // write the Panktee to the controller
-          this.$shabad.appendChild(shabadLine);
-          // append the currentShabad array
-          currentShabad.push(item.ID);
-          if (LineID === item.ID) {
-            this.currentLine = item.ID;
-          }
-        });
-        // scroll the Shabad controller to the current Panktee
-        const curPankteeTop = this.$shabad.querySelector('.current').parentNode.offsetTop;
-        this.$shabadContainer.scrollTop = curPankteeTop;
+    global.platform.search.loadShabad(ShabadID, LineID);
+  },
+
+  printShabad(rows, ShabadID, LineID) {
+    rows.forEach((item) => {
+      const shabadLine = h(
+        'li',
+        {},
+        h(
+          `a#line${item.ID}.panktee${(parseInt(LineID, 10) === item.ID ? '.current.main' : '')}`,
+          {
+            'data-line-id': item.ID,
+            onclick: e => this.clickShabad(e, ShabadID, item.ID),
+          },
+          [
+            h('i.fa.fa-fw.fa-home'),
+            ' ',
+            item.Gurmukhi,
+          ]));
+      // write the Panktee to the controller
+      this.$shabad.appendChild(shabadLine);
+      // append the currentShabad array
+      currentShabad.push(item.ID);
+      if (LineID === item.ID) {
+        this.currentLine = item.ID;
       }
     });
+    // scroll the Shabad controller to the current Panktee
+    const curPankteeTop = this.$shabad.querySelector('.current').parentNode.offsetTop;
+    this.$shabadContainer.scrollTop = curPankteeTop;
   },
 
   clearSession() {
