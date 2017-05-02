@@ -58,7 +58,8 @@
         "title": "Display Options",
         "type": "switch",
         "options": {
-          "larivaar": "Larivaar"
+          "larivaar": "Larivaar",
+          "left-align": "Left-Align"
         }
       }
     }
