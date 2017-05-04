@@ -35,14 +35,13 @@
 #gurmukhi-keyboard {
   background-color: #fff;
   border-radius: 2px;
-  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  bottom: 80px;
   display: none;
   font-size: 0;
   left: 0;
   overflow: hidden;
   position: absolute;
-  top: -176px;
-  width: calc(100%);
+  width: calc(100% + 2px);
   z-index: 2;
 
   &.active {
@@ -55,10 +54,6 @@
     &.active {
       display: block;
     }
-  }
-
-  .keyboard-row {
-    border-bottom: 2px solid #999;
   }
 
   .keyboard-row-set {

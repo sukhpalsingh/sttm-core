@@ -6,6 +6,21 @@
     line-height: 2;
     margin-top: 0;
     text-align: center;
+    display: none;
+  }
+  header {
+	  color: #757575;
+	  border-top: 1px #757575 solid;
+	  padding-top: 0.75em;
+	  letter-spacing: 0.2em;
+	  word-spacing: 0.2em;
+  }
+  h2:first-child + section.block-list > header:first-child {
+	  border-top: none;
+	  padding-top: 0;
+  }
+  li {
+	  border: none;
   }
 
   .block-list li {
