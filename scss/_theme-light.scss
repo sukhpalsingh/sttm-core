@@ -6,9 +6,6 @@ $base-text: #4e4e4e;
 
 .light-theme {
   #header {
-    background-color: $statusbar-bg;
-    color: $base-text;
-
     a {
       color: $base-text;
 
@@ -17,6 +14,11 @@ $base-text: #4e4e4e;
         background-color: $dialog-bg;
       }
     }
+  }
+
+  .navigator-header {
+    background-color: $statusbar-bg;
+    color: $base-text;
   }
 
   #gurmukhi-keyboard {

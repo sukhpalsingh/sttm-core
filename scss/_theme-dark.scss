@@ -15,9 +15,6 @@ $highlight-text: #cfd8dc;
   color: $text-base;
 
   #header {
-    background-color: $bg-main;
-    color: $text-base;
-
     a {
       color: $text-base;
 
@@ -26,6 +23,11 @@ $highlight-text: #cfd8dc;
         background-color: $bg-alt;
       }
     }
+  }
+
+  .navigator-header {
+    background-color: $bg-main;
+    color: $text-base;
   }
 
   #gurmukhi-keyboard {
