@@ -7,10 +7,12 @@ $text-dim: #9e9e9e;
 $border: #424242;
 $scrollbar: #999;
 $white: #fff;
-$accent: #4DB6AC;
+$accent: #4FC3F7;
+$highlight-bg: #37474F;
+$highlight-text: #CFD8DC;
 
 .dark-theme {
-	color: $text-base;
+  color: $text-base;
 
   #header {
     background-color: $bg-main;
@@ -27,14 +29,14 @@ $accent: #4DB6AC;
   }
 
   #gurmukhi-keyboard {
-	  background-color: $bg-main;
+    background-color: $bg-main;
   }
-	#gurmukhi-keyboard .keyboard-row:nth-child(2n-1) .keyboard-row-set:nth-child(1), #gurmukhi-keyboard .keyboard-row:nth-child(2n) .keyboard-row-set:nth-child(2) {
-		background-color: $bg-alt;
-	}
-	#gurmukhi-keyboard button {
-		color: $text-base;
-	}
+  #gurmukhi-keyboard .keyboard-row:nth-child(2n-1) .keyboard-row-set:nth-child(1), #gurmukhi-keyboard .keyboard-row:nth-child(2n) .keyboard-row-set:nth-child(2) {
+    background-color: $bg-alt;
+  }
+  #gurmukhi-keyboard button {
+    color: $text-base;
+  }
 
   .nav-page,
   .takeover-page {
@@ -51,32 +53,51 @@ $accent: #4DB6AC;
 
   }
 
+  .nav-page {
+    a.panktee.current {
+      background-color: #37474F !important;
+      color: $text-base !important;
+    }
+  }
+
   .switch > label {
     background: $text-dim;
   }
   .switch > label::after {
-	  background: $text-bright;
+    background: $text-bright;
     border-color: $text-dim;
   }
-	.switch input:checked + label {
-		background: $accent;
-	}
-	.switch input:checked + label::after {
-		background: $white;
-		border-color: $accent;
-	}
+  .switch input:checked + label {
+    background: $accent;
+  }
+  .switch input:checked + label::after {
+    background: $white;
+    border-color: $accent;
+  }
 
   #search-container {
-    background-color: $bg-bright;
 
     input {
       color: $text-bright;
     }
 
+    input:focus + div {
+      background: rgba(255,255,255,.12);
+    }
+
     > button {
-      background-color: $bg-bright;
       color: $text-bright;
     }
+  }
+
+  #search-container:focused {
+    background: white;
+  }
+
+  #search-options select {
+    background-color: $bg-main;
+    border: $bg-main;
+    color: $text-bright;
   }
 
   .panktee {
@@ -109,7 +130,7 @@ $accent: #4DB6AC;
       }
 
       &.active {
-        color: $sttm-orange;
+        color: $highlight-text;
       }
     }
   }

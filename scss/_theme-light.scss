@@ -1,41 +1,62 @@
-$light: #fafafa;
-$text-color: #222;
+$statusbar-bg: #e0e0e0;
+$nav-bg: #f5f5f5;
+$alt-bg: #fafafa;
+$dialog-bg: #fff;
+$base-text: #4e4e4e;
 
 .light-theme {
   #header {
-    background-color: $light;
-    color: $text-color;
+    background-color: $statusbar-bg;
+    color: $base-text;
 
     a {
-      color: $text-color;
+      color: $base-text;
 
       &:hover,
       &.active {
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: $dialog-bg;
       }
     }
   }
 
-  .nav-page,
+  #gurmukhi-keyboard {
+    background-color: $nav-bg;
+  }
+  #gurmukhi-keyboard .keyboard-row:nth-child(2n-1) .keyboard-row-set:nth-child(1), #gurmukhi-keyboard .keyboard-row:nth-child(2n) .keyboard-row-set:nth-child(2) {
+    background-color: $alt-bg;
+  }
+  #gurmukhi-keyboard button {
+    color: $base-text;
+  }
+
+  .nav-page {
+	background-color: $nav-bg;
+
+    a.panktee.current {
+      background-color: #c5deea !important;
+      color: $base-text !important;
+    }
+  }
   .takeover-page {
-    background-color: #fff;
+    background-color: $dialog-bg;
   }
 
   #search-container {
-    background-color: #fff;
-
     input {
-      color: $text-color;
+      color: $base-text;
+    }
+
+    input:focus + div {
+      background: $dialog-bg;
     }
 
     > button {
-      background-color: #fff;
-      color: $text-color;
+      color: $base-text;
     }
   }
 
   .panktee.search-result .gurmukhi {
-    color: $text-color;
+    color: $base-text;
   }
 
   .block-list {
@@ -43,28 +64,28 @@ $text-color: #222;
       > a,
       > span,
       > label {
-        color: $text-color;
+        color: $base-text;
 
         &:hover {
-          background-color: #f4f4f4;
+          background-color: $nav-bg;
         }
       }
     }
   }
 
   #footer {
-    background-color: #fafafa;
+    background-color: $statusbar-bg;
 
     a {
-      color: $text-color;
+      color: $base-text;
 
       &.active,
       &:hover {
-        background-color: #ccc;
+        background-color: $nav-bg;
       }
 
       &.active {
-        color: $sttm-blue;
+        color: #0277BD;
       }
     }
   }
@@ -78,7 +99,7 @@ $text-color: #222;
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: #999;
+    background-color: #BDBDBD;
     border-radius: 6px;
   }
 }

@@ -25,6 +25,7 @@ const searchInputs = h('div#search-container', [
       onfocus: e => module.exports.focusSearch(e),
       onkeyup: e => module.exports.typeSearch(e),
     }),
+  h('div#search-bg'),
   h(
     'button#search-options-toggle',
     {
