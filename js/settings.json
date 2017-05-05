@@ -20,8 +20,8 @@
         "type": "checkbox",
         "options": {
           "display-translation": "English Translation",
-          "display-transliteration": "Transliteration",
           "display-teeka": "Punjabi Teeka",
+          "display-transliteration": "Transliteration",
           "display-next-line": "Next Line"
         }
       },
