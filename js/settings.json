@@ -21,7 +21,8 @@
         "options": {
           "display-translation": "English Translation",
           "display-transliteration": "Transliteration",
-          "display-teeka": "Punjabi Teeka"
+          "display-teeka": "Punjabi Teeka",
+          "display-next-line": "Next Line"
         }
       },
       "font-sizes": {
