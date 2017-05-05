@@ -7,9 +7,9 @@ $text-dim: #9e9e9e;
 $border: #424242;
 $scrollbar: #999;
 $white: #fff;
-$accent: #4FC3F7;
-$highlight-bg: #37474F;
-$highlight-text: #CFD8DC;
+$accent: #4fc3f7;
+$highlight-bg: #37474f;
+$highlight-text: #cfd8dc;
 
 .dark-theme {
   color: $text-base;
@@ -31,9 +31,12 @@ $highlight-text: #CFD8DC;
   #gurmukhi-keyboard {
     background-color: $bg-main;
   }
-  #gurmukhi-keyboard .keyboard-row:nth-child(2n-1) .keyboard-row-set:nth-child(1), #gurmukhi-keyboard .keyboard-row:nth-child(2n) .keyboard-row-set:nth-child(2) {
+
+  #gurmukhi-keyboard .keyboard-row:nth-child(2n-1) .keyboard-row-set:nth-child(1),
+  #gurmukhi-keyboard .keyboard-row:nth-child(2n) .keyboard-row-set:nth-child(2) {
     background-color: $bg-alt;
   }
+
   #gurmukhi-keyboard button {
     color: $text-base;
   }
@@ -43,19 +46,18 @@ $highlight-text: #CFD8DC;
     background: $bg-alt;
 
     h2 {
-      color: $text-dim;
       border-top: 1px $border solid;
+      color: $text-dim;
     }
 
-    h2::first-child {
-        border-top: none;
+    h2:first-child {
+      border-top: none;
     }
-
   }
 
   .nav-page {
     a.panktee.current {
-      background-color: #37474F !important;
+      background-color: #37474f !important;
       color: $text-base !important;
     }
   }
@@ -63,26 +65,28 @@ $highlight-text: #CFD8DC;
   .switch > label {
     background: $text-dim;
   }
+
   .switch > label::after {
     background: $text-bright;
     border-color: $text-dim;
   }
+
   .switch input:checked + label {
     background: $accent;
   }
+
   .switch input:checked + label::after {
     background: $white;
     border-color: $accent;
   }
 
   #search-container {
-
     input {
       color: $text-bright;
     }
 
     input:focus + div {
-      background: rgba(255,255,255,.12);
+      background: rgba(255, 255, 255, 0.12);
     }
 
     > button {
@@ -90,7 +94,7 @@ $highlight-text: #CFD8DC;
     }
   }
 
-  #search-container:focused {
+  #search-container:focus {
     background: white;
   }
 

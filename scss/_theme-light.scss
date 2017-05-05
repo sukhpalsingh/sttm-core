@@ -22,21 +22,25 @@ $base-text: #4e4e4e;
   #gurmukhi-keyboard {
     background-color: $nav-bg;
   }
-  #gurmukhi-keyboard .keyboard-row:nth-child(2n-1) .keyboard-row-set:nth-child(1), #gurmukhi-keyboard .keyboard-row:nth-child(2n) .keyboard-row-set:nth-child(2) {
+
+  #gurmukhi-keyboard .keyboard-row:nth-child(2n-1) .keyboard-row-set:nth-child(1),
+  #gurmukhi-keyboard .keyboard-row:nth-child(2n) .keyboard-row-set:nth-child(2) {
     background-color: $alt-bg;
   }
+
   #gurmukhi-keyboard button {
     color: $base-text;
   }
 
   .nav-page {
-	background-color: $nav-bg;
+    background-color: $nav-bg;
 
     a.panktee.current {
       background-color: #c5deea !important;
       color: $base-text !important;
     }
   }
+
   .takeover-page {
     background-color: $dialog-bg;
   }
@@ -85,7 +89,7 @@ $base-text: #4e4e4e;
       }
 
       &.active {
-        color: #0277BD;
+        color: #0277bd;
       }
     }
   }
@@ -99,7 +103,7 @@ $base-text: #4e4e4e;
   }
 
   ::-webkit-scrollbar-thumb {
-    background-color: #BDBDBD;
+    background-color: #bdbdbd;
     border-radius: 6px;
   }
 }
