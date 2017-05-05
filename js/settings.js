@@ -148,6 +148,9 @@ Object.keys(settings).forEach((catKey) => {
               const newVal = e.target.checked;
               global.platform.setUserPref(`${catKey}.${settingKey}.${option}`, newVal);
               updateCheckboxSetting(option);
+              if (typeof global.controller[option] === 'function') {
+                global.controller[option]();
+              }
             },
             type: 'checkbox',
             value: option,

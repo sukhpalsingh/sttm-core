@@ -9,6 +9,13 @@
           "light-theme": "Light Theme",
           "dark-theme": "Dark Theme"
         }
+      },
+      "layout": {
+        "title": "App Layout",
+        "type": "switch",
+        "options": {
+          "presenter-view": "Presenter View"
+        }
       }
     }
   },

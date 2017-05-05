@@ -62,7 +62,7 @@ ul {
 }
 
 #main-ui {
-  height: calc(100% - 80px); //Full-height minus header, search, and footer
+  height: calc(100% - 40px); //Full-height minus header, search, and footer
   position: relative;
 }
 
@@ -93,7 +93,7 @@ ul {
   }
 
   .block-list {
-    height: 100%;
+    height: calc(100% - 40px);
     margin: 0;
     overflow-y: auto;
     position: relative;
@@ -170,38 +170,10 @@ ul {
   }
 }
 
-#footer {
-  height: 40px;
-
-  .menu-group > .menu-group-left,
-  .menu-group > .menu-group-right {
-    flex: 0 0 auto;
-  }
-
-  .menu-bar {
-    list-style-type: none;
-
-    > li {
-      display: inline-block;
-
-      > a {
-        display: block;
-        font-size: 0.8em;
-        line-height: 40px;
-        text-align: center;
-        width: 40px;
-
-        .fa {
-          line-height: 40px;
-        }
-      }
-    }
-  }
-}
-
 @import
   "foundation/foundation",
   "animations",
+  "footer",
   "forms",
   "header",
   "helpers",

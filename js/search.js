@@ -84,7 +84,7 @@ Object.keys(keyboardLayout).forEach((i) => {
 const keyboard = h('div#gurmukhi-keyboard.gurmukhi', kbPages);
 
 const searchTypes = ['First Letter Start (Gurmukhi)', 'First Letter Anywhere (Gurmukhi)', 'Full Word (Gurmukhi)', 'English Translations (Full Word)'];
-const searchType = global.platform.getPref('searchOptions.searchType');
+const searchType = parseInt(global.platform.getPref('searchOptions.searchType'), 10);
 
 const searchTypeOptions = searchTypes.map((string, value) => h('option', { value }, string));
 
@@ -390,6 +390,5 @@ module.exports = {
     });
     document.querySelector(`#${page}-page`).classList.add('active');
     document.querySelector(`#${page}-pageLink`).classList.add('active');
-    document.querySelector('.navigator-header').innerText = pageNavJSON[page].label;
   },
 };
