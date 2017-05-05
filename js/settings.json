@@ -41,14 +41,14 @@
             "min": 1,
             "step": 1
           },
-          "transliteration": {
-            "title": "Transliteration",
+          "teeka": {
+            "title": "Punjabi Teeka",
             "max": 12,
             "min": 1,
             "step": 1
           },
-          "teeka": {
-            "title": "Punjabi Teeka",
+          "transliteration": {
+            "title": "Transliteration",
             "max": 12,
             "min": 1,
             "step": 1
