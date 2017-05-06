@@ -128,6 +128,7 @@ module.exports = {
     document.querySelector('.search-div').appendChild(keyboard);
     document.querySelector('.search-div').appendChild(searchOptions);
     document.querySelector('#footer .menu-group-left').appendChild(footerNav);
+    this.$navigator = document.getElementById('navigator');
     this.$searchPage = document.getElementById('search-page');
     this.$search = document.getElementById('search');
     this.$searchType = document.getElementById('search-type');
@@ -195,21 +196,21 @@ module.exports = {
   toggleGurmukhiKB(e) {
     const gurmukhiKBPref = global.platform.getPref('gurmukhiKB');
     // no need to set a preference if user is just re-opening after KB was auto-closed
-    if (!this.$gurmukhiKB.classList.contains('active') && gurmukhiKBPref) {
+    if (!this.$navigator.classList.contains('kb-active') && gurmukhiKBPref) {
       this.openGurmukhiKB();
     } else {
       global.platform.setPref('gurmukhiKB', !gurmukhiKBPref);
       this.focusSearch();
-      this.$gurmukhiKB.classList.toggle('active');
+      this.$navigator.classList.toggle('kb-active');
     }
   },
 
   openGurmukhiKB() {
-    this.$gurmukhiKB.classList.add('active');
+    this.$navigator.classList.add('kb-active');
   },
 
   closeGurmukhiKB() {
-    this.$gurmukhiKB.classList.remove('active');
+    this.$navigator.classList.remove('kb-active');
   },
 
   clickKBButton(e, action = false) {

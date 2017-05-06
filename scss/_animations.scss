@@ -36,19 +36,21 @@
 }
 
 @keyframes blank {
-    0% {
-        opacity: 0;
-    }
-    100% {
-	    opacity: 0;
-    }
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes backlight {
-	0% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }
