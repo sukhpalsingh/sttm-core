@@ -200,8 +200,13 @@ module.exports = {
       this.openGurmukhiKB();
     } else {
       global.platform.setPref('gurmukhiKB', !gurmukhiKBPref);
-      this.focusSearch();
-      this.$navigator.classList.toggle('kb-active');
+      // Focus search
+      // This will also auto-show they KB if that's what the new pref is
+      this.$search.focus();
+      // Toggle KB if it was supposed to be turned off
+      if (gurmukhiKBPref) {
+        this.$navigator.classList.toggle('kb-active');
+      }
     }
   },
 
