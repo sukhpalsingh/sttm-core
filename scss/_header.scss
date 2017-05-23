@@ -8,7 +8,6 @@
   z-index: 10;
 
   a {
-    display: inline-block;
     height: 40px;
     text-align: center;
     width: 40px;
@@ -20,6 +19,15 @@
       position: absolute;
     }
   }
+}
+
+.navigator-left a {
+  display: none;
+}
+
+.desktop .navigator-left a.close-button.active,
+.mobile .navigator-left a.menu-button {
+  display: inline-block;
 }
 
 .navigator-header {
