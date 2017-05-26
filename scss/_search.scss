@@ -25,21 +25,30 @@
     }
   }
 
-  div {
-    height: 100%;
-    left: 0;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: -1;
-  }
-
   > button {
     display: inline-block;
     height: 40px;
     padding: 0.5rem;
     width: 40px;
   }
+}
+
+#search-bg {
+  height: 100%;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+}
+
+#db-download-progress {
+  background-color: green;
+  bottom: 0;
+  height: 0;
+  position: absolute;
+  transition: all $transition-time $transition-easing;
+  width: 0;
 }
 
 #gurmukhi-keyboard {
