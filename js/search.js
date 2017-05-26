@@ -20,8 +20,8 @@ const searchInputs = h('div#search-container', [
   h(
     'input#search.gurmukhi',
     {
+      disabled: 'disabled',
       type: 'search',
-      placeholder: 'Koj',
       onfocus: e => module.exports.focusSearch(e),
       onkeyup: e => module.exports.typeSearch(e),
     }),
@@ -40,6 +40,7 @@ const searchInputs = h('div#search-container', [
       onclick: e => module.exports.toggleGurmukhiKB(e),
     },
     h('i.fa.fa-keyboard-o')),
+  h('div#db-download-progress'),
 ]);
 
 // build the Gurmukhi keyboard and append to HTML
@@ -140,6 +141,7 @@ module.exports = {
     this.$searchPage = document.getElementById('search-page');
     this.$search = document.getElementById('search');
     this.$searchType = document.getElementById('search-type');
+    this.$dbDownloadProgress = document.getElementById('db-download-progress');
     this.$results = document.getElementById('results');
     this.$session = document.getElementById('session');
     this.$sessionContainer = document.querySelector('#session-page .block-list');
@@ -151,8 +153,28 @@ module.exports = {
     this.$navPageLinks = document.querySelectorAll('#footer .menu-group-left a');
 
     this.navPage('search');
+  },
+
+  offline(seconds) {
+    this.$search.placeholder = `Offline. Retrying database download in ${seconds}s`;
+    const newSeconds = seconds - 1;
+    if (newSeconds > -1) {
+      setTimeout(() => this.offline(newSeconds), 1000);
+    } else {
+      global.platform.downloadLatestDB(true);
+    }
+  },
+
+  initSearch() {
+    this.$dbDownloadProgress.style.height = 0;
+    this.$search.disabled = false;
     this.$search.focus();
     this.changeSearchType(this.searchType);
+  },
+
+  updateDLProgress(state) {
+    this.$dbDownloadProgress.style.height = '2px';
+    this.$dbDownloadProgress.style.width = `${state.percent * 100}%`;
   },
 
   // eslint-disable-next-line no-unused-vars
