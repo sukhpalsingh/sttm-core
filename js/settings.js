@@ -31,160 +31,163 @@ function updateRangeSetting(key, val) {
   }
 }
 
-const userPrefs = global.platform.getAllPrefs();
+function createSettingsPage(userPrefs) {
+  const settingsPage = h('div#settings');
+  Object.keys(settings).forEach((catKey) => {
+    const cat = settings[catKey];
+    settingsPage.appendChild(
+      h('h2', cat.title));
+    const settingCat = h('section.block-list');
 
-const settingsPage = h('div#settings');
-Object.keys(settings).forEach((catKey) => {
-  const cat = settings[catKey];
-  settingsPage.appendChild(
-    h('h2', cat.title));
-  const settingCat = h('section.block-list');
+    Object.keys(cat.settings).forEach((settingKey) => {
+      const setting = cat.settings[settingKey];
+      settingCat.appendChild(
+        h('header', setting.title));
+      switch (setting.type) {
+        case 'checkbox': {
+          const checkboxList = h('ul');
+          Object.keys(setting.options).forEach((option) => {
+            const optionId = `setting-${catKey}-${settingKey}-${option}`;
+            const checkboxListAttrs = {
+              name: `setting-${catKey}-${settingKey}`,
+              onclick: (e) => {
+                const newVal = e.target.checked;
+                global.platform.setUserPref(`${catKey}.${settingKey}.${option}`, newVal);
+                updateCheckboxSetting(option);
+              },
+              type: 'checkbox',
+              value: option,
+            };
+            if (userPrefs[catKey][settingKey][option]) {
+              checkboxListAttrs.checked = true;
+            }
+            checkboxList.appendChild(
+              h('li',
+                [
+                  h(`input#${optionId}`,
+                    checkboxListAttrs),
+                  h('label',
+                    {
+                      htmlFor: optionId },
+                    setting.options[option])]));
+          });
+          settingCat.appendChild(checkboxList);
+          break;
+        }
+        case 'radio': {
+          const radioList = h('ul');
+          Object.keys(setting.options).forEach((option) => {
+            const optionId = `setting-${catKey}-${settingKey}-${option}`;
+            const radioListAttrs = {
+              name: `setting-${catKey}-${settingKey}`,
+              onclick: () => {
+                global.platform.setUserPref(`${catKey}.${settingKey}`, option);
+                updateMultipleChoiceSetting(`${catKey}.settings.${settingKey}.options`, option);
+              },
+              type: 'radio',
+              value: option,
+            };
+            if (userPrefs[catKey][settingKey] === option) {
+              radioListAttrs.checked = true;
+            }
+            radioList.appendChild(
+              h('li',
+                [
+                  h(`input#${optionId}`,
+                    radioListAttrs),
+                  h('label',
+                    {
+                      htmlFor: optionId },
+                    setting.options[option])]));
+          });
+          settingCat.appendChild(radioList);
+          break;
+        }
+        case 'range': {
+          const rangeList = h('ul');
+          Object.keys(setting.options).forEach((optionKey) => {
+            const option = setting.options[optionKey];
+            const optionId = `setting-${catKey}-${settingKey}-${optionKey}`;
+            const switchListAttrs = {
+              'data-value': userPrefs[catKey][settingKey][optionKey],
+              max: option.max,
+              min: option.min,
+              oninput: (e) => {
+                const newVal = e.target.value;
+                e.target.dataset.value = newVal;
+                global.platform.setUserPref(`${catKey}.${settingKey}.${optionKey}`, newVal);
+                updateRangeSetting(`${catKey}.settings.${settingKey}.options.${optionKey}`, newVal);
+              },
+              step: option.step,
+              type: 'range',
+              value: userPrefs[catKey][settingKey][optionKey],
+            };
+            rangeList.appendChild(
+              h('li',
+                [
+                  h('span', option.title),
+                  h('div.range',
+                    [
+                      h(`input#${optionId}`,
+                        switchListAttrs),
+                      h('label',
+                        {
+                          htmlFor: optionId })])]));
+          });
+          settingCat.appendChild(rangeList);
+          break;
+        }
+        case 'switch': {
+          const switchList = h('ul');
+          Object.keys(setting.options).forEach((option) => {
+            const optionId = `setting-${catKey}-${settingKey}-${option}`;
+            const switchListAttrs = {
+              name: `setting-${catKey}-${settingKey}`,
+              onclick: (e) => {
+                const newVal = e.target.checked;
+                global.platform.setUserPref(`${catKey}.${settingKey}.${option}`, newVal);
+                updateCheckboxSetting(option);
+                if (typeof global.controller[option] === 'function') {
+                  global.controller[option]();
+                }
+              },
+              type: 'checkbox',
+              value: option,
+            };
+            if (userPrefs[catKey][settingKey][option]) {
+              switchListAttrs.checked = true;
+            }
+            switchList.appendChild(
+              h('li',
+                [
+                  h('span', setting.options[option]),
+                  h('div.switch',
+                    [
+                      h(`input#${optionId}`,
+                        switchListAttrs),
+                      h('label',
+                        {
+                          htmlFor: optionId })])]));
+          });
+          settingCat.appendChild(switchList);
+          break;
+        }
+        default:
+          break;
+      }
+      settingsPage.appendChild(settingCat);
+    });
 
-  Object.keys(cat.settings).forEach((settingKey) => {
-    const setting = cat.settings[settingKey];
-    settingCat.appendChild(
-      h('header', setting.title));
-    switch (setting.type) {
-      case 'checkbox': {
-        const checkboxList = h('ul');
-        Object.keys(setting.options).forEach((option) => {
-          const optionId = `setting-${catKey}-${settingKey}-${option}`;
-          const checkboxListAttrs = {
-            name: `setting-${catKey}-${settingKey}`,
-            onclick: (e) => {
-              const newVal = e.target.checked;
-              global.platform.setUserPref(`${catKey}.${settingKey}.${option}`, newVal);
-              updateCheckboxSetting(option);
-            },
-            type: 'checkbox',
-            value: option,
-          };
-          if (userPrefs[catKey][settingKey][option]) {
-            checkboxListAttrs.checked = true;
-          }
-          checkboxList.appendChild(
-            h('li',
-              [
-                h(`input#${optionId}`,
-                  checkboxListAttrs),
-                h('label',
-                  {
-                    htmlFor: optionId },
-                  setting.options[option])]));
-        });
-        settingCat.appendChild(checkboxList);
-        break;
-      }
-      case 'radio': {
-        const radioList = h('ul');
-        Object.keys(setting.options).forEach((option) => {
-          const optionId = `setting-${catKey}-${settingKey}-${option}`;
-          const radioListAttrs = {
-            name: `setting-${catKey}-${settingKey}`,
-            onclick: () => {
-              global.platform.setUserPref(`${catKey}.${settingKey}`, option);
-              updateMultipleChoiceSetting(`${catKey}.settings.${settingKey}.options`, option);
-            },
-            type: 'radio',
-            value: option,
-          };
-          if (userPrefs[catKey][settingKey] === option) {
-            radioListAttrs.checked = true;
-          }
-          radioList.appendChild(
-            h('li',
-              [
-                h(`input#${optionId}`,
-                  radioListAttrs),
-                h('label',
-                  {
-                    htmlFor: optionId },
-                  setting.options[option])]));
-        });
-        settingCat.appendChild(radioList);
-        break;
-      }
-      case 'range': {
-        const rangeList = h('ul');
-        Object.keys(setting.options).forEach((optionKey) => {
-          const option = setting.options[optionKey];
-          const optionId = `setting-${catKey}-${settingKey}-${optionKey}`;
-          const switchListAttrs = {
-            'data-value': userPrefs[catKey][settingKey][optionKey],
-            max: option.max,
-            min: option.min,
-            oninput: (e) => {
-              const newVal = e.target.value;
-              e.target.dataset.value = newVal;
-              global.platform.setUserPref(`${catKey}.${settingKey}.${optionKey}`, newVal);
-              updateRangeSetting(`${catKey}.settings.${settingKey}.options.${optionKey}`, newVal);
-            },
-            step: option.step,
-            type: 'range',
-            value: userPrefs[catKey][settingKey][optionKey],
-          };
-          rangeList.appendChild(
-            h('li',
-              [
-                h('span', option.title),
-                h('div.range',
-                  [
-                    h(`input#${optionId}`,
-                      switchListAttrs),
-                    h('label',
-                      {
-                        htmlFor: optionId })])]));
-        });
-        settingCat.appendChild(rangeList);
-        break;
-      }
-      case 'switch': {
-        const switchList = h('ul');
-        Object.keys(setting.options).forEach((option) => {
-          const optionId = `setting-${catKey}-${settingKey}-${option}`;
-          const switchListAttrs = {
-            name: `setting-${catKey}-${settingKey}`,
-            onclick: (e) => {
-              const newVal = e.target.checked;
-              global.platform.setUserPref(`${catKey}.${settingKey}.${option}`, newVal);
-              updateCheckboxSetting(option);
-              if (typeof global.controller[option] === 'function') {
-                global.controller[option]();
-              }
-            },
-            type: 'checkbox',
-            value: option,
-          };
-          if (userPrefs[catKey][settingKey][option]) {
-            switchListAttrs.checked = true;
-          }
-          switchList.appendChild(
-            h('li',
-              [
-                h('span', setting.options[option]),
-                h('div.switch',
-                  [
-                    h(`input#${optionId}`,
-                      switchListAttrs),
-                    h('label',
-                      {
-                        htmlFor: optionId })])]));
-        });
-        settingCat.appendChild(switchList);
-        break;
-      }
-      default:
-        break;
-    }
     settingsPage.appendChild(settingCat);
   });
-
-  settingsPage.appendChild(settingCat);
-});
+  return settingsPage;
+}
 
 module.exports = {
   init() {
-    document.querySelector('#menu-page').appendChild(settingsPage);
+    const userPrefs = global.platform.getAllPrefs();
+    this.settingsPage = createSettingsPage(userPrefs);
+    document.querySelector('#menu-page').appendChild(this.settingsPage);
     this.applySettings();
   },
 
