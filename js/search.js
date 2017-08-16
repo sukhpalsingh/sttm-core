@@ -85,7 +85,6 @@ Object.keys(keyboardLayout).forEach((i) => {
 const keyboard = h('div#gurmukhi-keyboard.gurmukhi', kbPages);
 
 const searchTypes = ['First Letter Start (Gurmukhi)', 'First Letter Anywhere (Gurmukhi)', 'Full Word (Gurmukhi)', 'English Translations (Full Word)'];
-const searchType = parseInt(global.platform.getPref('searchOptions.searchType'), 10);
 
 const searchTypeOptions = searchTypes.map((string, value) => h('option', { value }, string));
 
@@ -97,8 +96,6 @@ const searchOptions = h('div#search-options',
       },
     },
     searchTypeOptions));
-
-searchOptions.querySelector('#search-type').value = searchType;
 
 const navPageLinks = [];
 Object.keys(pageNavJSON).forEach((id) => {
@@ -130,9 +127,11 @@ document.body.addEventListener('click', (e) => {
 
 module.exports = {
   currentShabad,
-  searchType,
 
   init() {
+    this.searchType = parseInt(global.platform.getPref('searchOptions.searchType'), 10);
+    searchOptions.querySelector('#search-type').value = this.searchType;
+
     document.querySelector('.search-div').appendChild(searchInputs);
     document.querySelector('.search-div').appendChild(keyboard);
     document.querySelector('.search-div').appendChild(searchOptions);
