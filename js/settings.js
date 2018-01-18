@@ -2,6 +2,8 @@ const h = require('hyperscript');
 const ldGet = require('lodash.get');
 const settings = require('./settings.json');
 
+const defaultPrefs = global.platform.getDefaults().userPrefs;
+
 function updateMultipleChoiceSetting(key, val) {
   Object.keys(ldGet(settings, key)).forEach((optionToRemove) => {
     document.body.classList.remove(optionToRemove);
@@ -125,7 +127,10 @@ function createSettingsPage(userPrefs) {
             rangeList.appendChild(
               h('li',
                 [
-                  h('span', option.title),
+                  h('span', [
+                    option.title,
+                    h('i', `(Default: ${defaultPrefs[catKey][settingKey][optionKey]})`),
+                  ]),
                   h('div.range',
                     [
                       h(`input#${optionId}`,

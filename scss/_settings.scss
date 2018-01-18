@@ -27,6 +27,12 @@
   }
 
   .block-list li {
+    span i {
+      color: #999;
+      font-size: 0.8em;
+      margin-left: 3px;
+    }
+
     a,
     label {
       cursor: default;
