@@ -83,6 +83,33 @@ ul {
     margin-left: 0;
     margin-right: 0;
   }
+
+  .list-icon {
+    padding-right: 10px;
+  }
+
+  .announcement-box {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .announcement-text {
+    border-radius: 10px;
+    display: inline-block;
+    min-height: 80px;
+    outline: none;
+    padding: 10px;
+    width: 100%;
+  }
+
+  select {
+    outline: none;
+  }
+
+  .announcement-slide-btn {
+    display: block;
+    width: 100%;
+  }
 }
 
 .nav-page {

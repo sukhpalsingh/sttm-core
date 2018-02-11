@@ -12,26 +12,28 @@
     text-align: center;
     width: 40px;
   }
-
-  .global-nav {
-    .navigator-left {
-      margin-bottom: 0;
-      position: absolute;
-    }
-  }
-}
-
-.navigator-left a {
-  display: none;
-}
-
-.desktop .navigator-left a.close-button.active,
-.mobile .navigator-left a.menu-button {
-  display: inline-block;
 }
 
 .navigator-header {
+  align-items: center;
+  display: flex;
   height: 40px;
+  justify-content: space-between;
   line-height: 40px;
   text-align: center;
+
+  .nav-header-text {
+    flex-grow: 1;
+    padding: 0 10px;
+  }
+
+  .navigator-button {
+    cursor: pointer;
+    display: block;
+    height: 40px;
+    text-align: center;
+    width: 40px;
+
+    &.close-button { background: white; }
+  }
 }
