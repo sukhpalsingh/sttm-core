@@ -12,6 +12,7 @@ const allowedKeys = [
 ];
 const sessionList = [];
 const currentShabad = [];
+let currentShabadID;
 const kbPages = [];
 let newSearchTimeout;
 
@@ -88,6 +89,27 @@ const searchTypes = ['First Letter Start (Gurmukhi)', 'First Letter Anywhere (Gu
 
 const searchTypeOptions = searchTypes.map((string, value) => h('option', { value }, string));
 
+const shabadNavFwd = h(
+  'div#shabad-next.navigator-button',
+  {
+    onclick: e => module.exports.clickNext(
+      e,
+      currentShabadID + 1,
+      currentShabad[currentShabad.length - 1] + 1),
+  },
+h('i.fa.fa-arrow-circle-o-right'));
+
+const shabadNavBack = h(
+  'div#shabad-prev.navigator-button',
+  {
+    onclick: e => module.exports.clickNext(
+      e,
+      currentShabadID - 1,
+      null,
+      false),
+  },
+h('i.fa.fa-arrow-circle-o-left'));
+
 const searchOptions = h('div#search-options',
   h('select#search-type',
     {
@@ -127,6 +149,7 @@ document.body.addEventListener('click', (e) => {
 
 module.exports = {
   currentShabad,
+  currentShabadID,
 
   init() {
     this.searchType = parseInt(global.platform.getPref('searchOptions.searchType'), 10);
@@ -135,6 +158,8 @@ module.exports = {
     document.querySelector('.search-div').appendChild(searchInputs);
     document.querySelector('.search-div').appendChild(keyboard);
     document.querySelector('.search-div').appendChild(searchOptions);
+    document.querySelector('.shabad-next').appendChild(shabadNavFwd);
+    document.querySelector('.shabad-prev').appendChild(shabadNavBack);
     document.querySelector('#footer .menu-group-left').appendChild(footerNav);
     this.$navigator = document.getElementById('navigator');
     this.$searchPage = document.getElementById('search-page');
@@ -309,7 +334,16 @@ module.exports = {
     }
   },
 
+  clickNext(e, ShabadID, LineID, Forward = true) {
+    // load the Shabad into the controller
+    this.loadShabad(ShabadID, LineID);
+    // scroll the session block to the top to see the highlighted line
+    this.$sessionContainer.scrollTop = 0;
+    currentShabadID = Forward ? currentShabadID + 1 : currentShabadID - 1;
+  },
+
   clickResult(e, ShabadID, LineID, Gurmukhi) {
+    currentShabadID = ShabadID;
     document.body.classList.remove('home');
     this.closeGurmukhiKB();
     const sessionItem = h(
@@ -353,12 +387,13 @@ module.exports = {
   },
 
   printShabad(rows, ShabadID, LineID) {
+    const lineID = LineID || rows[0].ID;
     rows.forEach((item) => {
       const shabadLine = h(
         'li',
         {},
         h(
-          `a#line${item.ID}.panktee${(parseInt(LineID, 10) === item.ID ? '.current.main' : '')}`,
+          `a#line${item.ID}.panktee${(parseInt(lineID, 10) === item.ID ? '.current.main' : '')}`,
           {
             'data-line-id': item.ID,
             onclick: e => this.clickShabad(e, ShabadID, item.ID),
@@ -372,13 +407,15 @@ module.exports = {
       this.$shabad.appendChild(shabadLine);
       // append the currentShabad array
       currentShabad.push(item.ID);
-      if (LineID === item.ID) {
+      if (lineID === item.ID) {
         this.currentLine = item.ID;
       }
     });
     // scroll the Shabad controller to the current Panktee
     const curPankteeTop = this.$shabad.querySelector('.current').parentNode.offsetTop;
     this.$shabadContainer.scrollTop = curPankteeTop;
+    // send the line to app.js, which will send it to the viewer window
+    global.controller.sendLine(ShabadID, lineID);
   },
 
   clearSession() {
