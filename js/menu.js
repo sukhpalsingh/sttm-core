@@ -31,4 +31,5 @@ module.exports = {
     document.querySelector('a.close-button.navigator-button').classList.toggle('active');
     document.querySelector('#menu-page').classList.toggle('active');
   },
+
 };

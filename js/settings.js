@@ -31,6 +31,10 @@ function updateRangeSetting(key, val) {
   }
 }
 
+function updateColorSetting(key, val) {
+  $(`body.custom-theme .${key}`).css('color', val);
+}
+
 const userPrefs = global.platform.getAllPrefs();
 
 const settingsPage = h('div#settings');
@@ -173,6 +177,26 @@ Object.keys(settings).forEach((catKey) => {
         settingCat.appendChild(switchList);
         break;
       }
+      case 'color': {
+        const colorList = h('ul');
+        Object.keys(setting.options).forEach((option) => {
+          const optionId = `setting-${catKey}-${settingKey}-${option}`;
+          colorList.appendChild(
+            h('li',
+              [
+                h('span', setting.options[option]),
+                h('div.colors',
+                  [
+                    h(`input#${optionId}`),
+                  ],
+                ),
+              ],
+            ),
+          );
+        });
+        settingCat.appendChild(colorList);
+        break;
+      }
       default:
         break;
     }
@@ -219,6 +243,41 @@ module.exports = {
                 document.body.classList.remove(`${optionKey}-${i}`);
               }
               document.body.classList.add(`${optionKey}-${newUserPrefs[catKey][settingKey][optionKey]}`);
+            });
+            break;
+
+          case 'color':
+            Object.keys(setting.options).forEach((option) => {
+              const optionId = `setting-${catKey}-${settingKey}-${option}`;
+              const optionValue = newUserPrefs[catKey][settingKey][option];
+              $(`body.custom-theme .${option}`).css('color', optionValue);
+              $(`#${optionId}`).spectrum({
+                color: newUserPrefs[catKey][settingKey][option],
+                change: function (color) {
+                  global.platform.setUserPref(`${catKey}.${settingKey}.${option}`, color.toHexString());
+                  updateColorSetting(`${option}`, color.toHexString());
+                },
+              });
+            });
+            break;
+
+          default:
+            break;
+        }
+      });
+    });
+  },
+  applyViewerSettings(prefs = false) {
+    const newUserPrefs = prefs || global.platform.getAllPrefs();
+    Object.keys(settings).forEach((catKey) => {
+      const cat = settings[catKey];
+      Object.keys(cat.settings).forEach((settingKey) => {
+        const setting = cat.settings[settingKey];
+        switch (setting.type) {
+          case 'color':
+            Object.keys(setting.options).forEach((option) => {
+              const optionValue = newUserPrefs[catKey][settingKey][option];
+              $(`body.custom-theme .${option}`).css('color', optionValue);
             });
             break;
 
