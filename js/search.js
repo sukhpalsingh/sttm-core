@@ -12,7 +12,6 @@ const allowedKeys = [
 ];
 const sessionList = [];
 const currentShabad = [];
-let currentShabadID;
 const kbPages = [];
 let newSearchTimeout;
 
@@ -92,21 +91,14 @@ const searchTypeOptions = searchTypes.map((string, value) => h('option', { value
 const shabadNavFwd = h(
   'div#shabad-next.navigator-button',
   {
-    onclick: e => module.exports.clickNext(
-      e,
-      currentShabadID + 1,
-      currentShabad[currentShabad.length - 1] + 1),
+    onclick: () => module.exports.loadAdjacentShabad(),
   },
 h('i.fa.fa-arrow-circle-o-right'));
 
 const shabadNavBack = h(
   'div#shabad-prev.navigator-button',
   {
-    onclick: e => module.exports.clickNext(
-      e,
-      currentShabadID - 1,
-      null,
-      false),
+    onclick: () => module.exports.loadAdjacentShabad(false),
   },
 h('i.fa.fa-arrow-circle-o-left'));
 
@@ -149,7 +141,6 @@ document.body.addEventListener('click', (e) => {
 
 module.exports = {
   currentShabad,
-  currentShabadID,
 
   init() {
     this.searchType = parseInt(global.platform.getPref('searchOptions.searchType'), 10);
@@ -334,16 +325,7 @@ module.exports = {
     }
   },
 
-  clickNext(e, ShabadID, LineID, Forward = true) {
-    // load the Shabad into the controller
-    this.loadShabad(ShabadID, LineID);
-    // scroll the session block to the top to see the highlighted line
-    this.$sessionContainer.scrollTop = 0;
-    currentShabadID = Forward ? currentShabadID + 1 : currentShabadID - 1;
-  },
-
   clickResult(e, ShabadID, LineID, Gurmukhi) {
-    currentShabadID = ShabadID;
     document.body.classList.remove('home');
     this.closeGurmukhiKB();
     const sessionItem = h(
@@ -384,6 +366,14 @@ module.exports = {
     this.$shabad.innerHTML = '';
     currentShabad.splice(0, currentShabad.length);
     global.platform.search.loadShabad(ShabadID, LineID);
+  },
+
+  loadAdjacentShabad(Forward = true) {
+    const FirstLine = currentShabad[0];
+    const LastLine = currentShabad[currentShabad.length - 1];
+    this.$shabad.innerHTML = '';
+    currentShabad.splice(0, currentShabad.length);
+    global.platform.search.loadAdjacentShabad(FirstLine, LastLine, Forward);
   },
 
   printShabad(rows, ShabadID, LineID) {
