@@ -373,7 +373,10 @@ module.exports = {
     const LastLine = currentShabad[currentShabad.length - 1];
     this.$shabad.innerHTML = '';
     currentShabad.splice(0, currentShabad.length);
-    global.platform.search.loadAdjacentShabad(FirstLine, LastLine, Forward);
+    // Load the same shabad if on first or last shabad
+    const PreviousVerseID = FirstLine === 1 ? FirstLine : FirstLine - 1;
+    const NextVerseID = LastLine === 60403 ? LastLine : LastLine + 1;
+    global.platform.search.loadAdjacentShabad(PreviousVerseID, NextVerseID, Forward);
   },
 
   printShabad(rows, ShabadID, LineID) {
@@ -406,6 +409,19 @@ module.exports = {
     this.$shabadContainer.scrollTop = curPankteeTop;
     // send the line to app.js, which will send it to the viewer window
     global.controller.sendLine(ShabadID, lineID);
+    // Hide next and previous links before loading first and last shabad
+    const $shabadNext = document.querySelector('#shabad-next');
+    const $shabadPrev = document.querySelector('#shabad-prev');
+    if (currentShabad[0] === 1) {
+      $shabadPrev.classList.add('hide');
+      $shabadNext.classList.remove('hide');
+    } else if (currentShabad[currentShabad.length - 1] === 60403) {
+      $shabadNext.classList.add('hide');
+      $shabadPrev.classList.remove('hide');
+    } else {
+      $shabadPrev.classList.remove('hide');
+      $shabadNext.classList.remove('hide');
+    }
   },
 
   clearSession() {
