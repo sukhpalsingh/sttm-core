@@ -58,7 +58,14 @@ if (typeof Mousetrap !== 'undefined') {
   Mousetrap.bind('space', spaceBar);
 }
 
+function platformMethod(method, args) {
+  if (typeof global.platform[method] === 'function') {
+    global.platform[method](args);
+  }
+}
+
 module.exports = {
   menu,
   search,
+  platformMethod,
 };

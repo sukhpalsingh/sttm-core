@@ -9,16 +9,12 @@ function updateMultipleChoiceSetting(key, val) {
     document.body.classList.remove(optionToRemove);
   });
   document.body.classList.add(val);
-  if (global.electron) {
-    global.platform.ipc.send('update-settings');
-  }
+  global.core.platformMethod('updateSettings');
 }
 
 function updateCheckboxSetting(val) {
   document.body.classList.toggle(val);
-  if (global.electron) {
-    global.platform.ipc.send('update-settings');
-  }
+  global.core.platformMethod('updateSettings');
 }
 
 function updateRangeSetting(key, val) {
@@ -28,9 +24,7 @@ function updateRangeSetting(key, val) {
     document.body.classList.remove(`${optionKey}-${i}`);
   }
   document.body.classList.add(`${optionKey}-${val}`);
-  if (global.electron) {
-    global.platform.ipc.send('update-settings');
-  }
+  global.core.platformMethod('updateSettings');
 }
 
 function createSettingsPage(userPrefs) {
