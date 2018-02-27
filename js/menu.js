@@ -137,7 +137,7 @@ module.exports = {
     settings.init();
   },
 
-  toggleMenu(pageSelector) {
+  toggleMenu(pageSelector = '#menu-page') {
     document.querySelector(pageSelector).classList.toggle('active');
   },
 };
