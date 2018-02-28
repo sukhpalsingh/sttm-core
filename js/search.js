@@ -386,12 +386,13 @@ module.exports = {
         'li',
         {},
         h(
-          `a#line${item.ID}.panktee${(parseInt(lineID, 10) === item.ID ? '.current.main' : '')}`,
+          `a#line${item.ID}.panktee${(parseInt(LineID, 10) === item.ID ? '.current.main.seen_check' : '')}`,
           {
             'data-line-id': item.ID,
             onclick: e => this.clickShabad(e, ShabadID, item.ID),
           },
           [
+            h('i.fa.fa-fw.fa-check'),
             h('i.fa.fa-fw.fa-home'),
             ' ',
             item.Gurmukhi,
@@ -446,7 +447,7 @@ module.exports = {
       // Change main line
       const $panktee = e.target.parentNode;
       Array.from(lines).forEach(el => el.classList.remove('main'));
-      $panktee.classList.add('main');
+      $panktee.classList.add('main', 'seen_check');
     } else if (e.target.classList.contains('panktee')) {
       // Change line to click target
       const $panktee = e.target;
@@ -454,8 +455,8 @@ module.exports = {
       global.controller.sendLine(ShabadID, LineID);
       // Remove 'current' class from all Panktees
       Array.from(lines).forEach(el => el.classList.remove('current'));
-      // Add 'current' to selected Panktee
-      $panktee.classList.add('current');
+      // Add 'current' and 'seen-check' to selected Panktee
+      $panktee.classList.add('current', 'seen_check');
     }
   },
 

@@ -184,8 +184,17 @@ ul {
     }
   }
 
-  i.fa-home {
+  i.fa-home,
+  i.fa-check {
     color: transparent;
+  }
+
+  i.fa-check {
+    font-size: 10px;
+  }
+
+  a.seen_check i.fa-check {
+    color: #999;
   }
 
   a.panktee.main i.fa-home {
