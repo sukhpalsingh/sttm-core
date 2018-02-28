@@ -78,4 +78,5 @@ module.exports = {
   menu,
   search,
   platformMethod,
+  akhandpaatt: search.akhandPaatt,
 };

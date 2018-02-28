@@ -147,7 +147,10 @@ function createSettingsPage(userPrefs) {
                 global.platform.setUserPref(`${catKey}.${settingKey}.${option}`, newVal);
                 updateCheckboxSetting(option);
                 if (typeof global.controller[option] === 'function') {
-                  global.controller[option]();
+                  global.controller[option](newVal);
+                }
+                if (typeof global.core[option] === 'function') {
+                  global.core[option](newVal);
                 }
               },
               type: 'checkbox',

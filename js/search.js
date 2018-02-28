@@ -13,6 +13,7 @@ const allowedKeys = [
 const sessionList = [];
 const currentShabad = [];
 const kbPages = [];
+let currentMeta = {};
 let newSearchTimeout;
 
 // build the search bar and toggles and append to HTML
@@ -124,9 +125,18 @@ document.body.addEventListener('click', (e) => {
   }
 });
 
+function akhandPaatt(apv) {
+  if (apv && currentMeta.PageNo) {
+    global.platform.search.loadAng(currentMeta.PageNo, currentMeta.SourceID)
+      .then((rows) => {
+        module.exports.printShabad(rows);
+      });
+  }
+}
 
 module.exports = {
   currentShabad,
+  currentMeta,
 
   init() {
     this.searchType = parseInt(global.platform.getPref('searchOptions.searchType'), 10);
@@ -281,6 +291,8 @@ module.exports = {
     }
   },
 
+  akhandPaatt,
+
   printResults(rows) {
     if (rows.length > 0) {
       this.$results.innerHTML = '';
@@ -338,18 +350,34 @@ module.exports = {
     this.$session.insertBefore(sessionItem, this.$session.firstChild);
     // send the line to app.js, which will send it to the viewer window
     global.controller.sendLine(ShabadID, LineID);
+    // are we in APV
+    const apv = document.body.classList.contains('akhandpaatt');
     // load the Shabad into the controller
-    this.loadShabad(ShabadID, LineID);
+    this.loadShabad(ShabadID, LineID, apv);
     // scroll the session block to the top to see the highlighted line
     this.$sessionContainer.scrollTop = 0;
     this.navPage('shabad');
   },
 
-  loadShabad(ShabadID, LineID) {
+  loadShabad(ShabadID, LineID, apv = false) {
     // clear the Shabad controller and empty out the currentShabad array
     this.$shabad.innerHTML = '';
     currentShabad.splice(0, currentShabad.length);
-    global.platform.search.loadShabad(ShabadID, LineID);
+    if (apv) {
+      global.platform.search.getAng(ShabadID)
+        .then((ang) => {
+          currentMeta = ang;
+          return global.platform.search.loadAng(ang.PageNo, ang.SourceID);
+        })
+        .then(rows => this.printShabad(rows, ShabadID, LineID));
+    } else {
+      global.platform.search.loadShabad(ShabadID, LineID);
+    }
+  },
+
+  loadAng(PageNo, SourceID) {
+    global.platform.search.loadAng(PageNo, SourceID)
+      .then(rows => this.printShabad(rows));
   },
 
   printShabad(rows, ShabadID, LineID) {
@@ -361,7 +389,7 @@ module.exports = {
           `a#line${item.ID}.panktee${(parseInt(LineID, 10) === item.ID ? '.current.main' : '')}`,
           {
             'data-line-id': item.ID,
-            onclick: e => this.clickShabad(e, ShabadID, item.ID),
+            onclick: e => this.clickShabad(e, item.ShabadID, item.ID),
           },
           [
             h('i.fa.fa-fw.fa-home'),

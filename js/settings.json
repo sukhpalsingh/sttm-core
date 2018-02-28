@@ -66,6 +66,7 @@
         "title": "Display Options",
         "type": "switch",
         "options": {
+          "akhandpaatt": "Akhand Paatth View",
           "larivaar": "Larivaar",
           "left-align": "Left-Align"
         }
