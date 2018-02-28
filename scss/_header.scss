@@ -35,5 +35,7 @@
     width: 40px;
 
     &.close-button { background: white; }
+
+    &.hide { display: none; }
   }
 }

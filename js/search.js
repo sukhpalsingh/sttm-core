@@ -88,6 +88,20 @@ const searchTypes = ['First Letter Start (Gurmukhi)', 'First Letter Anywhere (Gu
 
 const searchTypeOptions = searchTypes.map((string, value) => h('option', { value }, string));
 
+const shabadNavFwd = h(
+  'div#shabad-next.navigator-button',
+  {
+    onclick: () => module.exports.loadAdjacentShabad(),
+  },
+h('i.fa.fa-arrow-circle-o-right'));
+
+const shabadNavBack = h(
+  'div#shabad-prev.navigator-button',
+  {
+    onclick: () => module.exports.loadAdjacentShabad(false),
+  },
+h('i.fa.fa-arrow-circle-o-left'));
+
 const searchOptions = h('div#search-options',
   h('select#search-type',
     {
@@ -135,6 +149,8 @@ module.exports = {
     document.querySelector('.search-div').appendChild(searchInputs);
     document.querySelector('.search-div').appendChild(keyboard);
     document.querySelector('.search-div').appendChild(searchOptions);
+    document.querySelector('.shabad-next').appendChild(shabadNavFwd);
+    document.querySelector('.shabad-prev').appendChild(shabadNavBack);
     document.querySelector('#footer .menu-group-left').appendChild(footerNav);
     this.$navigator = document.getElementById('navigator');
     this.$searchPage = document.getElementById('search-page');
@@ -352,13 +368,25 @@ module.exports = {
     global.platform.search.loadShabad(ShabadID, LineID);
   },
 
+  loadAdjacentShabad(Forward = true) {
+    const FirstLine = currentShabad[0];
+    const LastLine = currentShabad[currentShabad.length - 1];
+    this.$shabad.innerHTML = '';
+    currentShabad.splice(0, currentShabad.length);
+    // Load the same shabad if on first or last shabad
+    const PreviousVerseID = FirstLine === 1 ? FirstLine : FirstLine - 1;
+    const NextVerseID = LastLine === 60403 ? LastLine : LastLine + 1;
+    global.platform.search.loadAdjacentShabad(PreviousVerseID, NextVerseID, Forward);
+  },
+
   printShabad(rows, ShabadID, LineID) {
+    const lineID = LineID || rows[0].ID;
     rows.forEach((item) => {
       const shabadLine = h(
         'li',
         {},
         h(
-          `a#line${item.ID}.panktee${(parseInt(LineID, 10) === item.ID ? '.current.main' : '')}`,
+          `a#line${item.ID}.panktee${(parseInt(lineID, 10) === item.ID ? '.current.main' : '')}`,
           {
             'data-line-id': item.ID,
             onclick: e => this.clickShabad(e, ShabadID, item.ID),
@@ -372,13 +400,28 @@ module.exports = {
       this.$shabad.appendChild(shabadLine);
       // append the currentShabad array
       currentShabad.push(item.ID);
-      if (LineID === item.ID) {
+      if (lineID === item.ID) {
         this.currentLine = item.ID;
       }
     });
     // scroll the Shabad controller to the current Panktee
     const curPankteeTop = this.$shabad.querySelector('.current').parentNode.offsetTop;
     this.$shabadContainer.scrollTop = curPankteeTop;
+    // send the line to app.js, which will send it to the viewer window
+    global.controller.sendLine(ShabadID, lineID);
+    // Hide next and previous links before loading first and last shabad
+    const $shabadNext = document.querySelector('#shabad-next');
+    const $shabadPrev = document.querySelector('#shabad-prev');
+    if (currentShabad[0] === 1) {
+      $shabadPrev.classList.add('hide');
+      $shabadNext.classList.remove('hide');
+    } else if (currentShabad[currentShabad.length - 1] === 60403) {
+      $shabadNext.classList.add('hide');
+      $shabadPrev.classList.remove('hide');
+    } else {
+      $shabadPrev.classList.remove('hide');
+      $shabadNext.classList.remove('hide');
+    }
   },
 
   clearSession() {
