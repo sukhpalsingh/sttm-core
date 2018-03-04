@@ -414,7 +414,7 @@ module.exports = {
         'li',
         {},
         h(
-          `a#line${item.ID}.panktee${(parseInt(LineID, 10) === item.ID ? '.current.main.seen_check' : '')}`,
+          `a#line${item.ID}.panktee${(parseInt(lineID, 10) === item.ID ? '.current.main.seen_check' : '')}`,
           {
             'data-line-id': item.ID,
             onclick: e => this.clickShabad(e, item.ShabadID, item.ID),
