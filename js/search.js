@@ -139,13 +139,9 @@ document.body.addEventListener('click', (e) => {
   }
 });
 
-function akhandPaatt(apv) {
-  if (apv && currentMeta.PageNo) {
-    global.platform.search.loadAng(currentMeta.PageNo, currentMeta.SourceID)
-      .then((rows) => {
-        module.exports.printShabad(rows);
-      });
-  }
+function akhandPaatt() {
+  module.exports.$shabad.innerHTML = '';
+  global.controller.clearAPV();
 }
 
 module.exports = {
