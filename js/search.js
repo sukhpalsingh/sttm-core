@@ -417,7 +417,7 @@ module.exports = {
           `a#line${item.ID}.panktee${(parseInt(lineID, 10) === item.ID ? '.current.main.seen_check' : '')}`,
           {
             'data-line-id': item.ID,
-            onclick: e => this.clickShabad(e, item.ShabadID, item.ID),
+            onclick: e => this.clickShabad(e, item.ShabadID || ShabadID, item.ID),
           },
           [
             h('i.fa.fa-fw.fa-check'),
