@@ -174,6 +174,34 @@ function createSettingsPage(userPrefs) {
           settingCat.appendChild(switchList);
           break;
         }
+        case 'color': {
+          const colorList = h('ul');
+          Object.keys(setting.options).forEach((option) => {
+            const optionId = `setting-${catKey}-${settingKey}-${option}`;
+            const switchListAttrs = {
+              name: `setting-${catKey}-${settingKey}`,
+              onchange: (e) => {
+                const newVal = '#' + e.target.jscolor;
+                global.platform.setUserPref(`${catKey}.${settingKey}.${option}`, newVal);
+              },
+              value: userPrefs[catKey][settingKey][option]
+            };
+            colorList.appendChild(
+              h('li',
+                [
+                  h('span', setting.options[option]),
+                  h('div.colors',
+                    [
+                      h(`input.jscolor#${optionId}`, switchListAttrs),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          });
+          settingCat.appendChild(colorList);
+          break;
+        }
         default:
           break;
       }
@@ -224,6 +252,14 @@ module.exports = {
                 document.body.classList.remove(`${optionKey}-${i}`);
               }
               document.body.classList.add(`${optionKey}-${newUserPrefs[catKey][settingKey][optionKey]}`);
+            });
+            break;
+
+          case 'color':
+            Object.keys(setting.options).forEach((option) => {
+              const optionId = `setting-${catKey}-${settingKey}-${option}`;
+              const optionValue = newUserPrefs[catKey][settingKey][option];
+              document.getElementsByClassName(`body.custom-theme .${option}`)[0].style.color = optionValue;
             });
             break;
 
